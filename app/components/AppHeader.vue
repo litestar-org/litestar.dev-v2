@@ -1,54 +1,131 @@
+<script setup lang="ts">
+import type { ContentNavigationItem } from '@nuxt/content'
+
+const navigation = inject<Ref<ContentNavigationItem[]>>('navigation', ref([]))
+const logo = useTemplateRef('logo')
+const route = useRoute()
+const stats = useStats()
+const { copy } = useClipboard()
+const { headerLinks } = useHeaderLinks()
+const { version } = useDocsVersion()
+
+const { tags } = useDocsTags()
+
+const latestVersion = computed(() => {
+  const versionMatch = stats.value?.version?.match(/\d+\.\d+/)
+  return versionMatch ? versionMatch[0] : undefined
+})
+
+const mobileDocsVersion = computed(() =>
+  route.path.startsWith('/docs')
+    ? version.value.shortTag !== 'v4'
+      ? `${version.value.shortTag} (${tags[version.value.shortTag]})`
+      : version.value.shortTag
+    : undefined
+)
+
+const mobileNavigation = computed<ContentNavigationItem[]>(() => {
+  // Show Migration and Bridge on mobile only when user is reading them
+  const docsLink = navigation.value.find(link => link.path === version.value.path)
+  if (docsLink && !route.path.startsWith(`${version.value.path}/bridge`) && !route.path.startsWith(`${version.value.path}/migration`)) {
+    docsLink.children = docsLink.children?.filter(link => ![`${version.value.path}/bridge`, `${version.value.path}/migration`].includes(link.path as string)) || []
+  }
+
+  return [
+    docsLink,
+    ...headerLinks.value.slice(1).map(link => ({
+      ...link,
+      title: link.label,
+      path: link.to,
+      children: link.children?.map(child => ({
+        ...child,
+        title: child.label,
+        path: child.to
+      }))
+    } as ContentNavigationItem)),
+    {
+      title: 'Design Kit',
+      icon: 'i-lucide-palette',
+      path: '/design-kit'
+    }
+  ].filter((item): item is ContentNavigationItem => Boolean(item))
+})
+
+const defaultOpen = computed(() => {
+  const topLevelWithChildren = mobileNavigation.value.filter(link => link.children?.length)
+  const currentPath = route.path
+
+  return topLevelWithChildren.some(link => link.children?.some(child => currentPath.startsWith(child.path as string)))
+})
+
+</script>
+
 <template>
-  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <div class="flex items-center">
-          <NuxtLink to="/" class="flex items-center space-x-2">
-            <div class="w-8 h-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-lg flex items-center justify-center">
-              <span class="text-white font-bold text-sm">L</span>
-            </div>
-            <span class="text-xl font-bold">Litestar</span>
-          </NuxtLink>
-        </div>
-        
-        <nav class="hidden md:flex items-center space-x-8">
-          <NuxtLink to="/docs" class="text-gray-600 hover:text-gray-900 font-medium">
-            Docs
-          </NuxtLink>
-          <NuxtLink to="/examples" class="text-gray-600 hover:text-gray-900 font-medium">
-            Examples
-          </NuxtLink>
-          <NuxtLink to="/ecosystem" class="text-gray-600 hover:text-gray-900 font-medium">
-            Ecosystem
-          </NuxtLink>
-          <NuxtLink to="/community" class="text-gray-600 hover:text-gray-900 font-medium">
-            Community
-          </NuxtLink>
-        </nav>
+  <UHeader>
+    <template #left>
+      <NuxtLink to="/" class="flex gap-2 items-end" aria-label="Back to home">
+        <!-- <NuxtImg src="/litestar.svg" class="block w-auto h-7" /> -->
+        <LitestarLogo ref="logo" class="block w-auto h-6" />
 
-        <div class="flex items-center space-x-4">
-          <UButton
-            to="https://github.com/litestar-org/litestar"
-            target="_blank"
-            variant="ghost"
-            icon="i-simple-icons-github"
-            class="hidden sm:flex"
-          />
-          <UButton
-            to="/docs/getting-started"
-            color="primary"
-            class="font-medium"
-          >
-            Get Started
-          </UButton>
-        </div>
-      </div>
-    </div>
-  </header>
+        <UTooltip v-if="latestVersion" :text="`Latest release: v${stats?.version || 3}`" class="hidden md:block">
+          <UBadge variant="subtle" size="sm" class="-mb-[2px] rounded font-semibold text-[12px]/3" color="primary">
+            v{{ latestVersion }}
+          </UBadge>
+        </UTooltip>
+
+        <UBadge v-if="mobileDocsVersion" variant="subtle" size="sm" class="block md:hidden -mb-[2px] rounded font-semibold text-[12px]/3" :color="version.tagColor">
+          {{ mobileDocsVersion }}
+        </UBadge>
+      </NuxtLink>
+    </template>
+
+    <UNavigationMenu :items="headerLinks" variant="link" :ui="{ linkLeadingIcon: 'hidden' }" />
+
+    <template #right>
+      <UTooltip text="Search" :kbds="['meta', 'K']">
+        <UContentSearchButton />
+      </UTooltip>
+
+      <UColorModeButton />
+
+      <UTooltip text="Litestar on GitHub">
+        <UButton
+          icon="i-simple-icons-github"
+          to="https://github.com/litestar-org/litestar"
+          target="_blank"
+          variant="ghost"
+          color="neutral"
+          :label="stats ? formatNumber(stats.stars) : '...'"
+          :ui="{
+            label: 'hidden sm:inline-flex'
+          }"
+        >
+          <span class="sr-only">Litestar on GitHub</span>
+        </UButton>
+      </UTooltip>
+
+      <UTooltip text="Discord">
+        <UButton
+          icon="i-simple-icons-discord"
+          to="https://discord.gg/litestar"
+          target="_blank"
+          variant="ghost"
+          color="neutral"
+          :ui="{ label: 'hidden sm:inline-flex' }"
+        >
+          <span class="sr-only">Litestar on Discord</span>
+        </UButton>
+      </UTooltip>
+    </template>
+
+    <template #body>
+      <template v-if="route.path.startsWith('/docs')">
+        <VersionSelect />
+
+        <USeparator type="dashed" class="my-6" />
+      </template>
+
+      <UContentNavigation :navigation="mobileNavigation" :default-open="defaultOpen" highlight />
+    </template>
+  </UHeader>
 </template>
-
-<style scoped>
-.router-link-active {
-  @apply text-primary-600;
-}
-</style>

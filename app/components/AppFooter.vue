@@ -4,13 +4,10 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div class="col-span-1 md:col-span-2">
           <div class="flex items-center space-x-2 mb-4">
-            <div class="w-8 h-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-lg flex items-center justify-center">
-              <span class="text-white font-bold text-sm">L</span>
-            </div>
-            <span class="text-xl font-bold">Litestar</span>
+            <UIcon name="i-custom-litestar-full" class="h-8 w-30" />
           </div>
           <p class="text-gray-600 max-w-md">
-            A modern, fast Python web framework for building APIs with automatic interactive API documentation.
+            A modern, fast Python ASGI framework for building APIs that scale.
           </p>
         </div>
         
@@ -28,9 +25,7 @@
           <h3 class="font-semibold text-gray-900 mb-4">Community</h3>
           <ul class="space-y-2">
             <li><a href="https://github.com/litestar-org/litestar" target="_blank" class="text-gray-600 hover:text-primary-600">GitHub</a></li>
-            <li><a href="https://discord.gg/litestar" target="_blank" class="text-gray-600 hover:text-primary-600">Discord</a></li>
-            <li><a href="https://twitter.com/litestarapi" target="_blank" class="text-gray-600 hover:text-primary-600">Twitter</a></li>
-            <li><NuxtLink to="/blog" class="text-gray-600 hover:text-primary-600">Blog</NuxtLink></li>
+            <li><a href="https://discord.gg/litestar" target="_blank" class="text-gray-600 hover:text-primary-600">Discord</a></li>            <li><NuxtLink to="/blog" class="text-gray-600 hover:text-primary-600">Blog</NuxtLink></li>
           </ul>
         </div>
       </div>

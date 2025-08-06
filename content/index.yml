@@ -1,0 +1,343 @@
+hero:
+  cta:
+    label: Litestar v3 is out
+    to: /blog/v3-18
+    icon: i-lucide-arrow-right
+  tabs:
+    - title: Minimal
+      icon: i-lucide-leaf
+      content: |
+        ::code-tree{defaultValue="main.py" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
+        ```python [main.py]
+        from litestar import Litestar, get
+
+        @get("/")
+        async def hello() -> dict[str, str]:
+            return {"message": "Hello, World!"}
+
+        app = Litestar(route_handlers=[hello])
+        ```
+
+        ```toml [pyproject.toml]
+        {
+          "name": "hello-nuxt",
+          "private": true,
+          "type": "module",
+          "scripts": {
+            "dev": "nuxt dev",
+            "build": "nuxt build",
+            "generate": "nuxt generate",
+            "preview": "nuxt preview"
+          },
+          "dependencies": {
+            "nuxt": "latest"
+          }
+        }
+        ```
+        ::
+    - title: Routing
+      icon: i-lucide-milestone
+      content: |
+        ::code-tree{defaultValue="pages/index.vue" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
+        ```vue [app.vue]
+        <template>
+          <NuxtPage />
+        </template>
+        ```
+
+        ```json [package.json]
+        {
+          "name": "nuxt-routing",
+          "private": true,
+          "type": "module",
+          "scripts": {
+            "dev": "nuxt dev",
+            "build": "nuxt build",
+            "generate": "nuxt generate",
+            "preview": "nuxt preview"
+          },
+          "dependencies": {
+            "nuxt": "latest"
+          }
+        }
+        ```
+
+        ```vue [pages/index.vue]
+        <template>
+          <h1>Index page</h1>
+          <NuxtLink to="/blog/hello-world">
+            Go to blog post
+          </NuxtLink>
+        </template>
+        ```
+        ```vue [pages/blog/[slug\\].vue]
+        <template>
+          <h1>Blog post {{ $route.params.slug }}</h1>
+        </template>
+        ```
+        ::
+    - title: Data Fetching
+      icon: i-lucide-unplug
+      content: |
+        ::code-tree{defaultValue="pages/index.vue" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
+        ```vue [app.vue]
+        <template>
+          <NuxtPage />
+        </template>
+        ```
+
+        ```json [package.json]
+        {
+          "name": "nuxt-data-fetching",
+          "private": true,
+          "type": "module",
+          "scripts": {
+            "dev": "nuxt dev",
+            "build": "nuxt build",
+            "generate": "nuxt generate",
+            "preview": "nuxt preview"
+          },
+          "dependencies": {
+            "nuxt": "latest"
+          }
+        }
+        ```
+
+        ```vue [pages/index.vue]
+        <script setup lang="ts">
+        const { data: page } = await useFetch('/api/cms/home')
+        </script>
+
+        <template>
+          <h1>{{ page.title }}</h1>
+          <NuxtLink to="/blog/hello-world">
+            Go to blog post
+          </NuxtLink>
+        </template>
+        ```
+        ```vue [pages/blog/[slug\\].vue]
+        <script setup lang="ts">
+          const { slug } = useRoute().params
+          const { data: post } = await useFetch(`/api/cms/blog/${slug}`)
+        </script>
+
+        <template>
+          <h1>{{ post.title }}</h1>
+          <NuxtLink to="/">
+            Go to home
+          </NuxtLink>
+        </template>
+        ```
+        ::
+    - title: Auto-Imports
+      icon: i-lucide-wand-sparkles
+      content: |
+        ::code-tree{defaultValue="app.vue" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
+        ```vue [app.vue]
+        <script setup>
+        const message = ref('Nuxt')
+        const hello = () => sayHello(message.value)
+        </script>
+
+        <template>
+          <main>
+            <h1>Demo with auto imports</h1>
+            <form @submit.prevent="hello">
+              <MyInput v-model="message" />
+              <button type="submit">Say Hello</button>
+            </form>
+          </main>
+        </template>
+        ```
+
+        ```vue [components/MyInput.vue]
+        <script setup>
+        const modelValue = defineModel<string>()
+        </script>
+
+        <template>
+          <input v-model="modelValue" />
+        </template>
+        ```
+        ```ts [composables/say-hello.ts]
+        export function sayHello(message = 'World') {
+          alert(`Hello ${upperCase(message)}!`)
+        }
+        ```
+
+        ```json [package.json]
+        {
+          "name": "hello-nuxt",
+          "private": true,
+          "type": "module",
+          "scripts": {
+            "dev": "nuxt dev",
+            "build": "nuxt build",
+            "generate": "nuxt generate",
+            "preview": "nuxt preview"
+          },
+          "dependencies": {
+            "nuxt": "latest"
+          }
+        }
+        ```
+        ::
+    - title: API Routes
+      icon: i-lucide-pc-case
+      content: |
+        ::code-tree{defaultValue="server/api/hello.ts" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
+        ```vue [app.vue]
+        <template>
+          <NuxtPage />
+        </template>
+        ```
+
+        ```json [package.json]
+        {
+          "name": "nuxt-data-fetching",
+          "private": true,
+          "type": "module",
+          "scripts": {
+            "dev": "nuxt dev",
+            "build": "nuxt build",
+            "generate": "nuxt generate",
+            "preview": "nuxt preview"
+          },
+          "dependencies": {
+            "nuxt": "latest"
+          }
+        }
+        ```
+
+        ```vue [pages/index.vue]
+        <script setup lang="ts">
+        const { data } = await useFetch('/api/hello')
+        </script>
+
+        <template>
+          <h1>{{ data.message }}</h1>
+        </template>
+        ```
+
+        ```ts [server/api/hello.ts]
+        export default defineEventHandler((event) => {
+          return {
+            message: 'Hello World'
+          }
+        })
+        ```
+        ::
+features:
+  title:  Everything you need to build modern APIs
+  description: Litestar provides all the tools you need out of the box, with minimal configuration required.
+  features:
+    - icon: i-lucide-sparkles
+      title: Data Validation And Parsing
+      description: Leverage the power of type hints to define how data should be validated, parsed and serialized.
+      to: https://docs.litestar.dev/2/usage/dto/index.html
+    - icon: i-lucide-file-code-2
+      title: Open Ecosystem
+      description: Define schemas and models for validation with standard types such as dataclasses, libraries like Pydantic, msgspec, attr, or integrate your own.
+      to: https://docs.litestar.dev/2/usage/applications.html
+    - icon: i-lucide-milestone
+      title: OpenAPI
+      description: Automatically generated OpenAPI schemas help to document APIs and integrate with the frontend via TypeScript schema generation.
+      to: https://docs.litestar.dev/2/usage/openapi/index.html
+    - icon: i-lucide-unplug
+      title: Interactive API Documentation
+      description: Interactively explore your APIs through Swagger, Redoc or Stoplight Elements, powered by OpenAPI.
+      to: https://docs.litestar.dev/2/usage/openapi/ui_plugins.html
+    - icon: i-lucide-bug
+      title: Middlewares
+      description: Handle rate-limiting, CORS, CSRF, compression, logging and many more common tasks with Litestar's built-in middlewares.
+      to: https://docs.litestar.dev/2/usage/middleware/builtin-middleware.html
+    - icon: i-lucide-flip-horizontal
+      title: Data Stores
+      description: Interfaces for various key/value stores that seamlessly integrate with your application and third party extensions.
+      to: https://docs.litestar.dev/2/usage/stores.html
+    - icon: i-lucide-image
+      title: ORM Integration
+      description: First-class SQLAlchemy support let's you use your models for validation and serialization directly, reducing code duplication.
+      to: https://docs.litestar.dev/2/usage/databases/sqlalchemy/index.html
+    - icon: i-lucide-file-search
+      title: Dependency Injection
+      description: Powerful dependency injection on all application layers, aides in code decoupling and reduces repetition.
+      to: https://docs.litestar.dev/2/usage/dependency-injection.html
+    - icon: i-lucide-puzzle
+      title: Caching
+      description: Response caching with minimal configuration and overhead to speed up response times.
+      to: https://docs.litestar.dev/2/usage/caching.html
+    - icon: i-lucide-shield-check
+      title: WebSockets
+      description: Easy to use WebSockets integration, featuring high- and low-level APIs and support for automatic data validation and serialization.
+      to: https://docs.litestar.dev/2/usage/websockets.html
+    - icon: i-simple-icons-typescript
+      title: Authentication And Authorization 
+      description: Session and JWT based authentication and utilities at your disposal to start building your authentication layer with ease.
+      to: https://docs.litestar.dev/2/usage/security/index.html
+  cta:
+    title: 'Explore Litestar now'
+    label: Start reading docs
+    to: /docs
+    icon: i-lucide-arrow-right
+foundation:
+  title: Built on a solid foundation
+  description: Nuxt is built on top of bulletproof open source technologies, with versatility to choose between different build tools.
+  items:
+    - title: Fully featured
+      description: Everything that's needed to build modern APIs, from data serialization and validation to websockets, ORM integration, session management, authentication and more.
+      logo: i-lucide-cloud-lightning
+      color: '#42B883'
+      gradient: 'bg-gradient-to-br from-[#42B883]/10 from-5% via-transparent via-50% to-transparent'
+      link:
+        label: vuejs.org
+        to: https://vuejs.org
+    - title: Fast
+      description: Litestar puts great emphasis on developer experience and performance. It's one of the fastest ASGI frameworks and developing with it is just as fast.
+      logo: i-lucide-cloud-lightning
+      color: '#A156FE'
+      gradient: 'bg-gradient-to-br from-[#A156FE]/10 from-5% via-transparent via-50% to-transparent'
+      link:
+        label: vite.dev
+        to: https://vite.dev
+    - title: (A)synchonous
+      description: Asynchronous at heart, but with synchronous execution not as a second class citizen. Synchronous applications run without performance penalties.
+      logo: i-lucide-arrow-right
+      color: '#8ED6FB'
+      gradient: 'bg-gradient-to-br from-[#8ED6FB]/10 from-5% via-transparent via-50% to-transparent'
+      link:
+        label: webpack.js.org
+        to: https://webpack.js.org
+modules:
+  title: Extend Litestar with modules
+  description: Litestar has a rich module ecosystem, with both official and community-driven modules. This accelerates development by providing ready-to-use solutions for common needs.
+  links:
+    - label: Explore all modules
+      to: /modules
+      icon: i-lucide-arrow-right
+      color: neutral
+      trailing: true
+deploy:
+  title: Deploy your app anywhere
+  description: One-command deployments and zero-configuration options make it easy to get your Nuxt app live. Choose your platform, and let Nuxt handle the rest, allowing you to focus on building great applications rather than managing complex deployments.
+  links:
+    - label: Learn how to deploy now
+      to: /deploy
+      icon: i-lucide-arrow-right
+      color: neutral
+      trailing: true
+stats:
+  title: The developer's choice for simple and powerful APIs
+  description: |
+    Nuxt was born from developers' need to boost productivity and platform performance.
+    What began as a Vue-based solution for automating tasks and server-side rendering is now trusted by startups and enterprises all around the world.
+  community:
+    title: Open source
+    description: Litestar is 100% powered by our passionate open source community. Every line of Nuxt is written by passionate developers like you.
+  cta:
+    label: Start contributing
+    to: 'https://github.com/nuxt/nuxt'
+    color: neutral
+    variant: outline
+    icon: i-simple-icons-github
+    trailing: true

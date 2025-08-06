@@ -5,7 +5,7 @@ export default defineAppConfig({
     //   preference: 'light',
     // },
     colors: {
-      primary: 'emerald',
+      primary: 'yellow',
       neutral: 'slate',
     },
     button: {

@@ -16,12 +16,20 @@
     "@nuxt/scripts": "0.11.10",
     "@nuxt/test-utils": "3.19.2",
     "@nuxt/ui": "3.3.0",
+    "@nuxt/ui-pro": "^3.3.0",
+    "@nuxtjs/mdc": "^0.17.2",
     "@unhead/vue": "^2.0.3",
     "eslint": "^9.0.0",
     "nuxt": "^4.0.1",
+    "tailwindcss": "^4.1.11",
     "typescript": "^5.6.3",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"
   },
-  "packageManager": "pnpm@10.5.2+sha512.da9dc28cd3ff40d0592188235ab25d3202add8a207afbedc682220e4a0029ffbff4562102b9e6e46b4e3f9e8bd53e6d05de48544b0c57d4b0179e22c76d1199b"
+  "packageManager": "pnpm@10.5.2+sha512.da9dc28cd3ff40d0592188235ab25d3202add8a207afbedc682220e4a0029ffbff4562102b9e6e46b4e3f9e8bd53e6d05de48544b0c57d4b0179e22c76d1199b",
+  "devDependencies": {
+    "nuxt-content-twoslash": "^0.1.2",
+    "shiki": "^3.9.2",
+    "twoslash": "^0.3.3"
+  }
 }
