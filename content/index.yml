@@ -276,8 +276,8 @@ features:
     to: /docs
     icon: i-lucide-arrow-right
 foundation:
-  title: Built on a solid foundation
-  description: Nuxt is built on top of bulletproof open source technologies, with versatility to choose between different build tools.
+  title: Built to scale
+  description: Litestar leverages proven open source technologies to deliver exceptional performance and developer experience.
   items:
     - title: Fully featured
       description: Everything that's needed to build modern APIs, from data serialization and validation to websockets, ORM integration, session management, authentication and more.
@@ -312,26 +312,17 @@ modules:
       icon: i-lucide-arrow-right
       color: neutral
       trailing: true
-deploy:
-  title: Deploy your app anywhere
-  description: One-command deployments and zero-configuration options make it easy to get your Nuxt app live. Choose your platform, and let Nuxt handle the rest, allowing you to focus on building great applications rather than managing complex deployments.
-  links:
-    - label: Learn how to deploy now
-      to: /deploy
-      icon: i-lucide-arrow-right
-      color: neutral
-      trailing: true
 stats:
   title: The developer's choice for simple and powerful APIs
   description: |
-    Nuxt was born from developers' need to boost productivity and platform performance.
-    What began as a Vue-based solution for automating tasks and server-side rendering is now trusted by startups and enterprises all around the world.
+    Litestar was born from developers' need to boost productivity and platform performance.
+    What began as a starlette based-solution is now a solid ASGI frameworks to build APIs that scale.
   community:
     title: Open source
-    description: Litestar is 100% powered by our passionate open source community. Every line of Nuxt is written by passionate developers like you.
+    description: Litestar is 100% powered by our passionate open source community.
   cta:
     label: Start contributing
-    to: 'https://github.com/nuxt/nuxt'
+    to: 'https://github.com/litestar-org/litestar'
     color: neutral
     variant: outline
     icon: i-simple-icons-github
