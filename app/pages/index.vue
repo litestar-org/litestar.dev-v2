@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+definePageMeta({
+  heroBackground: '-z-10'
+})
+
 const [{ data: page }] = await Promise.all([
   useAsyncData('index', () => queryCollection('index').first())
 ])
@@ -88,6 +92,7 @@ const officialModulesLitestar = computed(() => [
 </script>
 
 <template>
+  <div v-if="page">
     <UPageHero
       class="relative"
       orientation="horizontal"
@@ -149,7 +154,7 @@ const officialModulesLitestar = computed(() => [
           }"
         >
           <template #content="{ item, index }">
-            <LazyMDC :value="item.content" :cache-key="`index-hero-tab-${index}`" />
+            <LazyMDC :value="item.content" :cache-key="`index-hero-tab-${index}`" hydrate-on-idle/>
           </template>
         </UTabs>
       </UPageCard>
@@ -188,7 +193,7 @@ const officialModulesLitestar = computed(() => [
           :while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
           :transition="{ delay: 0.1 * page?.features.features.length }"
           :in-view-options="{ once: true }"
-          class="flex flex-col justify-center gap-4 p-4 bg-muted/50 h-full"
+          class="flex flex-col justify-center gap-4 p-4 h-full"
         >
           <span class="text-lg font-semibold">
             {{ page?.features.cta?.title }}
@@ -268,5 +273,5 @@ const officialModulesLitestar = computed(() => [
     <ModelsSection />
 
     <StatsSection :stats="stats" :stats-data="page.stats" />
-
+  </div>
 </template>

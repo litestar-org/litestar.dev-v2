@@ -10,16 +10,20 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@iconify-json/lucide": "^1.2.61",
+    "@iconify-json/simple-icons": "^1.2.46",
     "@nuxt/content": "3.6.3",
-    "@nuxt/eslint": "1.7.1",
     "@nuxt/image": "1.11.0",
     "@nuxt/scripts": "0.11.10",
     "@nuxt/test-utils": "3.19.2",
-    "@nuxt/ui": "3.3.0",
     "@nuxt/ui-pro": "^3.3.0",
+    "@nuxtjs/html-validator": "^2.1.0",
     "@nuxtjs/mdc": "^0.17.2",
     "@unhead/vue": "^2.0.3",
-    "eslint": "^9.0.0",
+    "@vue/compiler-sfc": "^3.5.18",
+    "@vueuse/components": "^13.6.0",
+    "@vueuse/core": "^13.6.0",
+    "@vueuse/nuxt": "^13.6.0",
     "motion-v": "^1.7.0",
     "nuxt": "^4.0.3",
     "tailwindcss": "^4.1.11",
@@ -29,8 +33,23 @@
   },
   "packageManager": "pnpm@10.5.2+sha512.da9dc28cd3ff40d0592188235ab25d3202add8a207afbedc682220e4a0029ffbff4562102b9e6e46b4e3f9e8bd53e6d05de48544b0c57d4b0179e22c76d1199b",
   "devDependencies": {
+    "@nuxt/eslint": "1.7.1",
+    "@shikijs/transformers": "^3.9.2",
+    "eslint": "^9.32.0",
     "nuxt-content-twoslash": "^0.1.2",
     "shiki": "^3.9.2",
     "twoslash": "^0.3.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "esbuild",
+      "sharp"
+    ],
+    "ignoredBuiltDependencies": [
+      "@parcel/watcher",
+      "puppeteer",
+      "vue-demi"
+    ]
   }
 }

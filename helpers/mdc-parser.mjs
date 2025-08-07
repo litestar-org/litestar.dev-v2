@@ -70,15 +70,10 @@ export function createShikiHighlighter({
     } else if (lang === 'vue-html' || lang === 'vue-template') {
       lang = 'vue'
       codeToHastOptions.grammarContextCode = '<template>'
-    } else if (lang === 'python' || lang === 'py') {
-      lang = 'python'
-      codeToHastOptions.grammarContextCode = 'def my_function():'
     }
     const themesObject = { ...typeof theme === 'string' ? { default: theme } : theme || {} }
     const loadedThemes = shiki2.getLoadedThemes()
     const loadedLanguages = shiki2.getLoadedLanguages()
-    console.log(loadedThemes)
-    console.log(`[@nuxtjs/mdc] Loaded languages: ${loadedLanguages.join(', ')}`)
     if (typeof lang === 'string' && !loadedLanguages.includes(lang) && !isSpecialLang(lang)) {
       if (bundledLangs[lang]) {
         await shiki2.loadLanguage(bundledLangs[lang])
@@ -195,8 +190,9 @@ const bundledLangs = {
   ts: () => import('shiki/langs/ts.mjs'),
   tsx: () => import('shiki/langs/tsx.mjs'),
   jsx: () => import('shiki/langs/jsx.mjs'),
-  json: () => import('shiki/langs/json.mjs')
-
+  json: () => import('shiki/langs/json.mjs'),
+  python: () => import('shiki/langs/python.mjs'),
+  toml: () => import('shiki/langs/toml.mjs')
 }
 const bundledThemes = {
   'material-theme-lighter': () => import('shiki/themes/material-theme-lighter.mjs').then(r => r.default),
@@ -226,7 +222,7 @@ export async function parseMdc(content) {
     },
     highlight: {
       highlighter,
-      langs: ['python', 'toml', 'js', 'vue'],
+      langs: ['js', 'vue', 'python', 'toml'],
       theme: {
         default: 'material-theme-lighter',
         dark: 'material-theme-palenight'

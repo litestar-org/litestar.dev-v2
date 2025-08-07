@@ -1,25 +1,31 @@
 import { createResolver } from 'nuxt/kit'
+import { parseMdc } from './helpers/mdc-parser.mjs'
 
 const { resolve } = createResolver(import.meta.url)
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: true, //Temporary disable SSR because of tailwindcss issues https://github.com/nuxt/nuxt/issues/32564
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
   modules: [
     '@nuxt/ui-pro',
-    '@nuxt/eslint',
-    '@nuxt/image',
-    '@nuxt/scripts',
     '@nuxt/test-utils',
     'nuxt-content-twoslash',
+    '@nuxt/image',
     '@nuxt/content',
+    '@nuxt/eslint',
+    '@nuxt/scripts',
+    '@vueuse/nuxt',
     'motion-v/nuxt',
   ],
+  app: {
+    pageTransition: false,
+    layoutTransition: false
+  },
+  css: ['~/assets/css/main.css'],
   content: {
-    experimental: { nativeSqlite: true },
+    // experimental: { nativeSqlite: true },
     build: {
       markdown: {
         highlight: {
@@ -32,6 +38,24 @@ export default defineNuxtConfig({
       }
     },
   },
+  mdc: {
+    highlight: {
+      noApiRoute: false,
+      // langs: ['js', 'python', 'toml'],
+    }
+  },
+  hooks: {
+    'content:file:afterParse': async ({ file, content }) => {
+      if (file.id === 'index/index.yml') {
+        // @ts-expect-error -- TODO: fix this
+        for (const tab of content.hero.tabs) {
+          tab.content = await parseMdc(tab.content)
+        }
+        // @ts-expect-error -- TODO: fix this
+        delete content.meta.body
+      }
+    }
+  },
   icon: {
     customCollections: [{
       prefix: 'custom',
@@ -42,13 +66,6 @@ export default defineNuxtConfig({
       includeCustomCollections: true
     },
     provider: 'iconify'
-  },
-  css: ['~/assets/css/main.css'],
-  mdc: {
-    highlight: {
-      noApiRoute: false,
-      langs: ['js', 'python', 'toml'],
-    }
   },
   twoslash: {
     floatingVueOptions: {
