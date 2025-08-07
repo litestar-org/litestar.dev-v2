@@ -1,4 +1,19 @@
 <script lang="ts" setup>
+import type { TabsItem } from '@nuxt/ui'
+
+const installCommands = ref<TabsItem[]>([
+  {
+    label: 'pip',
+    icon: 'i-custom-python',
+    content: 'pip install litestar'
+  },
+  {
+    label: 'uv',
+    icon: 'i-custom-uv',
+    content: 'uv add litestar'
+  }
+])
+
 definePageMeta({
   heroBackground: '-z-10'
 })
@@ -133,7 +148,19 @@ const officialModulesLitestar = computed(() => [
               View on Github
             </UButton>
           </div>
-          <UInputCopy value="uv add litestar" label="uv add litestar" size="xl" />
+          <UTabs
+            :items="installCommands"
+            color="neutral"
+            :ui="{
+              list: 'bg-muted/50 p-1 rounded-lg',
+              trigger: 'text-sm data-[state=active]:bg-background',
+              content: 'pt-2'
+            }"
+          >
+            <template  #content="{ item }">
+              <UInputCopy :value="item.content" :label="item.content" size="xl" />
+            </template>
+          </UTabs>
         </div>
       </template>
 
