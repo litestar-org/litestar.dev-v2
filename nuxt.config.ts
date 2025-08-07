@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     '@nuxt/test-utils',
     'nuxt-content-twoslash',
     '@nuxt/content',
+    'motion-v/nuxt',
   ],
   content: {
     experimental: { nativeSqlite: true },

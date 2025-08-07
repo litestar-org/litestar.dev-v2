@@ -1,13 +1,6 @@
 <script lang="ts" setup>
-const [{ data: page }, { data: officialModules }, { data: showcase }] = await Promise.all([
-  useAsyncData('index', () => queryCollection('index').first()),
-  useFetch('https://api.nuxt.com/modules', {
-    key: 'official-modules',
-    transform: (res: { modules: Module[], stats: Stats }) => res.modules
-      .filter(module => module.type === 'official')
-      .sort((a, b) => b.stats.stars - a.stats.stars)
-  }),
-  useAsyncData('showcase', () => queryCollection('showcase').first()),
+const [{ data: page }] = await Promise.all([
+  useAsyncData('index', () => queryCollection('index').first())
 ])
 
 const stats = useStats()
@@ -99,7 +92,6 @@ const officialModulesLitestar = computed(() => [
       class="relative"
       orientation="horizontal"
       :ui="{
-        root: 'bg-gradient-to-br from-gray-50 to-white',
         container: '!pb-20 py-24 sm:py-32 lg:py-40',
         title: 'text-5xl sm:text-6xl',
         wrapper: 'lg:min-h-[540px]'
@@ -140,7 +132,7 @@ const officialModulesLitestar = computed(() => [
         </div>
       </template>
 
-      <!-- <UPageCard
+      <UPageCard
         class="overflow-auto lg:absolute [@media(min-width:2400px)]:relative lg:-mt-16 [@media(min-width:2400px)]:mt-8 right-0 [@media(min-width:2400px)]:right-auto w-screen lg:w-[calc(50%-2rem)] [@media(min-width:2400px)]:w-full max-w-[800px] [@media(min-width:2400px)]:mx-auto rounded-none lg:rounded-l-[calc(var(--ui-radius)*4)] [@media(min-width:2400px)]:rounded-2xl -mx-4 sm:-mx-6 lg:mx-0"
         variant="subtle"
         :ui="{ container: 'sm:pt-4.5 lg:pr-0 [@media(min-width:2400px)]:px-6 w-full' }"
@@ -157,10 +149,10 @@ const officialModulesLitestar = computed(() => [
           }"
         >
           <template #content="{ item, index }">
-            <LazyMDC :value="item.content" :cache-key="`index-hero-tab-${index}`" hydrate-on-idle />
+            <LazyMDC :value="item.content" :cache-key="`index-hero-tab-${index}`" />
           </template>
         </UTabs>
-      </UPageCard> -->
+      </UPageCard>
     </UPageHero>
 
     <UPageSection
@@ -242,66 +234,6 @@ const officialModulesLitestar = computed(() => [
     </UPageSection>
 
     <UPageSection
-      :title="page.stats.title"
-      :description="page.stats.description"
-      class="relative"
-      :ui="{
-        root: 'bg-gradient-to-b border-t border-default from-muted dark:from-muted/40 to-default'
-      }"
-    >
-      <div class="flex flex-col md:flex-row gap-4">
-        <div class="md:w-1/3 flex flex-col gap-4">
-          <UPageCard class="flex-1" variant="subtle" to="https://pypi.org/project/litestar/">
-            <div class="flex items-center gap-3">
-              <div class="rounded-lg bg-default p-2 flex items-center justify-center border border-default">
-                <UIcon name="i-custom-pypi" class="size-6" />
-              </div>
-              <div class="flex flex-col">
-                <span class="font-semibold text-lg text-highlighted">
-                  {{ formatNumber(stats.monthlyDownloads) }}
-                </span>
-                <p class="text-sm">
-                  Monthly downloads
-                </p>
-              </div>
-            </div>
-          </UPageCard>
-
-          <UPageCard class="flex-1" variant="subtle" to="https://go.nuxt.com/github">
-            <div class="flex items-center gap-2">
-              <div class="rounded-lg bg-default p-2 flex items-center justify-center border border-default">
-                <UIcon name="i-simple-icons-github" class="size-6" />
-              </div>
-              <div class="flex flex-col">
-                <span class="font-semibold text-lg text-highlighted">
-                  {{ formatNumber(stats.stars) }}
-                </span>
-                <p class="text-sm">
-                  GitHub Stars
-                </p>
-              </div>
-            </div>
-          </UPageCard>
-        </div>
-
-        <div class="md:w-2/3">
-          <UPageCard class="h-full" variant="subtle" to="https://go.nuxt.com/github">
-            <div class="flex flex-col items-center justify-around h-full">
-              <span class="text-xl font-semibold">
-                {{ page.stats.community.title }}
-              </span>
-              <p class="text-muted text-center">
-                {{ page.stats.community.description }}
-              </p>
-              <UButton class="mt-4 w-fit" v-bind="page.stats.cta" />
-            </div>
-          </UPageCard>
-        </div>
-
-      </div>
-    </UPageSection>
-
-    <UPageSection
       :description="page.modules.description"
       :links="page.modules.links"
       :ui="{
@@ -334,4 +266,7 @@ const officialModulesLitestar = computed(() => [
     <IntegrationsSection />
 
     <ModelsSection />
+
+    <StatsSection :stats="stats" :stats-data="page.stats" />
+
 </template>

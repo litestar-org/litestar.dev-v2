@@ -70,6 +70,9 @@ export function createShikiHighlighter({
     } else if (lang === 'vue-html' || lang === 'vue-template') {
       lang = 'vue'
       codeToHastOptions.grammarContextCode = '<template>'
+    } else if (lang === 'python' || lang === 'py') {
+      lang = 'python'
+      codeToHastOptions.grammarContextCode = 'def my_function():'
     }
     const themesObject = { ...typeof theme === 'string' ? { default: theme } : theme || {} }
     const loadedThemes = shiki2.getLoadedThemes()
@@ -221,7 +224,7 @@ export async function parseMdc(content) {
     },
     highlight: {
       highlighter,
-      langs: ['js', 'vue'],
+      langs: ['js', 'vue', 'python'],
       theme: {
         default: 'material-theme-lighter',
         dark: 'material-theme-palenight'

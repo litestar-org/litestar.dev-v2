@@ -12,51 +12,45 @@ const { version } = useDocsVersion()
 const { tags } = useDocsTags()
 
 const latestVersion = computed(() => {
-  const versionMatch = stats.value?.version?.match(/\d+\.\d+/)
-  return versionMatch ? versionMatch[0] : undefined
+  return '3.0'
+  // const versionMatch = stats.value?.version?.match(/\d+\.\d+/)
+  // return versionMatch ? versionMatch[0] : undefined
 })
 
-const mobileDocsVersion = computed(() =>
-  route.path.startsWith('/docs')
-    ? version.value.shortTag !== 'v4'
-      ? `${version.value.shortTag} (${tags[version.value.shortTag]})`
-      : version.value.shortTag
-    : undefined
-)
 
-const mobileNavigation = computed<ContentNavigationItem[]>(() => {
-  // Show Migration and Bridge on mobile only when user is reading them
-  const docsLink = navigation.value.find(link => link.path === version.value.path)
-  if (docsLink && !route.path.startsWith(`${version.value.path}/bridge`) && !route.path.startsWith(`${version.value.path}/migration`)) {
-    docsLink.children = docsLink.children?.filter(link => ![`${version.value.path}/bridge`, `${version.value.path}/migration`].includes(link.path as string)) || []
-  }
+// const mobileNavigation = computed<ContentNavigationItem[]>(() => {
+//   // Show Migration and Bridge on mobile only when user is reading them
+//   const docsLink = navigation.value.find(link => link.path === version.value.path)
+//   if (docsLink && !route.path.startsWith(`${version.value.path}/bridge`) && !route.path.startsWith(`${version.value.path}/migration`)) {
+//     docsLink.children = docsLink.children?.filter(link => ![`${version.value.path}/bridge`, `${version.value.path}/migration`].includes(link.path as string)) || []
+//   }
 
-  return [
-    docsLink,
-    ...headerLinks.value.slice(1).map(link => ({
-      ...link,
-      title: link.label,
-      path: link.to,
-      children: link.children?.map(child => ({
-        ...child,
-        title: child.label,
-        path: child.to
-      }))
-    } as ContentNavigationItem)),
-    {
-      title: 'Design Kit',
-      icon: 'i-lucide-palette',
-      path: '/design-kit'
-    }
-  ].filter((item): item is ContentNavigationItem => Boolean(item))
-})
+//   return [
+//     docsLink,
+//     ...headerLinks.value.slice(1).map(link => ({
+//       ...link,
+//       title: link.label,
+//       path: link.to,
+//       children: link.children?.map(child => ({
+//         ...child,
+//         title: child.label,
+//         path: child.to
+//       }))
+//     } as ContentNavigationItem)),
+//     {
+//       title: 'Design Kit',
+//       icon: 'i-lucide-palette',
+//       path: '/design-kit'
+//     }
+//   ].filter((item): item is ContentNavigationItem => Boolean(item))
+// })
 
-const defaultOpen = computed(() => {
-  const topLevelWithChildren = mobileNavigation.value.filter(link => link.children?.length)
-  const currentPath = route.path
+// const defaultOpen = computed(() => {
+//   const topLevelWithChildren = mobileNavigation.value.filter(link => link.children?.length)
+//   const currentPath = route.path
 
-  return topLevelWithChildren.some(link => link.children?.some(child => currentPath.startsWith(child.path as string)))
-})
+//   return topLevelWithChildren.some(link => link.children?.some(child => currentPath.startsWith(child.path as string)))
+// })
 
 </script>
 
@@ -67,15 +61,12 @@ const defaultOpen = computed(() => {
         <!-- <NuxtImg src="/litestar.svg" class="block w-auto h-7" /> -->
         <LitestarLogo ref="logo" class="block w-auto h-6" />
 
-        <UTooltip v-if="latestVersion" :text="`Latest release: v${stats?.version || 3}`" class="hidden md:block">
+        <UTooltip v-if="latestVersion" :text="`Latest release: v${stats?.version || 3}`" class="md:block">
           <UBadge variant="subtle" size="sm" class="-mb-[2px] rounded font-semibold text-[12px]/3" color="primary">
             v{{ latestVersion }}
           </UBadge>
         </UTooltip>
 
-        <UBadge v-if="mobileDocsVersion" variant="subtle" size="sm" class="block md:hidden -mb-[2px] rounded font-semibold text-[12px]/3" :color="version.tagColor">
-          {{ mobileDocsVersion }}
-        </UBadge>
       </NuxtLink>
     </template>
 
@@ -119,13 +110,7 @@ const defaultOpen = computed(() => {
     </template>
 
     <template #body>
-      <template v-if="route.path.startsWith('/docs')">
-        <VersionSelect />
-
-        <USeparator type="dashed" class="my-6" />
-      </template>
-
-      <UContentNavigation :navigation="mobileNavigation" :default-open="defaultOpen" highlight />
+      <!-- <UContentNavigation :navigation="mobileNavigation" :default-open="defaultOpen" highlight /> -->
     </template>
   </UHeader>
 </template>

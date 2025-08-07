@@ -25,7 +25,7 @@
         <div class="flex items-start space-x-4">
           <div class="flex-shrink-0">
             <div class="w-12 h-12 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl flex items-center justify-center">
-              <UIcon :name="model.icon" class="w-7 h-7 object-contain" />
+              <UIcon :name="isDark && model.iconDark ? model.iconDark : model.icon" class="w-7 h-7 object-contain" />
             </div>
           </div>
           <div class="flex-1 min-w-0">
@@ -43,11 +43,17 @@
 </template>
 
 <script setup lang="ts">
+
+const colorMode = useColorMode()
+
+const isDark = computed(() => colorMode.value === 'dark')
+
 interface Model {
   name: string
   description: string
   icon: string
   link: string
+  iconDark?: string
 }
 
 const models: Model[] = [
@@ -79,6 +85,7 @@ const models: Model[] = [
     name: 'Msgspec',
     description: 'Fast serialization and validation library with JSON and MessagePack support.',
     icon: 'i-custom-msgspec',
+    iconDark: 'i-custom-msgspec-dark',
     link: 'https://jcristharif.com/msgspec/'
   }
 ]
