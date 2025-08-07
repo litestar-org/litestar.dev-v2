@@ -27,7 +27,7 @@ export default defineNuxtConfig({
             default: 'material-theme-lighter',
             dark: 'material-theme-palenight'
           },
-          langs: ['sql', 'diff', 'ini']
+          langs: ['sql', 'diff', 'ini', 'python', 'toml']
         }
       }
     },
@@ -46,7 +46,8 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   mdc: {
     highlight: {
-      noApiRoute: false
+      noApiRoute: false,
+      langs: ['js', 'python', 'toml'],
     }
   },
   twoslash: {

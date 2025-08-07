@@ -77,6 +77,8 @@ export function createShikiHighlighter({
     const themesObject = { ...typeof theme === 'string' ? { default: theme } : theme || {} }
     const loadedThemes = shiki2.getLoadedThemes()
     const loadedLanguages = shiki2.getLoadedLanguages()
+    console.log(loadedThemes)
+    console.log(`[@nuxtjs/mdc] Loaded languages: ${loadedLanguages.join(', ')}`)
     if (typeof lang === 'string' && !loadedLanguages.includes(lang) && !isSpecialLang(lang)) {
       if (bundledLangs[lang]) {
         await shiki2.loadLanguage(bundledLangs[lang])
@@ -224,7 +226,7 @@ export async function parseMdc(content) {
     },
     highlight: {
       highlighter,
-      langs: ['js', 'vue', 'python'],
+      langs: ['python', 'toml', 'js', 'vue'],
       theme: {
         default: 'material-theme-lighter',
         dark: 'material-theme-palenight'
