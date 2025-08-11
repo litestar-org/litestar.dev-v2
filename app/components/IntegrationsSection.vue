@@ -67,7 +67,7 @@ const integrations: Integration[] = [
     name: 'ReDoc',
     description: 'ReDoc integration.',
     repo: 'https://github.com/Redocly/redoc',
-    icon: 'i-simple-icons-redoc'
+    icon: 'i-custom-redoc'
   },
   {
     name: 'Spotlight Elements',

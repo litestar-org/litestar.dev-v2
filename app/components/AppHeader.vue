@@ -62,7 +62,7 @@ const latestVersion = computed(() => {
         <LitestarLogo ref="logo" class="block w-auto h-6" />
 
         <UTooltip v-if="latestVersion" :text="`Latest release: v${stats?.version || 3}`" class="md:block">
-          <UBadge variant="subtle" size="sm" class="-mb-[2px] rounded font-semibold text-[12px]/3" color="primary">
+          <UBadge variant="subtle" size="sm" class="mb-[2px] rounded font-semibold text-[12px]/3" color="primary">
             v{{ latestVersion }}
           </UBadge>
         </UTooltip>
