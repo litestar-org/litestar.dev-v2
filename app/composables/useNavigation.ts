@@ -13,8 +13,8 @@ function _useHeaderLinks() {
       target: '_blank',
       search: false,
     }, {
-      label: 'Modules',
-      to: '/modules',
+      label: 'Plugins',
+      to: '/plugins',
       icon: 'i-lucide-puzzle',
       search: false,
     },{
