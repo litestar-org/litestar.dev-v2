@@ -2,7 +2,7 @@
 title: Uvicorn
 description: 'Deploy your Litestar application using Uvicorn, the lightning-fast ASGI server implementation.'
 componentImg: Uvicorn
-logoIcon: 'i-logos-python'
+logoIcon: '/img/uvicorn.png'
 category: Technology
 nitroPreset: 'uvicorn'
 website: 'https://www.uvicorn.org/'

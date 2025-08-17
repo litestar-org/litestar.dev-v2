@@ -66,12 +66,21 @@ await fetchList()
               <template #leading>
                 <UIcon v-if="provider.logoIcon" :name="provider.logoIcon" class="size-10 text-black dark:text-white" />
               </template>
+              <UBadge
+                v-if="provider.featured === true"
+                class="shine absolute top-4 right-4 sm:top-6 sm:right-6"
+                variant="subtle"
+                color="success"
+                label="Recommended"
+              />
               <template #title>
                 {{ provider.title }}
               </template>
+              
               <template #description>
                 <span class="line-clamp-2">{{ provider.description }}</span>
               </template>
+              
             </UPageCard>
           </UPageGrid>
         </section>
@@ -96,8 +105,16 @@ await fetchList()
               :description="tech.description"
             >
               <template #leading>
-                <UIcon v-if="tech.logoIcon" :name="tech.logoIcon" class="size-10 text-black dark:text-white" />
+                <NuxtImg v-if="tech.logoIcon && tech.logoIcon.endsWith('.png')" :src="tech.logoIcon" class="size-10 text-black dark:text-white" />
+                <UIcon v-else-if="tech.logoIcon" :name="tech.logoIcon"   class="size-10 object-contain" alt="" />
               </template>
+              <UBadge
+                v-if="tech.featured === true"
+                class="shine absolute top-4 right-4 sm:top-6 sm:right-6"
+                variant="subtle"
+                color="success"
+                label="Recommended"
+              />
               <template #title>
                 {{ tech.title }}
               </template>

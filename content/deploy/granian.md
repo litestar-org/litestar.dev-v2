@@ -2,10 +2,11 @@
 title: Granian
 description: 'Deploy your Litestar application using Granian, a Rust HTTP server.'
 componentImg: Granian
-logoIcon: 'i-logos-rust'
+logoIcon: '/img/granian.png'
 category: Technology
 nitroPreset: 'granian'
 website: 'https://github.com/emmett-framework/granian'
+featured: true
 ---
 
 # Deploy Litestar with Granian
