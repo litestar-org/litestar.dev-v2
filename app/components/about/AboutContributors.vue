@@ -43,7 +43,7 @@ async function loadImages(usernames) {
   const size = window.devicePixelRatio === 2 ? '160px' : '80px'
   await Promise.all(usernames.map((username) => {
     const img = new Image()
-    img.src = getImage(`/gh_avatar/${username}`, { height: size, width: size, format: 'auto' }, { provider: 'ipx' })
+    img.src = getImage(`https://github.com/${username}.png`, { height: size, width: size, format: 'auto' }, { provider: 'ipx' })
 
     return new Promise((resolve) => {
       img.onload = resolve
@@ -82,7 +82,7 @@ async function nextContributors() {
         <a
           v-if="username"
           :key="username"
-          :href="`https://nuxters.nuxt.com/${username}`"
+          :href="`https://github.com/${username}`"
           target="_blank"
           class="absolute inset-0 flex transition-all"
           :style="{
@@ -91,7 +91,7 @@ async function nextContributors() {
         >
           <UTooltip :text="username" class="w-full">
             <NuxtImg
-              :src="`/gh_avatar/${username}`"
+              :src="`https://github.com/${username}.png`"
               provider="ipx"
               densities="x1 x2"
               height="80"
