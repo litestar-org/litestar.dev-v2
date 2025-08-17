@@ -13,6 +13,11 @@ function _useHeaderLinks() {
       target: '_blank',
       search: false,
     }, {
+      label: 'Tutorial',
+      icon: 'i-lucide-graduation-cap',
+      to: '/tutorial',
+      search: false,
+    }, {
       label: 'Plugins',
       to: '/plugins',
       icon: 'i-lucide-puzzle',
@@ -20,7 +25,7 @@ function _useHeaderLinks() {
     },{
       label: 'Deploy',
       to: '/deploy',
-      icon: 'i-lucide-puzzle',
+      icon: 'i-lucide-rocket',
       search: false,
     }, {
       label: 'Templates',

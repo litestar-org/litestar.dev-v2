@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import type { ButtonProps } from '@nuxt/ui-pro'
 
 definePageMeta({
   heroBackground: 'opacity-70 -z-10'
 })
 
-const { fetchList, providers } = useDeploy()
+const { fetchList, hostingProviders, deploymentTechnologies } = useDeploy()
 
 const title = 'Deploy Litestar App'
-const description = 'Discover the different ways to deploy your Litestar project on different hosting providers.'
+const description = 'Discover the different ways to deploy your Litestar project on different hosting providers and deployment technologies.'
 const links: ButtonProps[] = [
   {
     icon: 'i-lucide-rocket',
@@ -43,26 +44,69 @@ await fetchList()
 
     <UPage>
       <UPageBody>
-        <UPageGrid>
-          <UPageCard
-            v-for="(deployment, index) in providers"
-            :key="index"
-            :to="deployment.path"
-            :title="deployment.title"
-            :description="deployment.description"
-          >
-            <template #leading>
-              <!-- <NuxtImg v-if="deployment.logoSrc" :src="deployment.logoSrc" width="10" height="10" class="w-10 h-10" /> -->
-              <!-- <UIcon v-else :name="deployment.logoIcon" class="size-10 text-black dark:text-white" /> -->
-            </template>
-            <template #title>
-              {{ deployment.title }}
-            </template>
-            <template #description>
-              <span class="line-clamp-2">{{ deployment.description }}</span>
-            </template>
-          </UPageCard>
-        </UPageGrid>
+        <!-- Hosting Providers Section -->
+        <section class="mb-16">
+          <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              Hosting Providers
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400">
+              Choose from various cloud platforms and hosting services to deploy your Litestar application.
+            </p>
+          </div>
+          
+          <UPageGrid>
+            <UPageCard
+              v-for="(provider, index) in hostingProviders"
+              :key="`provider-${index}`"
+              :to="provider.path"
+              :title="provider.title"
+              :description="provider.description"
+            >
+              <template #leading>
+                <UIcon v-if="provider.logoIcon" :name="provider.logoIcon" class="size-10 text-black dark:text-white" />
+              </template>
+              <template #title>
+                {{ provider.title }}
+              </template>
+              <template #description>
+                <span class="line-clamp-2">{{ provider.description }}</span>
+              </template>
+            </UPageCard>
+          </UPageGrid>
+        </section>
+
+        <!-- Deployment Technologies Section -->
+        <section>
+          <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              Deployment Technologies
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400">
+              Select the right ASGI server or deployment technology to run your Litestar application efficiently.
+            </p>
+          </div>
+          
+          <UPageGrid>
+            <UPageCard
+              v-for="(tech, index) in deploymentTechnologies"
+              :key="`tech-${index}`"
+              :to="tech.path"
+              :title="tech.title"
+              :description="tech.description"
+            >
+              <template #leading>
+                <UIcon v-if="tech.logoIcon" :name="tech.logoIcon" class="size-10 text-black dark:text-white" />
+              </template>
+              <template #title>
+                {{ tech.title }}
+              </template>
+              <template #description>
+                <span class="line-clamp-2">{{ tech.description }}</span>
+              </template>
+            </UPageCard>
+          </UPageGrid>
+        </section>
       </UPageBody>
     </UPage>
   </UContainer>

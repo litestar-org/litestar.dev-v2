@@ -1,25 +1,32 @@
 import type { DeployCollectionItem } from '@nuxt/content'
 
 export const useDeploy = () => {
-  const providers = useState<DeployCollectionItem[]>('deploy', () => [])
+  const hostingProviders = useState<DeployCollectionItem[]>('hosting-providers', () => [])
+  const deploymentTechnologies = useState<DeployCollectionItem[]>('deployment-technologies', () => [])
 
   async function fetchList() {
-    if (providers.value.length) {
+    if (hostingProviders.value.length || deploymentTechnologies.value.length) {
       return
     }
 
     try {
-      const { data } = await useAsyncData('hosting-provider', () => queryCollection('deploy').all())
+      const { data } = await useAsyncData('deploy-content', () => queryCollection('deploy').all())
 
-      providers.value = data.value?.filter(article => article.path !== '/deploy') || []
+      const allItems = data.value?.filter(article => article.path !== '/deploy') || []
+      
+      // Separate items by category
+      hostingProviders.value = allItems.filter(item => item.category === 'Hosting' || item.category === 'hosting')
+      deploymentTechnologies.value = allItems.filter(item => item.category === 'Technology' || item.category === 'technology')
     } catch (e) {
-      providers.value = []
+      hostingProviders.value = []
+      deploymentTechnologies.value = []
       return e
     }
   }
 
   return {
-    providers,
+    hostingProviders,
+    deploymentTechnologies,
     fetchList
   }
 }
