@@ -7,9 +7,17 @@ const { resolve } = createResolver(import.meta.url)
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-
+  nitro: {
+    devProxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        prependPath: true,
+      }
+    }
+  },
   modules: [
-    '@nuxt/ui-pro',
+    '@nuxt/ui',
     '@nuxt/test-utils',
     'nuxt-content-twoslash',
     '@nuxt/image',

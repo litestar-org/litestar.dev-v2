@@ -14,10 +14,10 @@
         <div>
           <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Framework</h3>
           <ul class="space-y-2">
-            <li><NuxtLink to="/docs" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Documentation</NuxtLink></li>
-            <li><NuxtLink to="/examples" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Examples</NuxtLink></li>
-            <li><NuxtLink to="/api" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">API Reference</NuxtLink></li>
-            <li><NuxtLink to="/changelog" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Changelog</NuxtLink></li>
+            <li><NuxtLink to="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Documentation</NuxtLink></li>
+            <li><NuxtLink to="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Examples</NuxtLink></li>
+            <li><NuxtLink to="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">API Reference</NuxtLink></li>
+            <li><NuxtLink to="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Changelog</NuxtLink></li>
           </ul>
         </div>
         
@@ -36,8 +36,8 @@
           © {{ new Date().getFullYear() }} Litestar. Released under the MIT License.
         </p>
         <div class="flex items-center space-x-4 mt-4 sm:mt-0">
-          <NuxtLink to="/privacy" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Privacy</NuxtLink>
-          <NuxtLink to="/terms" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Terms</NuxtLink>
+          <NuxtLink to="#" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Privacy</NuxtLink>
+          <NuxtLink to="#" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Terms</NuxtLink>
         </div>
       </div>
     </div>

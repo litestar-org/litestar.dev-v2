@@ -1,0 +1,333 @@
+<script setup lang="ts">
+import { motion, AnimatePresence } from 'motion-v'
+import type { Plugin } from '~/types'
+import { joinURL } from 'ufo'
+
+definePageMeta({
+  heroBackground: 'opacity-50'
+})
+
+const input = useTemplateRef('input')
+const pluginsToAdd = ref<Plugin[]>([])
+const el = useTemplateRef<HTMLElement>('el')
+
+const { replaceRoute } = useFilters('plugins')
+const { fetchList, filteredPlugins, q, categories, plugins, stats, selectedSort, selectedOrder, selectedCategory, sorts } = usePlugins()
+
+
+const title = 'Litestar plugins'
+const description = 'Discover a list of Litestar plugins to enhance your application. From authentication to database integrations, find the perfect plugin to supercharge your Litestar project.'
+const site = useSiteConfig()
+
+useSeoMeta({
+  titleTemplate: '%s',
+  title,
+  description,
+  ogDescription: description,
+  ogTitle: title,
+  ogImage: joinURL(site.url, '/modules-social-card.jpg'),
+  twitterImage: joinURL(site.url, '/modules-social-card.jpg')
+})
+
+await fetchList()
+
+defineShortcuts({
+  '/': () => {
+    input.value?.inputRef?.focus()
+  }
+})
+
+const breakpoints = useBreakpoints({
+  sm: 640,
+  md: 768,
+  lg: 1024
+})
+
+const isMobile = breakpoints.smaller('sm')
+
+const ITEMS_PER_PAGE = 9
+const SCROLL_THRESHOLD = 450
+const displayedPlugins = ref<Plugin[]>([])
+const isLoading = ref(false)
+
+const { y: scrollY } = useWindowScroll()
+const { copy } = useClipboard()
+
+const loadMorePlugins = () => {
+  if (isLoading.value) return
+
+  const currentLength = displayedPlugins.value.length
+  if (currentLength >= filteredPlugins.value.length) return
+
+  isLoading.value = true
+
+  setTimeout(() => {
+    const nextItems = filteredPlugins.value.slice(
+      currentLength,
+      currentLength + ITEMS_PER_PAGE
+    )
+    displayedPlugins.value.push(...nextItems)
+    isLoading.value = false
+  }, 300)
+}
+
+const initializePlugins = () => {
+  displayedPlugins.value = filteredPlugins.value.slice(0, ITEMS_PER_PAGE * 2)
+}
+
+const debouncedLoadMore = useDebounceFn(loadMorePlugins, 50)
+
+watch(scrollY, (y) => {
+  if (window.innerHeight + y >= document.documentElement.scrollHeight - SCROLL_THRESHOLD) {
+    debouncedLoadMore()
+  }
+})
+
+watch(filteredPlugins, () => {
+  isLoading.value = false
+  displayedPlugins.value = []
+  initializePlugins()
+})
+
+const copyAllInstallCommands = () => {
+  const pluginNames = pluginsToAdd.value.map(plugin => plugin.name).join(' ')
+  const command = `uv add ${pluginNames}`
+  copy(command, {
+    title: 'Install command copied to clipboard:',
+    description: `Ready to install ${pluginsToAdd.value.length} plugin${pluginsToAdd.value.length > 1 ? 's' : ''} at once`
+  })
+}
+
+const clearAllPlugins = () => {
+  pluginsToAdd.value = []
+}
+
+initializePlugins()
+</script>
+
+<template>
+  <UContainer ref="el">
+    <!-- <LazyPluginsMarquee :plugins="plugins" /> -->
+
+    <UPageHero
+      class="z-20 relative pt-24"
+      :ui="{
+        title: 'text-4xl sm:text-7xl text-balance max-w-4xl mx-auto',
+        links: 'max-w-2xl mx-auto'
+      }"
+    >
+      <template #title>
+        Build faster with <span class="text-primary">{{ plugins.length }}+</span> Litestar Plugins
+      </template>
+
+      <template #description>
+        Discover our list of plugins to supercharge your Litestar project.<br/>Created and maintained by people from the Litestar team and community.
+      </template>
+
+      <template #links>
+        <div class="flex flex-col w-full gap-3">
+          <div class="flex flex-col sm:flex-row w-full gap-2 relative">
+            <UInput
+              ref="input"
+              :model-value="q"
+              name="q"
+              icon="i-lucide-search"
+              placeholder="Search a plugin..."
+              class="w-full"
+              size="lg"
+              autofocus
+              autocomplete="off"
+              variant="subtle"
+              @update:model-value="replaceRoute('q', $event as string)"
+            >
+              <template #trailing>
+                <UButton
+                  v-if="q"
+                  color="neutral"
+                  variant="link"
+                  size="lg"
+                  icon="i-lucide-x"
+                  @click="replaceRoute('q', '')"
+                />
+                <UKbd v-else value="/" class="hidden sm:flex" />
+              </template>
+            </UInput>
+
+            <div v-if="!isMobile" class="flex gap-2 sm:w-auto">
+              <USelectMenu
+                :model-value="selectedSort"
+                :items="sorts"
+                size="lg"
+                color="neutral"
+                class="w-auto"
+                variant="outline"
+                @update:model-value="replaceRoute('sortBy', $event)"
+              />
+
+              <UButton
+                :icon="selectedOrder.icon"
+                size="lg"
+                color="neutral"
+                variant="outline"
+                @click="replaceRoute('orderBy', selectedOrder.key === 'desc' ? 'asc' : 'desc')"
+              >
+                <span class="sr-only">Sort by {{ selectedOrder.label }}</span>
+              </UButton>
+            </div>
+          </div>
+
+          <div v-if="isMobile" class="flex gap-2">
+            <USelectMenu
+              :model-value="selectedCategory"
+              :items="categories"
+              size="lg"
+              color="neutral"
+              variant="outline"
+              class="flex-1"
+              placeholder="Select category"
+              @update:model-value="replaceRoute('category', $event)"
+            />
+            <UButton
+              v-if="selectedCategory"
+              icon="i-lucide-x"
+              size="lg"
+              color="neutral"
+              variant="outline"
+              aria-label="Clear category filter"
+              @click="replaceRoute('category', '')"
+            />
+            <USelectMenu
+              :model-value="selectedSort"
+              :items="sorts"
+              size="lg"
+              color="neutral"
+              class="w-1/3"
+              variant="outline"
+              @update:model-value="replaceRoute('sortBy', $event)"
+            />
+            <UButton
+              :icon="selectedOrder.icon"
+              size="lg"
+              color="neutral"
+              variant="outline"
+              @click="replaceRoute('orderBy', selectedOrder.key === 'desc' ? 'asc' : 'desc')"
+            />
+          </div>
+        </div>
+
+        <div class="hidden sm:flex mt-6 flex-wrap gap-1.5 justify-center">
+          <UButton
+            v-for="category in categories"
+            :key="category.key"
+            v-bind="category"
+            color="neutral"
+            variant="outline"
+            active-color="primary"
+            active-variant="subtle"
+            size="sm"
+          />
+        </div>
+      </template>
+    </UPageHero>
+
+    <UPage id="smooth" class="relative z-20">
+      <UPageBody>
+        <div class="flex items-center gap-2 mb-4 text-muted">
+          <UIcon name="i-lucide-info" class="size-4" />
+          <span class="text-xs">Shift+click to select plugins for bulk installation</span>
+        </div>
+
+        <UPageGrid v-if="filteredPlugins?.length" class="lg:grid-cols-2 xl:grid-cols-3">
+          <PluginItem
+            v-for="(plugin, index) in displayedPlugins"
+            :key="index"
+            :plugin="plugin"
+            :is-added="pluginsToAdd.includes(plugin)"
+            @add="pluginsToAdd.push(plugin)"
+            @remove="pluginsToAdd = pluginsToAdd.filter(p => p.name !== plugin.name)"
+          />
+
+          <template v-if="isLoading">
+            <div v-for="n in ITEMS_PER_PAGE" :key="n" class="flex flex-col gap-4 p-4 rounded-lg border border-default">
+              <div class="flex items-center gap-3">
+                <USkeleton class="h-8 w-8 rounded" />
+              </div>
+              <USkeleton class="h-4 w-3/4" />
+              <USkeleton class="h-4 w-full" />
+              <div class="flex gap-2">
+                <USkeleton class="h-6 w-16" />
+                <USkeleton class="h-6 w-16" />
+              </div>
+            </div>
+          </template>
+        </UPageGrid>
+
+        <EmptyCard v-else :label="`There is no module found for ${q} yet. Become the first one to create it!`">
+          <UButton
+            label="Contribute on GitHub"
+            color="neutral"
+            to="https://github.com/nuxt/modules"
+            target="_blank"
+            size="md"
+            @click="$router.replace({ query: {} })"
+          />
+          <UButton to="/docs/guide/going-further/modules" color="neutral" size="md" label="How to create a module?" />
+        </EmptyCard>
+      </UPageBody>
+
+      <AnimatePresence>
+        <motion.div
+          v-if="pluginsToAdd.length"
+          key="toolbar"
+          class="fixed z-50 bottom-0 left-0 right-0"
+          :initial="{ y: 100, opacity: 0 }"
+          :animate="{ y: 0, opacity: 1 }"
+          :exit="{ y: 100, opacity: 0 }"
+          :transition="{ type: 'spring', stiffness: 400, damping: 30 }"
+        >
+          <div layout class="flex justify-center mb-6">
+            <div class="bg-default/80 backdrop-blur-lg rounded-full p-1 border border-default dark:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] flex items-center gap-4">
+              <motion.div class="flex items-center gap-1">
+                <UTooltip text="Copy install command">
+                  <Motion
+                    :press="{
+                      scale: 0.99
+                    }"
+                  >
+                    <UButton
+                      color="primary"
+                      variant="soft"
+                      size="lg"
+                      icon="i-lucide-download"
+                      class="font-medium rounded-full"
+                      @click="copyAllInstallCommands"
+                    >
+                      Install {{ pluginsToAdd.length }} plugin{{ pluginsToAdd.length > 1 ? 's' : '' }}
+                    </UButton>
+                  </Motion>
+                </UTooltip>
+
+                <UTooltip text="Clear selection">
+                  <Motion
+                    :press="{
+                      scale: 0.99
+                    }"
+                  >
+                    <UButton
+                      color="neutral"
+                      variant="soft"
+                      size="lg"
+                      icon="i-lucide-x"
+                      class="hover:bg-error/10 hover:text-error rounded-full"
+                      @click="clearAllPlugins"
+                    />
+                  </Motion>
+                </UTooltip>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </UPage>
+  </UContainer>
+</template>

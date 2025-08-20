@@ -30,80 +30,161 @@ const tabs = computed(() => page.value?.hero.tabs.map(tab => ({
   content: tab.content
 })))
 
-const officialModulesLitestar = computed(() => [
+const officialPluginsLitestar = computed(() => [
     {
     name: 'Polyfactory',
     description: ' Simple and powerful factories for mock data generation',
     type: 'official', 
-    stats: { stars: 1262, downloads: 65200 },
+    repo: 'litestar-org/polyfactory',
+    npm: 'polyfactory',
     icon: 'nuxt.svg',
-    to: '/docs/plugins/redis'
+    github: 'litestar-org/polyfactory',
+    website: 'https://polyfactory.litestar.dev/',
+    learn_more: 'https://polyfactory.litestar.dev/',
+    category: 'testing',
+    sponsor: false,
+    compatibility: { nuxt: '^3.0.0', requires: { bridge: false } },
+    stats: { version: '2.0.0', stars: 1262, downloads: 65200, publishedAt: Date.now(), createdAt: Date.now() },
+    maintainers: [],
+    contributors: []
   },
   {
     name: 'Advanced Alchemy',
     description: 'A carefully crafted, thoroughly tested, optimized companion library for SQLAlchemy',
     type: 'official',
-    stats: { stars: 609, downloads: 89500 },
+    repo: 'litestar-org/advanced-alchemy',
+    npm: 'advanced-alchemy',
     icon: 'nuxt.svg',
-    to: '/docs/plugins/sqlalchemy'
+    github: 'litestar-org/advanced-alchemy',
+    website: 'https://advanced-alchemy.litestar.dev/',
+    learn_more: 'https://advanced-alchemy.litestar.dev/',
+    category: 'database',
+    sponsor: false,
+    compatibility: { nuxt: '^3.0.0', requires: { bridge: false } },
+    stats: { version: '0.8.0', stars: 609, downloads: 89500, publishedAt: Date.now(), createdAt: Date.now() },
+    maintainers: [],
+    contributors: []
   },
   {
     name: 'SQLSpec',
     description: 'A Query Mapper for Python',
     type: 'official', 
-    stats: { stars: 856, downloads: 65200 },
+    repo: 'litestar-org/sqlspec',
+    npm: 'sqlspec',
     icon: 'nuxt.svg',
-    to: '/docs/plugins/redis'
+    github: 'litestar-org/sqlspec',
+    website: 'https://sqlspec.litestar.dev/',
+    learn_more: 'https://sqlspec.litestar.dev/',
+    category: 'database',
+    sponsor: false,
+    compatibility: { nuxt: '^3.0.0', requires: { bridge: false } },
+    stats: { version: '1.0.0', stars: 856, downloads: 65200, publishedAt: Date.now(), createdAt: Date.now() },
+    maintainers: [],
+    contributors: []
   },
   {
     name: 'litestar-granian',
     description: 'Plugin for Granian',
     type: 'official',
-    stats: { stars: 729, downloads: 54300 },
+    repo: 'litestar-org/litestar-granian',
+    npm: 'litestar-granian',
     icon: 'nuxt.svg',
-    to: '/docs/plugins/jwt'
+    github: 'litestar-org/litestar-granian',
+    website: 'https://docs.litestar.dev/latest/usage/plugins/granian.html',
+    learn_more: 'https://docs.litestar.dev/latest/usage/plugins/granian.html',
+    category: 'server',
+    sponsor: false,
+    compatibility: { nuxt: '^3.0.0', requires: { bridge: false } },
+    stats: { version: '0.5.0', stars: 729, downloads: 54300, publishedAt: Date.now(), createdAt: Date.now() },
+    maintainers: [],
+    contributors: []
   },
   {
     name: 'litestar-vite',
     description: 'Plugin for Vite',
     type: 'official',
-    stats: { stars: 645, downloads: 78900 },
+    repo: 'litestar-org/litestar-vite',
+    npm: 'litestar-vite',
     icon: 'nuxt.svg',
-    to: '/docs/plugins/openapi'
+    github: 'litestar-org/litestar-vite',
+    website: 'https://docs.litestar.dev/latest/usage/plugins/vite.html',
+    learn_more: 'https://docs.litestar.dev/latest/usage/plugins/vite.html',
+    category: 'frontend',
+    sponsor: false,
+    compatibility: { nuxt: '^3.0.0', requires: { bridge: false } },
+    stats: { version: '0.1.0', stars: 645, downloads: 78900, publishedAt: Date.now(), createdAt: Date.now() },
+    maintainers: [],
+    contributors: []
   },
   {
     name: 'litestar-htmx',
     description: 'Plugin for HTMX',
     type: 'official',
-    stats: { stars: 423, downloads: 32100 },
+    repo: 'litestar-org/litestar-htmx',
+    npm: 'litestar-htmx',
     icon: 'nuxt.svg',
-    to: '/docs/plugins/prometheus'
+    github: 'litestar-org/litestar-htmx',
+    website: 'https://docs.litestar.dev/latest/usage/plugins/htmx.html',
+    learn_more: 'https://docs.litestar.dev/latest/usage/plugins/htmx.html',
+    category: 'frontend',
+    sponsor: false,
+    compatibility: { nuxt: '^3.0.0', requires: { bridge: false } },
+    stats: { version: '0.1.0', stars: 423, downloads: 32100, publishedAt: Date.now(), createdAt: Date.now() },
+    maintainers: [],
+    contributors: []
   },
   {
     name: 'litestar-asyncpg',
     description: 'Database connection management plugin for asyncpg',
     type: 'official',
-    stats: { stars: 381, downloads: 28700 },
+    repo: 'litestar-org/litestar-asyncpg',
+    npm: 'litestar-asyncpg',
     icon: 'nuxt.svg',
-    to: '/docs/plugins/structlog'
+    github: 'litestar-org/litestar-asyncpg',
+    website: 'https://docs.litestar.dev/latest/usage/plugins/asyncpg.html',
+    learn_more: 'https://docs.litestar.dev/latest/usage/plugins/asyncpg.html',
+    category: 'database',
+    sponsor: false,
+    compatibility: { nuxt: '^3.0.0', requires: { bridge: false } },
+    stats: { version: '0.1.0', stars: 381, downloads: 28700, publishedAt: Date.now(), createdAt: Date.now() },
+    maintainers: [],
+    contributors: []
   },
     {
     name: 'litestar-oracledb',
     description: 'Plugin for Oracle Database',
     type: 'official',
-    stats: { stars: 381, downloads: 28700 },
+    repo: 'litestar-org/litestar-oracledb',
+    npm: 'litestar-oracledb',
     icon: 'nuxt.svg',
-    to: '/docs/plugins/structlog'
+    github: 'litestar-org/litestar-oracledb',
+    website: 'https://docs.litestar.dev/latest/usage/plugins/oracledb.html',
+    learn_more: 'https://docs.litestar.dev/latest/usage/plugins/oracledb.html',
+    category: 'database',
+    sponsor: false,
+    compatibility: { nuxt: '^3.0.0', requires: { bridge: false } },
+    stats: { version: '0.1.0', stars: 381, downloads: 28700, publishedAt: Date.now(), createdAt: Date.now() },
+    maintainers: [],
+    contributors: []
   },
   {
     name: 'litestar-piccolo',
     description: 'Plugin for the Piccolo ORM',
     type: 'official',
-    stats: { stars: 381, downloads: 28700 },
+    repo: 'litestar-org/litestar-piccolo',
+    npm: 'litestar-piccolo',
     icon: 'nuxt.svg',
-    to: '/docs/plugins/structlog'
+    github: 'litestar-org/litestar-piccolo',
+    website: 'https://docs.litestar.dev/latest/usage/plugins/piccolo.html',
+    learn_more: 'https://docs.litestar.dev/latest/usage/plugins/piccolo.html',
+    category: 'database',
+    sponsor: false,
+    compatibility: { nuxt: '^3.0.0', requires: { bridge: false } },
+    stats: { version: '0.1.0', stars: 381, downloads: 28700, publishedAt: Date.now(), createdAt: Date.now() },
+    maintainers: [],
+    contributors: []
   }
-])
+].filter(Boolean))
 </script>
 
 <template>
@@ -276,14 +357,14 @@ const officialModulesLitestar = computed(() => [
       }"
     >
       <template #title>
-        <LazyMDC :value="page.modules.title" unwrap="p" cache-key="index-modules-title" hydrate-never />
+        <LazyMDC :value="page.modules.title" unwrap="p" cache-key="index-plugins-title" hydrate-never />
       </template>
       <UCarousel
         v-slot="{ item }"
         dots
         wheel-gestures
         arrows
-        :items="officialModulesLitestar"
+        :items="officialPluginsLitestar"
         class="min-w-0"
         :ui="{
           container: 'ms-0 items-stretch',
@@ -291,7 +372,7 @@ const officialModulesLitestar = computed(() => [
           arrows: 'hidden 2xl:block'
         }"
       >
-        <ModuleItem :module="item" :show-badge="false" :is-added="false" class="min-h-full" />
+        <PluginItem v-if="item" :plugin="item" :show-badge="false" :is-added="false" class="min-h-full" />
       </UCarousel>
     </UPageSection>
 

@@ -1,78 +1,82 @@
 <script setup lang="ts">
-import type { Module } from '~/types'
+import type { Plugin } from '~/types'
 
 const emit = defineEmits<{
-  add: [module: Module]
-  remove: [module: Module]
+  add: [plugin: Plugin]
+  remove: [plugin: Plugin]
 }>()
 
-const { module, showBadge = true, isAdded } = defineProps<{
-  module: Module
+const { plugin, showBadge = true, isAdded } = defineProps<{
+  plugin: Plugin
   showBadge?: boolean
   isAdded: boolean
 }>()
 
 const { copy } = useClipboard()
-const { selectedSort } = useModules()
+const { selectedSort } = usePlugins()
 const date = computed(() => {
-  if (selectedSort.value.key === 'publishedAt') {
-    return useTimeAgo(module.stats.publishedAt)
+  if (selectedSort.value.key === 'publishedAt' && plugin?.stats?.publishedAt) {
+    return useTimeAgo(plugin.stats.publishedAt)
   }
 
-  return useTimeAgo(module.stats.createdAt)
+  if (plugin?.stats?.createdAt) {
+    return useTimeAgo(plugin.stats.createdAt)
+  }
+  
+  return 'N/A'
 })
 
-function copyInstallCommand(moduleName: string) {
-  const command = `npx nuxt@latest module add ${moduleName}`
+function copyInstallCommand(pluginName: string) {
+  const command = `uv add ${pluginName}`
   copy(command, { title: 'Command copied to clipboard:', description: command })
 }
 
-function toggleModule(module: Module) {
-  console.log(module)
+function togglePlugin(plugin: Plugin) {
+  console.log(plugin)
   if (isAdded) {
-    emit('remove', module)
+    emit('remove', plugin)
   } else {
-    emit('add', module)
+    emit('add', plugin)
   }
 }
 
 function handleCardClick(event: MouseEvent) {
   if (event.shiftKey) {
     event.preventDefault()
-    toggleModule(module)
+    togglePlugin(plugin)
   }
 }
 
 const items = computed(() => [
   [
     {
-      label: isAdded ? 'Remove module' : 'Add module',
+      label: isAdded ? 'Remove plugin' : 'Add plugin',
       icon: isAdded ? 'i-lucide-minus' : 'i-lucide-plus',
-      onSelect: () => toggleModule(module)
+      onSelect: () => togglePlugin(plugin)
     },
     {
       label: 'Copy install command',
       icon: 'i-lucide-terminal',
-      onSelect: () => copyInstallCommand(module.name)
+      onSelect: () => copyInstallCommand(plugin?.name)
     }
   ],
   [
     {
       icon: 'i-lucide-book',
       label: 'Documentation',
-      to: `${module.website}?utm_source=nuxt.com&utm_medium=aside-module&utm_campaign=nuxt.com`,
+      to: plugin?.website ? `${plugin?.website}?utm_source=nuxt.com&utm_medium=aside-module&utm_campaign=nuxt.com` : '#',
       target: '_blank'
     },
     {
       label: 'View on GitHub',
       icon: 'i-lucide-github',
-      to: `https://github.com/${module.repo}`,
+      to: plugin?.repo ? `https://github.com/${plugin?.repo}` : '#',
       target: '_blank'
     },
     {
       label: 'View on pypi',
       icon: 'i-lucide-package',
-      to: `https://pypi.org/project/${module.pypi}`,
+      to: plugin?.npm ? `https://pypi.org/project/${plugin?.npm}` : '#',
       target: '_blank'
     }
   ]
@@ -82,9 +86,9 @@ const items = computed(() => [
 <template>
   <UContextMenu :items="items">
     <UPageCard
-      :to="`/modules/${module.name}`"
-      :title="module.name"
-      :description="module.description"
+      :to="`/plugins/${plugin?.name}`"
+      :title="plugin?.name"
+      :description="plugin?.description"
       class="group"
       variant="subtle"
       :ui="{
@@ -99,16 +103,16 @@ const items = computed(() => [
     >
       <template #leading>
         <UAvatar
-          :src="moduleImage(module.icon)"
-          :icon="moduleIcon(module.category)"
-          :alt="module.name"
+          :src="pluginImage(plugin?.icon)"
+          :icon="pluginIcon(plugin?.category)"
+          :alt="plugin?.name"
           size="md"
           class="rounded-md bg-transparent"
         />
       </template>
 
       <UBadge
-        v-if="showBadge && module.type === 'official'"
+        v-if="showBadge && plugin?.type === 'official'"
         class="shine absolute top-4 right-4 sm:top-6 sm:right-6"
         variant="subtle"
         color="primary"
@@ -116,7 +120,7 @@ const items = computed(() => [
       />
 
       <UBadge
-        v-if="showBadge && module.sponsor"
+        v-if="showBadge && plugin?.sponsor"
         class="shine absolute top-4 right-4 sm:top-6 sm:right-6"
         variant="subtle"
         color="important"
@@ -131,29 +135,29 @@ const items = computed(() => [
             <UTooltip text="Monthly PyPi Downloads">
               <NuxtLink
                 class="flex items-center gap-1 hover:text-highlighted"
-                :to="`https://pypi.org/project/${module.pypi}`"
+                :to="plugin?.npm ? `https://pypi.org/project/${plugin.npm}` : '#'"
                 target="_blank"
               >
                 <UIcon name="i-lucide-circle-arrow-down" class="size-4 shrink-0" />
-                <span class="text-sm font-medium whitespace-normal">{{ formatNumber(module.stats.downloads) }}</span>
+                <span class="text-sm font-medium whitespace-normal">{{ formatNumber(plugin?.stats?.downloads || 0) }}</span>
               </NuxtLink>
             </UTooltip>
 
             <UTooltip text="GitHub Stars">
               <NuxtLink
                 class="flex items-center gap-1 hover:text-highlighted"
-                :to="`https://github.com/${module.repo}`"
+                :to="plugin?.repo ? `https://github.com/${plugin?.repo}` : '#'"
                 target="_blank"
               >
                 <UIcon name="i-lucide-star" class="size-4 shrink-0" />
-                <span class="text-sm font-medium whitespace-normal">{{ formatNumber(module.stats.stars || 0) }}</span>
+                <span class="text-sm font-medium whitespace-normal">{{ formatNumber(plugin.stats?.stars || 0) }}</span>
               </NuxtLink>
             </UTooltip>
 
-            <UTooltip v-if="selectedSort.key === 'publishedAt'" :text="`Updated ${formatDateByLocale('en', module.stats.publishedAt)}`">
+            <UTooltip v-if="selectedSort.key === 'publishedAt'" :text="`Updated ${formatDateByLocale('en', plugin?.stats?.publishedAt)}`">
               <NuxtLink
                 class="flex items-center gap-1 hover:text-highlighted"
-                :to="`https://github.com/${module.repo}`"
+                :to="plugin?.repo ? `https://github.com/${plugin?.repo}` : '#'"
                 target="_blank"
               >
                 <UIcon name="i-lucide-radio" class="size-4 shrink-0" />
@@ -161,10 +165,10 @@ const items = computed(() => [
               </NuxtLink>
             </UTooltip>
 
-            <UTooltip v-if="selectedSort.key === 'createdAt'" :text="`Created ${formatDateByLocale('en', module.stats.createdAt)}`">
+            <UTooltip v-if="selectedSort.key === 'createdAt'" :text="`Created ${formatDateByLocale('en', plugin?.stats?.createdAt)}`">
               <NuxtLink
                 class="flex items-center gap-1 hover:text-highlighted"
-                :to="`https://github.com/${module.repo}`"
+                :to="plugin?.repo ? `https://github.com/${plugin?.repo}` : '#'"
                 target="_blank"
               >
                 <UIcon name="i-lucide-package" class="size-4 shrink-0" />
@@ -180,9 +184,9 @@ const items = computed(() => [
                 color="neutral"
                 size="xs"
                 variant="outline"
-                @click="copyInstallCommand(module.name)"
+                @click="copyInstallCommand(plugin?.name)"
               >
-                <span class="sr-only">Copy command to install {{ module.name }}</span>
+                <span class="sr-only">Copy command to install {{ plugin?.name }}</span>
               </UButton>
             </UTooltip>
           </div>

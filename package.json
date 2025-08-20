@@ -16,6 +16,7 @@
     "@nuxt/image": "1.11.0",
     "@nuxt/scripts": "0.11.10",
     "@nuxt/test-utils": "3.19.2",
+    "@nuxt/ui": "4.0.0-alpha.0",
     "@nuxt/ui-pro": "^3.3.2",
     "@nuxtjs/html-validator": "^2.1.0",
     "@nuxtjs/mdc": "^0.17.2",
@@ -31,10 +32,11 @@
     "sitemap": "^8.0.0",
     "tailwindcss": "^4.1.12",
     "typescript": "^5.9.2",
+    "ufo": "^1.6.1",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"
   },
-  "packageManager": "pnpm@10.5.2+sha512.da9dc28cd3ff40d0592188235ab25d3202add8a207afbedc682220e4a0029ffbff4562102b9e6e46b4e3f9e8bd53e6d05de48544b0c57d4b0179e22c76d1199b",
+  "packageManager": "pnpm@10.15.0",
   "devDependencies": {
     "@nuxt/eslint": "1.7.1",
     "@shikijs/transformers": "^3.9.2",

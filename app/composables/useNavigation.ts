@@ -15,7 +15,7 @@ function _useHeaderLinks() {
     }, {
       label: 'Tutorial',
       icon: 'i-lucide-graduation-cap',
-      to: '/tutorial',
+      to: '#',
       search: false,
     }, {
       label: 'Plugins',
@@ -187,25 +187,25 @@ const _useNavigation = () => {
       }
     }]
 
-    const loadModules = async () => {
-      const { modules, fetchList } = useModules()
-      if (!modules.value.length) {
+    const loadPlugins = async () => {
+      const { plugins, fetchList } = usePlugins()
+      if (!plugins.value.length) {
         await fetchList()
       }
 
-      modulesGroup.items = modules.value
-        .filter(module => ['name', 'npm', 'repo'].map(field => module[field as keyof typeof module]).filter(Boolean).some(value => typeof value === 'string' && value.search(searchTextRegExp(searchTerm.value)) !== -1))
-        .map(module => ({
-          id: `module-${module.name}`,
-          label: module.npm,
-          suffix: module.description,
+      pluginsGroup.items = plugins.value
+        .filter(plugin => ['name', 'npm', 'repo'].map(field => plugin[field as keyof typeof plugin]).filter(Boolean).some(value => typeof value === 'string' && value.search(searchTextRegExp(searchTerm.value)) !== -1))
+        .map(plugin => ({
+          id: `plugin-${plugin.name}`,
+          label: plugin.npm,
+          suffix: plugin.description,
           avatar: {
-            src: moduleImage(module.icon),
+            src: pluginImage(plugin.icon),
             ui: {
               root: 'rounded-none bg-transparent'
             }
           },
-          to: `/modules/${module.name}`
+          to: `/modules/${plugin.name}`
         }))
     }
 
@@ -236,7 +236,7 @@ const _useNavigation = () => {
 
     onMounted(() => {
       Promise.all([
-        loadModules(),
+        loadPlugins(),
         loadHosting()
       ]).catch(error => console.error('Error loading search results:', error))
     })
