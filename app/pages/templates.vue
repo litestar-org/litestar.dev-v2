@@ -143,7 +143,6 @@ const starterTemplates = [
     description: 'Starter with ORM, database migration and services for a Rest API',
     path: 'https://github.com/litestar-org/litestar-templates/tree/main/sqlalchemy-template',
     logoIcon: 'i-lucide-database',
-    featured: true,
     template: 'advanced-alchemy'
   },
   {

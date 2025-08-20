@@ -84,10 +84,13 @@ const latestVersion = computed(() => {
         :search-input="false"
         color="neutral"
         variant="ghost"
-        class="hidden sm:block w-16"
+        class="hidden sm:block w-24"
       >
         <template #leading>
           <UIcon :name="selectedPackageManager.icon" class="size-4" />
+        </template>
+        <template #trailing>
+          <UIcon name="i-lucide-chevron-down" class="size-4" />
         </template>
       </USelectMenu>
 

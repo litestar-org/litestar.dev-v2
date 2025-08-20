@@ -19,7 +19,7 @@ const dynamicCommand = computed(() => {
   if (!template.template) return ''
   
   if (selectedPackageManager.value.label === 'pip') {
-    return `pip install litestar && litestar create -t ${template.template}`
+    return `pipx litestar create -t ${template.template}`
   } else {
     return `uvx litestar@latest create -t ${template.template}`
   }
@@ -68,7 +68,7 @@ function copyCommand() {
           <UButton
             icon="i-lucide-github"
             color="neutral"
-            size="xs"
+            size="sm"
             variant="outline"
             :to="template.path"
             external
@@ -83,7 +83,7 @@ function copyCommand() {
           <UButton
             icon="i-lucide-terminal"
             color="neutral"
-            size="xs"
+            size="sm"
             variant="outline"
             @click.stop="copyCommand()"
           >
