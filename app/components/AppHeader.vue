@@ -8,6 +8,7 @@ const stats = useStats()
 const { copy } = useClipboard()
 const { headerLinks } = useHeaderLinks()
 const { version } = useDocsVersion()
+const { packageManagers, selectedPackageManager } = usePackageManager()
 
 const { tags } = useDocsTags()
 
@@ -76,6 +77,19 @@ const latestVersion = computed(() => {
       <UTooltip text="Search" :kbds="['meta', 'K']">
         <UContentSearchButton />
       </UTooltip>
+
+      <USelectMenu
+        v-model="selectedPackageManager"
+        :items="packageManagers"
+        :search-input="false"
+        color="neutral"
+        variant="ghost"
+        class="hidden sm:block w-16"
+      >
+        <template #leading>
+          <UIcon :name="selectedPackageManager.icon" class="size-4" />
+        </template>
+      </USelectMenu>
 
       <UColorModeButton />
 

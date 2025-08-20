@@ -11,6 +11,8 @@ const input = useTemplateRef('input')
 const pluginsToAdd = ref<Plugin[]>([])
 const el = useTemplateRef<HTMLElement>('el')
 
+const { packageManagers, selectedPackageManager } = usePackageManager()
+
 const { replaceRoute } = useFilters('plugins')
 const { fetchList, filteredPlugins, q, categories, plugins, stats, selectedSort, selectedOrder, selectedCategory, sorts } = usePlugins()
 
@@ -91,7 +93,7 @@ watch(filteredPlugins, () => {
 
 const copyAllInstallCommands = () => {
   const pluginNames = pluginsToAdd.value.map(plugin => plugin.name).join(' ')
-  const command = `uv add ${pluginNames}`
+  const command = `${selectedPackageManager.value.command} ${pluginNames}`
   copy(command, {
     title: 'Install command copied to clipboard:',
     description: `Ready to install ${pluginsToAdd.value.length} plugin${pluginsToAdd.value.length > 1 ? 's' : ''} at once`
@@ -117,7 +119,7 @@ initializePlugins()
       }"
     >
       <template #title>
-        Build faster with <span class="text-primary">{{ plugins.length }}+</span> Litestar Plugins
+        Ship faster with <span class="text-primary">{{ plugins.length }}+</span> Litestar Plugins
       </template>
 
       <template #description>
@@ -157,6 +159,7 @@ initializePlugins()
               <USelectMenu
                 :model-value="selectedSort"
                 :items="sorts"
+                :search-input=false
                 size="lg"
                 color="neutral"
                 class="w-auto"
@@ -173,45 +176,78 @@ initializePlugins()
               >
                 <span class="sr-only">Sort by {{ selectedOrder.label }}</span>
               </UButton>
+
+              <USelectMenu
+                v-model="selectedPackageManager"
+                :items="packageManagers"
+                :search-input=false
+                size="lg"
+                color="neutral"
+                variant="outline"
+                class="w-28"
+              >
+                <template #leading>
+                  <UIcon :name="selectedPackageManager.icon" class="size-4" />
+                </template>
+              </USelectMenu>
             </div>
           </div>
 
-          <div v-if="isMobile" class="flex gap-2">
-            <USelectMenu
-              :model-value="selectedCategory"
-              :items="categories"
-              size="lg"
-              color="neutral"
-              variant="outline"
-              class="flex-1"
-              placeholder="Select category"
-              @update:model-value="replaceRoute('category', $event)"
-            />
-            <UButton
-              v-if="selectedCategory"
-              icon="i-lucide-x"
-              size="lg"
-              color="neutral"
-              variant="outline"
-              aria-label="Clear category filter"
-              @click="replaceRoute('category', '')"
-            />
-            <USelectMenu
-              :model-value="selectedSort"
-              :items="sorts"
-              size="lg"
-              color="neutral"
-              class="w-1/3"
-              variant="outline"
-              @update:model-value="replaceRoute('sortBy', $event)"
-            />
-            <UButton
-              :icon="selectedOrder.icon"
-              size="lg"
-              color="neutral"
-              variant="outline"
-              @click="replaceRoute('orderBy', selectedOrder.key === 'desc' ? 'asc' : 'desc')"
-            />
+          <div v-if="isMobile" class="flex flex-col gap-2">
+            <div class="flex gap-2">
+              <USelectMenu
+                :model-value="selectedCategory"
+                :items="categories"
+                :search-input=false
+                size="lg"
+                color="neutral"
+                variant="outline"
+                class="flex-1"
+                placeholder="Select category"
+                @update:model-value="replaceRoute('category', $event)"
+              />
+              <UButton
+                v-if="selectedCategory"
+                icon="i-lucide-x"
+                size="lg"
+                color="neutral"
+                variant="outline"
+                aria-label="Clear category filter"
+                @click="replaceRoute('category', '')"
+              />
+            </div>
+            <div class="flex gap-2">
+              <USelectMenu
+                :model-value="selectedSort"
+                :items="sorts"
+                :search-input=false
+                size="lg"
+                color="neutral"
+                class="flex-1"
+                variant="outline"
+                @update:model-value="replaceRoute('sortBy', $event)"
+              />
+              <UButton
+                :icon="selectedOrder.icon"
+                size="lg"
+                color="neutral"
+                variant="outline"
+                @click="replaceRoute('orderBy', selectedOrder.key === 'desc' ? 'asc' : 'desc')"
+              />
+              <USelectMenu
+                v-model="selectedPackageManager"
+                :items="packageManagers"
+                size="lg"
+                :search-input=false
+                color="neutral"
+                variant="outline"
+                class="w-28"
+              >
+                <template #leading>
+                  <UIcon :name="selectedPackageManager.icon" class="size-4" />
+                </template>
+              </USelectMenu>
+            </div>
           </div>
         </div>
 

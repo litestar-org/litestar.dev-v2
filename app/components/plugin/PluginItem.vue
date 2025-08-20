@@ -26,8 +26,10 @@ const date = computed(() => {
   return 'N/A'
 })
 
+const { selectedPackageManager } = usePackageManager()
+
 function copyInstallCommand(pluginName: string) {
-  const command = `uv add ${pluginName}`
+  const command = `${selectedPackageManager.value.command} ${pluginName}`
   copy(command, { title: 'Command copied to clipboard:', description: command })
 }
 
