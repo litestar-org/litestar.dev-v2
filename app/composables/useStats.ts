@@ -1,19 +1,10 @@
-export interface Stats {
-  id: number
-  name: string
-  repo: string
-  description: string
-  createdAt: string
-  updatedAt: string
-  pushedAt: string
-  stars: number
-  watchers: number
-  forks: number
-  defaultBranch: string
-  version: string
-  monthlyDownloads: number
-}
+import statsData from '@/data/stats.json'
+import type { Stats } from '~/types'
 
 export const useStats = () => {
-  return useState<Stats | null>('stats', () => null)
-}
+  const stats = ref<Stats>(statsData as Stats)
+
+  return {
+    stats
+  }
+}  

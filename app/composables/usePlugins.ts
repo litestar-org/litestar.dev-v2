@@ -19,8 +19,7 @@ export const pluginImage = function (icon: string = '', _size: number = 80) {
   if (!icon) return
 
   if (/^https?:\/\//.test(icon)) return icon
-
-  return `https://raw.githubusercontent.com/nuxt/modules/main/icons/algolia.svg` //${icon}
+  return `https://raw.githubusercontent.com/litestar-org/plugins/main/icons/${icon}`
   // if (/\.svg$/.test(icon)) return `https://raw.githubuserxcontent.com/nuxt/modules/main/icons/${icon}`
 
   // return `https://ipx.nuxt.com/s_${size},f_auto/gh/nuxt/modules/main/icons/${icon}`
@@ -43,14 +42,14 @@ export const usePlugins = () => {
 
   // Data fetching
   async function fetchList() {
-    console.log(plugins.value.length)
+    // console.log(plugins.value.length)
     if (plugins.value.length) {
       return
     }
     // Import plugins from local JSON file
     const { default: pluginsData } = await import('~/data/plugins.json')
     plugins.value = pluginsData
-    console.log(plugins.value)
+    // console.log(plugins.value)
   }
 
   // Data

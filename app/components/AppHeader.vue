@@ -4,7 +4,7 @@ import type { ContentNavigationItem } from '@nuxt/content'
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation', ref([]))
 const logo = useTemplateRef('logo')
 const route = useRoute()
-const stats = useStats()
+const { stats } = useStats()
 const { copy } = useClipboard()
 const { headerLinks } = useHeaderLinks()
 const { version } = useDocsVersion()
@@ -13,9 +13,8 @@ const { packageManagers, selectedPackageManager } = usePackageManager()
 const { tags } = useDocsTags()
 
 const latestVersion = computed(() => {
-  return '3.0'
-  // const versionMatch = stats.value?.version?.match(/\d+\.\d+/)
-  // return versionMatch ? versionMatch[0] : undefined
+  const versionMatch = stats.value?.version.match(/\d+\.\d+/)
+  return versionMatch ? versionMatch[0] : undefined
 })
 
 
@@ -59,7 +58,6 @@ const latestVersion = computed(() => {
   <UHeader>
     <template #left>
       <NuxtLink to="/" class="flex gap-2 items-end" aria-label="Back to home">
-        <!-- <NuxtImg src="/litestar.svg" class="block w-auto h-7" /> -->
         <LitestarLogo ref="logo" class="block w-auto h-6" />
 
         <UTooltip v-if="latestVersion" :text="`Latest release: v${stats?.version || 3}`" class="md:block">

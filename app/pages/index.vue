@@ -22,7 +22,11 @@ const [{ data: page }] = await Promise.all([
   useAsyncData('index', () => queryCollection('index').first())
 ])
 
-const stats = useStats()
+// const { stats: Stats } = await useAsyncData('stats', async () => {
+//   const stats = await import('@/data/stats.json')
+//   return stats.default
+// })
+const { stats } = useStats()
 
 const tabs = computed(() => page.value?.hero.tabs.map(tab => ({
   label: tab.title,

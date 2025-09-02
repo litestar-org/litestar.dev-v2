@@ -6,6 +6,16 @@ const { resolve } = createResolver(import.meta.url)
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
+  runtimeConfig: {
+    public: {
+      githubUrl: 'https://github.com/litestar-org/litestar',
+      discordUrl: 'https://discord.gg/litestar',
+      pypiUrl: 'https://pypi.org/project/litestar/',
+      contributorsUrl: 'https://github.com/litestar-org/litestar/graphs/contributors',
+      appName: 'My Awesome App',
+      version: '1.0.0'
+    }
+  },
   devtools: { enabled: true },
   nitro: {
     devProxy: {
