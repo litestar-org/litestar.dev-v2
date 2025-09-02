@@ -47,16 +47,10 @@ export const usePlugins = () => {
     if (plugins.value.length) {
       return
     }
-    // _contributors = await $fetch('http://localhost:8000/contributors').then(data => data.slice(0, total * 10).map(c => c.login))
-    // console.log(_contributors)
-    plugins.value = await $fetch('http://localhost:8000/plugins')
+    // Import plugins from local JSON file
+    const { default: pluginsData } = await import('~/data/plugins.json')
+    plugins.value = pluginsData
     console.log(plugins.value)
-    // plugins.value = res
-    // const res = await $fetch<{ plugins: Plugin[], stats: Stats }>('/plugins')
-    // if (res?.plugins) {
-    //   plugins.value = res.plugins
-    //   stats.value = res.stats
-    // }
   }
 
   // Data

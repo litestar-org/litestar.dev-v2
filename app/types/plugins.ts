@@ -15,33 +15,39 @@ export interface ModuleUser {
 }
 
 export interface Plugin {
+  key: string
   name: string
   description: string
   repo: string
-  npm: string
+  pypi?: string
+  npm?: string
   icon: string
   github: string
   website: string
-  learn_more: string
+  documentation?: string
+  learn_more?: string
   category: string
   type: string
-  sponsor: boolean
+  sponsor?: boolean
   // tags: string[]
-  compatibility: { nuxt: string, requires: { bridge: boolean } }
-  stats: {
+  compatibility: { litestar?: string, nuxt?: string, requires?: { bridge: boolean } }
+  stats?: {
     version: string
     downloads: number
     stars: number
     publishedAt: number
     createdAt: number
   }
+  stars?: number
+  latest_version?: string
   maintainers: {
     name: string
     github: string
+    avatar?: string
     twitter?: string
     bluesky?: string
   }[]
-  contributors: {
+  contributors?: {
     id: number
     username: string
     contributions: number

@@ -1,0 +1,27 @@
+[
+  {
+    "key": "advanced-alchemy",
+    "name": "Advanced Alchemy",
+    "description": "SQLAlchemy companion",
+    "pypi": "advanced-alchemy",
+    "repo": "litestar-org/advanced-alchemy",
+    "github": "https://github.com/litestar-org/advanced-alchemy",
+    "website": "https://github.com/litestar-org/advanced-alchemy",
+    "documentation": "https://docs.advanced-alchemy.litestar.dev",
+    "category": "Database",
+    "type": "official",
+    "maintainers": [
+      {
+        "name": "Cody Fincher",
+        "github": "cofin",
+        "avatar": "https://https://avatars.githubusercontent.com/u/204685?v=4"
+      }
+    ],
+    "compatibility": {
+      "litestar": "^2.0.0 || >=3.0.0"
+    },
+    "icon": "advanced-alchemy.png",
+    "stars": 632,
+    "latest_version": "1.6.2"
+  }
+]

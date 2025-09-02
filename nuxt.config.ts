@@ -25,6 +25,7 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxt/scripts',
     '@vueuse/nuxt',
+    '@nuxtjs/mdc',
     'nuxt-og-image',
     'motion-v/nuxt',
   ],

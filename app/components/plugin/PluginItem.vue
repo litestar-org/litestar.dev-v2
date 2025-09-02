@@ -88,7 +88,7 @@ const items = computed(() => [
 <template>
   <UContextMenu :items="items">
     <UPageCard
-      :to="`/plugins/${plugin?.name}`"
+      :to="`/plugins/${plugin?.key}`"
       :title="plugin?.name"
       :description="plugin?.description"
       class="group"

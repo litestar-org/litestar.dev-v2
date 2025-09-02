@@ -20,10 +20,11 @@ function onIntersectionObserver([{ isIntersecting }]) {
     stopTimer()
   }
 }
-// Fetch on client-side
+// Fetch from local JSON file
 onMounted(async () => {
   if (contributors.value.length) return
-  _contributors = await $fetch('/api/contributors').then(data => data.slice(0, total * 10).map(c => c.login))
+  const contributorsData = await import('~/data/contributors.json')
+  _contributors = contributorsData.default.slice(0, total * 10).map(c => c.login)
   console.log(_contributors)
   await loadImages(_contributors.slice(0, total))
   if (!contributors.value.length && intersecting.value) {
