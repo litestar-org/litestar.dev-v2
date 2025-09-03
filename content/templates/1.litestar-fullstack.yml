@@ -1,0 +1,27 @@
+title: 'Litestar Fullstack'
+description: 'A complete fullstack web application template built with Litestar backend and modern frontend frameworks. Includes user authentication, database integration, and responsive design patterns.'
+icon: i-lucide-user
+thumbnail:
+  dark: 'https://assets.hub.nuxt.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJodHRwczovL2Rhc2hib2FyZC10ZW1wbGF0ZS5udXh0LmRldiIsImlhdCI6MTczOTQ2MzU2N30._VElt4uvLjvAMdnTLytCInOajMElzWDKbmvOaMZhZUI.jpg?theme=dark'
+  light: 'https://assets.hub.nuxt.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJodHRwczovL2Rhc2hib2FyZC10ZW1wbGF0ZS5udXh0LmRldiIsImlhdCI6MTczOTQ2MzU2N30._VElt4uvLjvAMdnTLytCInOajMElzWDKbmvOaMZhZUI.jpg?theme=light'
+features:
+  - title: Built with React
+    icon: i-lucide-layout-list
+  - title: Easily editable content via Markdown & YAML
+    icon: i-simple-icons-markdown
+  - title: Fully responsive design
+    icon: i-lucide-smartphone
+links:
+  - label: Preview
+    to: '#'
+    target: _blank
+    leadingIcon: i-logos-nuxt-icon
+    trailingIcon: i-lucide-arrow-up-right
+    color: neutral
+  - label: Repository
+    to: '#'
+    target: _blank
+    leadingIcon: i-simple-icons-github
+    trailingIcon: i-lucide-arrow-up-right
+    color: neutral
+    variant: outline

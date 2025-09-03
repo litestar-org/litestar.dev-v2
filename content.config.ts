@@ -1,5 +1,10 @@
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
 
+const TitleIconFeature = z.object({
+  title: z.string(),
+  icon: z.string()
+})
+
 const docsV3Source = {
   cwd: process.env.NUXT_PATH ?? undefined,
   repository: !process.env.NUXT_PATH ? 'https://github.com/nuxt/nuxt/tree/3.x' : undefined,
@@ -55,6 +60,7 @@ const Button = z.object({
   label: z.string(),
   icon: z.string().optional(),
   trailingIcon: z.string().optional(),
+  leadingIcon: z.string().optional(),
   to: z.string().optional(),
   color: z.enum(['primary', 'neutral', 'success', 'warning', 'error', 'info']).optional(),
   size: z.enum(['xs', 'sm', 'md', 'lg', 'xl']).optional(),
@@ -116,18 +122,13 @@ const PageHero = BaseSection.extend({
 })
 
 const Template = z.object({
-  name: z.string(),
-  slug: z.string(),
+  title: z.string(),
   description: z.string(),
-  repo: z.string().optional(),
-  demo: z.string().url(),
-  purchase: z.string().url().optional(),
-  featured: z.boolean().optional(),
-  badge: z.enum(['Premium', 'Freemium', 'Free']).optional(),
-  screenshotUrl: z.string().url().optional(),
-  screenshotOptions: z.object({
-    delay: z.number()
-  }).optional()
+  icon: z.string(),
+  thumbnail: DualModeImage,
+  images: z.array(Image).optional(),
+  features: z.array(TitleIconFeature).optional(),
+  links: z.array(Button).optional()
 })
 
 const ShowcaseItem = z.object({
@@ -140,7 +141,7 @@ const ShowcaseItem = z.object({
   }).optional()
 })
 
-const StarterCard = z.object({
+const Starter = z.object({
   title: z.string(),
   description: z.string(),
   template: z.string(),
@@ -186,13 +187,11 @@ export default defineContentConfig({
         }),
       })
     }),
-    template: defineCollection({
+    templatePage: defineCollection({
       type: 'data',
       source: 'template.yml',
       schema: z.object({
         hero: PageHero,
-        starters: z.array(StarterCard),
-        templates: PageSection,
       })
     }),
     docsv3: defineCollection({
@@ -230,7 +229,7 @@ export default defineContentConfig({
         { include: 'blog.yml' },
         { include: 'modules.yml' },
         { include: 'deploy.yml' },
-        { include: 'templates.yml' },
+        { include: 'template.yml' },
         { include: 'video-courses.yml' },
         { include: 'enterprise/sponsors.yml' },
         { include: 'enterprise/agencies.yml' },
@@ -374,6 +373,11 @@ export default defineContentConfig({
       type: 'data',
       source: 'templates/*',
       schema: Template
+    }),
+    starters: defineCollection({
+      type: 'data',
+      source: 'starters/*',
+      schema: Starter
     }),
     showcase: defineCollection({
       type: 'data',

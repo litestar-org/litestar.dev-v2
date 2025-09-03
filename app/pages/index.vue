@@ -1,5 +1,17 @@
 <script lang="ts" setup>
+import { link } from '#build/ui'
 import type { TabsItem } from '@nuxt/ui'
+
+
+definePageMeta({
+  heroBackground: '-z-10'
+})
+
+const [{ data: page }, { data: starters }, { data: templates }] = await Promise.all([
+  useAsyncData('index', () => queryCollection('index').first()),
+  useAsyncData('starters', () => queryCollection('starters').all()),
+  useAsyncData('templates', () => queryCollection('templates').all())
+])
 
 const installCommands = ref<TabsItem[]>([
   {
@@ -14,12 +26,10 @@ const installCommands = ref<TabsItem[]>([
   }
 ])
 
-definePageMeta({
-  heroBackground: '-z-10'
-})
-
-const [{ data: page }] = await Promise.all([
-  useAsyncData('index', () => queryCollection('index').first())
+// Templates tab configuration
+const templateTabs = ref<TabsItem[]>([
+  { label: 'Starter', items: starters, slot: 'starter' as const },
+  { label: 'Templates', items: templates, slot: 'templates' as const }
 ])
 
 const { stats } = useStats()
@@ -39,84 +49,11 @@ const officialPluginsLitestar = computed(() =>
   pluginsData.value?.filter(plugin => plugin.type === 'official') || []
 )
 
-// Template data organized by categories
-const starterTemplates = [
-  {
-    title: 'Litestar',
-    description: 'Starter for an API with OpenAPI documentation, validation and CRUD operations.',
-    path: 'https://github.com/litestar-org/litestar-templates/tree/main/basic-api',
-    icon: 'i-lucide-leaf',
-    framework: 'litestar',
-    links: [{ to: 'https://github.com/litestar-org/litestar-templates/tree/main/basic-api' }]
-  },
-  {
-    title: 'Minimal Litestar',
-    description: 'Starter for a minimal API.',
-    path: 'https://github.com/litestar-org/litestar-templates/tree/main/hello-world',
-    icon: 'i-lucide-globe',
-    framework: 'litestar',
-    links: [{ to: 'https://github.com/litestar-org/litestar-templates/tree/main/hello-world' }]
-  },
-  {
-    title: 'Plugin',
-    description: 'Starter for a plugin.',
-    path: 'https://github.com/litestar-org/litestar-templates/tree/main/cli-app',
-    icon: 'i-lucide-terminal',
-    framework: 'litestar',
-    links: [{ to: 'https://github.com/litestar-org/litestar-templates/tree/main/cli-app' }]
-  },
-  {
-    title: 'Advanced-Alchemy',
-    description: 'Starter with ORM, database migration and services for a Rest API.',
-    path: 'https://github.com/litestar-org/litestar-templates/tree/main/sqlalchemy-template',
-    icon: 'i-lucide-database',
-    framework: 'litestar',
-    links: [{ to: 'https://github.com/litestar-org/litestar-templates/tree/main/sqlalchemy-template' }]
-  }
-]
-
-const fullTemplates = [
-  {
-    title: 'Litestar Fullstack',
-    description: 'A complete fullstack web application template built with Litestar backend and modern frontend frameworks.',
-    icon: 'i-lucide-user',
-    framework: 'litestar',
-    links: [{ to: 'https://github.com/litestar-org/litestar-templates' }]
-  },
-  {
-    title: 'Litestar MCP',
-    description: 'An AI-powered application template using Model Context Protocol to integrate Large Language Models.',
-    icon: 'i-lucide-message-circle',
-    framework: 'litestar',
-    links: [{ to: 'https://github.com/litestar-org/litestar-templates' }]
-  },
-  {
-    title: 'Litestar SQLStack',
-    description: 'A comprehensive database-driven application template featuring Litestar with SQLSpec for type-safe database operations.',
-    icon: 'i-lucide-bar-chart-big',
-    framework: 'litestar',
-    links: [{ to: 'https://github.com/litestar-org/litestar-templates' }]
-  },
-  {
-    title: 'Litestar Inertia',
-    description: 'A modern fullstack template using Inertia.js to seamlessly connect your Litestar backend with frontend frameworks.',
-    icon: 'i-lucide-layers-3',
-    framework: 'litestar',
-    links: [{ to: 'https://github.com/litestar-org/litestar-templates' }]
-  }
-]
-
-// Templates tab configuration
-const templateTabs = ref([
-  { key: 'starter', label: 'Starter', items: starterTemplates },
-  { key: 'templates', label: 'Templates', items: fullTemplates }
-])
-
 const selectedTemplateTab = ref('starter')
-const templates = computed(() => {
-  const activeTab = templateTabs.value.find(tab => tab.key === selectedTemplateTab.value)
-  return activeTab ? activeTab.items : starterTemplates
-})
+// const templates = computed(() => {
+//   const activeTab = templateTabs.value.find(tab => tab.key === selectedTemplateTab.value)
+//   return activeTab ? activeTab.items : starters
+// })
 </script>
 
 <template>
@@ -305,90 +242,53 @@ const templates = computed(() => {
     >
       <div class="space-y-6">
         <UTabs
-          v-model="selectedTemplateTab"
-          :items="templateTabs.map(tab => ({ key: tab.key, label: tab.label }))"
+          :items="templateTabs"
           color="neutral"
           :ui="{
             list: 'bg-muted/50 p-1 rounded-lg inline-flex',
-            trigger: 'text-sm data-[state=active]:bg-background px-4 py-2'
-          }"
-        />
-        <!-- Starter Templates Carousel -->
-        <UCarousel
-          v-if="selectedTemplateTab === 'starter'"
-          v-slot="{ item }"
-          loop
-          dots
-          wheel-gestures
-          arrows
-          :contain-scroll="false"
-          :autoplay="{ delay: 5000 }"
-          :items="starterTemplates"
-          :ui="{
-            container: 'py-px',
-            viewport: 'px-px'
+            trigger: 'text-sm data-[state=active]:bg-background px-4 py-2',
+            content: 'min-h-[450px]'
           }"
         >
-          <UPageCard
-            :to="item.links?.[0]?.to"
-            :icon="item.icon"
-            :title="item.title"
-            :description="item.description"
-            target="_blank"
-            variant="subtle"
-            class="group rounded-md h-full"
+        <template #starter="{ item }">
+          <!-- Starter Templates Carousel -->
+          <UCarousel
+            v-slot="{ item }"
+            loop
+            dots
+            wheel-gestures
+            arrows
+            :contain-scroll="false"
+            :autoplay="{ delay: 5000 }"
+            :items="starters"
             :ui="{
-              container: 'p-4 h-full flex flex-col',
-              wrapper: 'flex-col items-start gap-3 flex-1',
-              leading: 'mb-0',
-              leadingIcon: 'text-primary size-6',
-              title: 'text-lg font-semibold',
-              description: 'text-sm text-muted-foreground flex-1'
-            }"
-          />
-        </UCarousel>
-
-        <!-- Full Templates Carousel -->
-        <UCarousel
-          v-else
-          v-slot="{ item }"
-          loop
-          dots
-          fade
-          wheel-gestures
-          :contain-scroll="false"
-          :autoplay="{ delay: 3000 }"
-          :items="fullTemplates"
-          :ui="{
-            container: 'py-px',
-            viewport: 'px-px'
-          }"
-        >
-          <UPageCard
-            :to="item.links?.[0]?.to"
-            :icon="item.icon"
-            :title="item.title"
-            target="_blank"
-            variant="subtle"
-            class="group rounded-md"
-            :ui="{
-              container: 'p-4 sm:p-4',
-              wrapper: 'flex-row items-center gap-1.5',
-              leading: 'mb-0',
-              leadingIcon: 'text-highlighted'
+              container: 'py-px',
+              viewport: 'px-px'
             }"
           >
-            <UColorModeImage
-              :light="`/assets/templates/${item.framework}/${item.title.toLowerCase()}-light.png`"
-              :dark="`/assets/templates/${item.framework}/${item.title.toLowerCase()}-dark.png`"
-              :alt="`Template ${item.title} screenshot`"
-              width="620"
-              height="348"
-              loading="lazy"
-              class="rounded-lg w-full border border-default aspect-video"
-            />
-          </UPageCard>
-        </UCarousel>
+            <StarterCard  :starter="item" />
+          </UCarousel>
+        </template>
+        <template #templates="{ item }">
+          <!-- Full Templates Carousel -->
+          <UCarousel
+            v-slot="{ item }"
+            loop
+            dots
+            wheel-gestures
+            arrows
+            :contain-scroll="false"
+            :autoplay="{ delay: 3000 }"
+            :items="templates"
+            :ui="{
+              container: 'py-px',
+              viewport: 'px-px'
+            }"
+          >
+            <TemplateCard :template="item" />
+          </UCarousel>
+        </template>
+        </UTabs>
       </div>
     </UPageSection>
 

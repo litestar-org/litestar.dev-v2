@@ -1,0 +1,27 @@
+title: 'Litestar SQLStack'
+description: 'A comprehensive database-driven application template featuring Litestar with SQLSpec for type-safe database operations, migrations, and an admin dashboard for data management.'
+icon: i-lucide-bar-chart-big
+thumbnail:
+  dark: 'https://assets.hub.nuxt.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJodHRwczovL2Rhc2hib2FyZC10ZW1wbGF0ZS5udXh0LmRldiIsImlhdCI6MTczOTQ2MzU2N30._VElt4uvLjvAMdnTLytCInOajMElzWDKbmvOaMZhZUI.jpg?theme=dark'
+  light: 'https://assets.hub.nuxt.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJodHRwczovL2Rhc2hib2FyZC10ZW1wbGF0ZS5udXh0LmRldiIsImlhdCI6MTczOTQ2MzU2N30._VElt4uvLjvAMdnTLytCInOajMElzWDKbmvOaMZhZUI.jpg?theme=light'
+features:
+  - title: Built with React
+    icon: i-lucide-layout-list
+  - title: Easily editable content via Markdown & YAML
+    icon: i-simple-icons-markdown
+  - title: Fully responsive design
+    icon: i-lucide-smartphone
+links:
+  - label: Preview
+    to: '#'
+    target: _blank
+    leadingIcon: i-logos-nuxt-icon
+    trailingIcon: i-lucide-arrow-up-right
+    color: neutral
+  - label: Repository
+    to: '#'
+    target: _blank
+    leadingIcon: i-simple-icons-github
+    trailingIcon: i-lucide-arrow-up-right
+    color: neutral
+    variant: outline

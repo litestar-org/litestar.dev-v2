@@ -1,6 +1,6 @@
 <template>
   <footer class="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div class="col-span-1 md:col-span-2">
           <div class="flex items-center space-x-2 mb-4">
@@ -35,10 +35,6 @@
         <p class="text-gray-500 dark:text-gray-400 text-sm">
           © {{ new Date().getFullYear() }} Litestar. Released under the MIT License.
         </p>
-        <div class="flex items-center space-x-4 mt-4 sm:mt-0">
-          <NuxtLink to="#" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Privacy</NuxtLink>
-          <NuxtLink to="#" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm">Terms</NuxtLink>
-        </div>
       </div>
     </div>
   </footer>

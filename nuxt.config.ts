@@ -12,8 +12,6 @@ export default defineNuxtConfig({
       discordUrl: 'https://discord.gg/litestar',
       pypiUrl: 'https://pypi.org/project/litestar/',
       contributorsUrl: 'https://github.com/litestar-org/litestar/graphs/contributors',
-      appName: 'My Awesome App',
-      version: '1.0.0'
     }
   },
   devtools: { enabled: true },
