@@ -22,10 +22,6 @@ const [{ data: page }] = await Promise.all([
   useAsyncData('index', () => queryCollection('index').first())
 ])
 
-// const { stats: Stats } = await useAsyncData('stats', async () => {
-//   const stats = await import('@/data/stats.json')
-//   return stats.default
-// })
 const { stats } = useStats()
 
 const tabs = computed(() => page.value?.hero.tabs.map(tab => ({
@@ -42,6 +38,85 @@ const { data: pluginsData } = await useAsyncData('plugins', async () => {
 const officialPluginsLitestar = computed(() => 
   pluginsData.value?.filter(plugin => plugin.type === 'official') || []
 )
+
+// Template data organized by categories
+const starterTemplates = [
+  {
+    title: 'Litestar',
+    description: 'Starter for an API with OpenAPI documentation, validation and CRUD operations.',
+    path: 'https://github.com/litestar-org/litestar-templates/tree/main/basic-api',
+    icon: 'i-lucide-leaf',
+    framework: 'litestar',
+    links: [{ to: 'https://github.com/litestar-org/litestar-templates/tree/main/basic-api' }]
+  },
+  {
+    title: 'Minimal Litestar',
+    description: 'Starter for a minimal API.',
+    path: 'https://github.com/litestar-org/litestar-templates/tree/main/hello-world',
+    icon: 'i-lucide-globe',
+    framework: 'litestar',
+    links: [{ to: 'https://github.com/litestar-org/litestar-templates/tree/main/hello-world' }]
+  },
+  {
+    title: 'Plugin',
+    description: 'Starter for a plugin.',
+    path: 'https://github.com/litestar-org/litestar-templates/tree/main/cli-app',
+    icon: 'i-lucide-terminal',
+    framework: 'litestar',
+    links: [{ to: 'https://github.com/litestar-org/litestar-templates/tree/main/cli-app' }]
+  },
+  {
+    title: 'Advanced-Alchemy',
+    description: 'Starter with ORM, database migration and services for a Rest API.',
+    path: 'https://github.com/litestar-org/litestar-templates/tree/main/sqlalchemy-template',
+    icon: 'i-lucide-database',
+    framework: 'litestar',
+    links: [{ to: 'https://github.com/litestar-org/litestar-templates/tree/main/sqlalchemy-template' }]
+  }
+]
+
+const fullTemplates = [
+  {
+    title: 'Litestar Fullstack',
+    description: 'A complete fullstack web application template built with Litestar backend and modern frontend frameworks.',
+    icon: 'i-lucide-user',
+    framework: 'litestar',
+    links: [{ to: 'https://github.com/litestar-org/litestar-templates' }]
+  },
+  {
+    title: 'Litestar MCP',
+    description: 'An AI-powered application template using Model Context Protocol to integrate Large Language Models.',
+    icon: 'i-lucide-message-circle',
+    framework: 'litestar',
+    links: [{ to: 'https://github.com/litestar-org/litestar-templates' }]
+  },
+  {
+    title: 'Litestar SQLStack',
+    description: 'A comprehensive database-driven application template featuring Litestar with SQLSpec for type-safe database operations.',
+    icon: 'i-lucide-bar-chart-big',
+    framework: 'litestar',
+    links: [{ to: 'https://github.com/litestar-org/litestar-templates' }]
+  },
+  {
+    title: 'Litestar Inertia',
+    description: 'A modern fullstack template using Inertia.js to seamlessly connect your Litestar backend with frontend frameworks.',
+    icon: 'i-lucide-layers-3',
+    framework: 'litestar',
+    links: [{ to: 'https://github.com/litestar-org/litestar-templates' }]
+  }
+]
+
+// Templates tab configuration
+const templateTabs = ref([
+  { key: 'starter', label: 'Starter', items: starterTemplates },
+  { key: 'templates', label: 'Templates', items: fullTemplates }
+])
+
+const selectedTemplateTab = ref('starter')
+const templates = computed(() => {
+  const activeTab = templateTabs.value.find(tab => tab.key === selectedTemplateTab.value)
+  return activeTab ? activeTab.items : starterTemplates
+})
 </script>
 
 <template>
@@ -124,6 +199,8 @@ const officialPluginsLitestar = computed(() =>
         </UTabs>
       </UPageCard>
     </UPageHero>
+    
+    <USeparator />
 
     <UPageSection
       :title="page?.features.title"
@@ -131,7 +208,7 @@ const officialPluginsLitestar = computed(() =>
       :ui="{
         title: 'text-center',
         description: 'text-center',
-        root: 'bg-gradient-to-b border-t border-default from-muted dark:from-muted/40 to-default',
+        root: 'bg-gradient-to-b from-muted dark:from-muted/40 to-default',
         features: 'xl:grid-cols-4 lg:gap-10'
       }"
     >
@@ -170,47 +247,28 @@ const officialPluginsLitestar = computed(() =>
       </template>
     </UPageSection>
 
+    <USeparator />
+
     <UPageSection
-      :ui="{
-        root: 'bg-gradient-to-b border-t border-default from-muted dark:from-muted/40 to-default'
-      }"
+      :title="page.component_customization.title"
+      :features="page.component_customization.features"
+      :links="page.component_customization.links"
+      orientation="horizontal"
     >
-      <template #title>
-        <LazyMDC :value="page.foundation.title" unwrap="p" cache-key="index-foundation-title" hydrate-never />
-      </template>
       <template #description>
-        <LazyMDC :value="page.foundation.description" unwrap="p" cache-key="index-foundation-description" hydrate-never />
+        <MDC :value="page.component_customization.description" cache-key="index-component-customization-description" />
       </template>
 
-      <div class="grid grid-cols-1 sm:grid-cols-3">
-        <template v-for="(item, index) in page?.foundation.items"
-          :key="item.title">
-          <UPageCard
-            :title="item.title"
-            :description="item.description"
-            :to="item.link.to"
-            class="h-full"
-            :ui="{
-              root: `${item.gradient} ring-0 border border-default ${index === 0 ? 'max-sm:rounded-t-lg max-sm:rounded-b-none sm:rounded-s-lg sm:rounded-e-none sm:border-r-0 max-sm:border-b-0' : index === page?.foundation.items.length - 1 ? 'max-sm:rounded-t-none max-sm:rounded-b-lg sm:rounded-s-none sm:rounded-e-lg sm:border-l-0 max-sm:border-t-0' : 'rounded-none max-sm:border-y-0'}`,
-              title: 'text-lg font-semibold'
-            }"
-          >
-            <template #leading>
-              <UIcon :name="item.logo" class="size-6" />
-            </template>
-          </UPageCard>
-        </template>
-      </div>
+      <MDC :value="page.component_customization.code" cache-key="index-component-customization-code" />
     </UPageSection>
+
+    <USeparator />
 
     <UPageSection
       :description="page.modules.description"
       :links="page.modules.links"
       :ui="{
-        root: 'bg-gradient-to-b border-t border-default from-muted dark:from-muted/40 to-default',
-        title: 'text-left',
-        description: 'text-left',
-        links: 'justify-start'
+        root: 'bg-gradient-to-b from-muted dark:from-muted/40 to-default',
       }"
     >
       <template #title>
@@ -232,10 +290,117 @@ const officialPluginsLitestar = computed(() =>
         <PluginItem v-if="item" :plugin="item" :show-badge="false" :is-added="false" class="min-h-full" />
       </UCarousel>
     </UPageSection>
+    
+    <USeparator />
+
+    <UPageSection
+      :title="page.templates.title"
+      :description="page.templates.description"
+      :links="page.templates.links"
+      :features="page.templates.features"
+      orientation="horizontal"
+      :ui="{
+        root: 'bg-gradient-to-b from-muted dark:from-muted/40 to-default',
+      }"
+    >
+      <div class="space-y-6">
+        <UTabs
+          v-model="selectedTemplateTab"
+          :items="templateTabs.map(tab => ({ key: tab.key, label: tab.label }))"
+          color="neutral"
+          :ui="{
+            list: 'bg-muted/50 p-1 rounded-lg inline-flex',
+            trigger: 'text-sm data-[state=active]:bg-background px-4 py-2'
+          }"
+        />
+        <!-- Starter Templates Carousel -->
+        <UCarousel
+          v-if="selectedTemplateTab === 'starter'"
+          v-slot="{ item }"
+          loop
+          dots
+          wheel-gestures
+          arrows
+          :contain-scroll="false"
+          :autoplay="{ delay: 5000 }"
+          :items="starterTemplates"
+          :ui="{
+            container: 'py-px',
+            viewport: 'px-px'
+          }"
+        >
+          <UPageCard
+            :to="item.links?.[0]?.to"
+            :icon="item.icon"
+            :title="item.title"
+            :description="item.description"
+            target="_blank"
+            variant="subtle"
+            class="group rounded-md h-full"
+            :ui="{
+              container: 'p-4 h-full flex flex-col',
+              wrapper: 'flex-col items-start gap-3 flex-1',
+              leading: 'mb-0',
+              leadingIcon: 'text-primary size-6',
+              title: 'text-lg font-semibold',
+              description: 'text-sm text-muted-foreground flex-1'
+            }"
+          />
+        </UCarousel>
+
+        <!-- Full Templates Carousel -->
+        <UCarousel
+          v-else
+          v-slot="{ item }"
+          loop
+          dots
+          fade
+          wheel-gestures
+          :contain-scroll="false"
+          :autoplay="{ delay: 3000 }"
+          :items="fullTemplates"
+          :ui="{
+            container: 'py-px',
+            viewport: 'px-px'
+          }"
+        >
+          <UPageCard
+            :to="item.links?.[0]?.to"
+            :icon="item.icon"
+            :title="item.title"
+            target="_blank"
+            variant="subtle"
+            class="group rounded-md"
+            :ui="{
+              container: 'p-4 sm:p-4',
+              wrapper: 'flex-row items-center gap-1.5',
+              leading: 'mb-0',
+              leadingIcon: 'text-highlighted'
+            }"
+          >
+            <UColorModeImage
+              :light="`/assets/templates/${item.framework}/${item.title.toLowerCase()}-light.png`"
+              :dark="`/assets/templates/${item.framework}/${item.title.toLowerCase()}-dark.png`"
+              :alt="`Template ${item.title} screenshot`"
+              width="620"
+              height="348"
+              loading="lazy"
+              class="rounded-lg w-full border border-default aspect-video"
+            />
+          </UPageCard>
+        </UCarousel>
+      </div>
+    </UPageSection>
+
+    <USeparator />
 
     <IntegrationsSection />
 
+    <USeparator />
+
     <ModelsSection />
+
+    <USeparator />
 
     <StatsSection :stats="stats" :stats-data="page.stats" />
   </div>

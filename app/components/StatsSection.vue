@@ -4,7 +4,7 @@
     :description="statsData.description"
     class="relative"
     :ui="{
-      root: 'bg-gradient-to-b border-t border-default from-muted dark:from-muted/40 to-default'
+      root: 'bg-gradient-to-b from-muted dark:from-muted/40 to-default'
     }"
   >
     <div class="flex flex-col md:flex-row gap-4">

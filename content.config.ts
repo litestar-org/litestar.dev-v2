@@ -78,10 +78,6 @@ const Author = z.object({
   avatar: Image.optional()
 })
 
-const Testimonial = z.object({
-  quote: z.string(),
-  author: Author
-})
 
 const PageFeature = z.object({
   title: z.string(),
@@ -144,6 +140,15 @@ const ShowcaseItem = z.object({
   }).optional()
 })
 
+const StarterCard = z.object({
+  title: z.string(),
+  description: z.string(),
+  template: z.string(),
+  icon: z.string().editor({ input: 'icon' }),
+  github: z.string(),
+  featured: z.boolean().optional()
+})
+
 export default defineContentConfig({
   collections: {
     index: defineCollection({
@@ -167,33 +172,27 @@ export default defineContentConfig({
           companies: z.array(DualModeImage)
         }),
         features: PageSection,
-        foundation: PageSection.extend({
-          items: z.array(z.object({
-            id: z.string(),
-            title: z.string(),
-            description: z.string(),
-            logo: z.string(),
-            color: z.string(),
-            gradient: z.string(),
-            link: Link
-          }))
+        component_customization: PageSection.extend({
+          code: z.string()
         }),
+        templates: PageSection,
         modules: PageSection,
-        testimonial: Testimonial,
         deploy: PageSection,
-        contributors: PageSection,
         stats: PageSection.extend({
           community: BaseSection,
           x: z.number(),
           discord: z.string(),
           cta: Button
         }),
-        support: PageSection.extend({
-          companies: z.array(Image.pick({ src: true, alt: true }))
-        }),
-        sponsors: PageSection.extend({
-          cta: Button
-        })
+      })
+    }),
+    template: defineCollection({
+      type: 'data',
+      source: 'template.yml',
+      schema: z.object({
+        hero: PageHero,
+        starters: z.array(StarterCard),
+        templates: PageSection,
       })
     }),
     docsv3: defineCollection({

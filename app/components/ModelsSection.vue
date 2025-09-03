@@ -3,7 +3,7 @@
     title="Work with any Python data model"
     description="Litestar supports all popular Python data modeling libraries out of the box. Choose your favorite or mix and match based on your needs."
     :ui="{
-      root: 'bg-gradient-to-b border-t border-default from-muted dark:from-muted/40 to-default',
+      root: 'bg-gradient-to-b from-muted dark:from-muted/40 to-default',
       title: 'text-left',
       description: 'text-left text-lg text-muted-foreground max-w-3xl'
     }"

@@ -1,0 +1,41 @@
+hero:
+  title: Litestar Starter & Templates
+  description: Kickstart your Litestar project with pre-built templates featuring common patterns, integrations, and best practices.
+  links:
+    - icon: 'i-lucide-github'
+      label: 'Browse Templates'
+      to: 'https://github.com/litestar-org/litestar-templates'
+      color: 'neutral'
+      size: 'md'
+starters:
+  - title: Litestar
+    description: Starter for an API with OpenAPI documentation, validation and CRUD operations.
+    github: https://github.com/litestar-org/litestar-templates/tree/main/basic-api
+    icon: i-lucide-leaf
+    featured: true
+    template: 'api'
+  - title: Minimal Litestar
+    description: Starter for a minimal API.
+    github: https://github.com/litestar-org/litestar-templates/tree/main/hello-world
+    icon: i-lucide-globe
+    template: 'minimal'
+  - title: Plugin
+    description: Starter for a plugin.
+    github: https://github.com/litestar-org/litestar-templates/tree/main/cli-app
+    icon: i-lucide-terminal
+    template: 'plugin'
+  - title: Middleware
+    description: Starter for a middleware.
+    github: https://github.com/litestar-org/litestar-templates/tree/main/middleware
+    icon: i-lucide-layers
+    template: 'middleware'
+  - title: Advanced-Alchemy (SQLAlchemy + Alembic)
+    description: Starter with ORM, database migration and services for a Rest API
+    github: https://github.com/litestar-org/litestar-templates/tree/main/sqlalchemy-template
+    icon: i-lucide-database
+    template: 'advanced-alchemy'
+  - title: JWT Authentication
+    description: Complete authentication system with JWT tokens, user management, and protected routes.
+    github: https://github.com/litestar-org/litestar-templates/tree/main/jwt-auth
+    icon: i-lucide-shield-check
+    template: 'jwt-auth'

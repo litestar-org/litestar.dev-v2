@@ -9,7 +9,7 @@ interface Template {
 }
 
 const { template } = defineProps<{
-  template: Template
+  template: StarterCard
 }>()
 
 const { copy } = useClipboard()
@@ -34,7 +34,6 @@ function copyCommand() {
 
 <template>
   <UPageCard
-    :to="template.path"
     :title="template.title"
     :description="template.description"
     external

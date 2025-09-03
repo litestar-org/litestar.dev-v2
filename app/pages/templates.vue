@@ -4,29 +4,25 @@ definePageMeta({
   heroBackground: 'opacity-70 -z-10'
 })
 
-const title = 'Litestar Starter & Templates'
-const description = 'Kickstart your Litestar project with pre-built templates featuring common patterns, integrations, and best practices.'
-const links = [
-  {
-    icon: 'i-lucide-github',
-    label: 'Browse Templates',
-    to: 'https://github.com/litestar-org/litestar-templates',
-    color: 'neutral',
-    size: 'md'
-  }
-]
+const [{ data: templateData }] = await Promise.all([
+  useAsyncData('template', () => queryCollection('template').first())
+])
+
+const title = templateData?.hero.title
+const description = templateData?.hero.description
+
 
 useSeoMeta({
   titleTemplate: '%s',
-  title,
-  description,
+  title: title,
+  description: description,
   ogDescription: description,
   ogTitle: title
 })
 
 defineOgImageComponent('Docs', {
   title: 'Litestar Templates',
-  description
+  description: templateData?.hero.description
 })
 
 // Templates data
@@ -107,61 +103,61 @@ const page = {
   ]
 }
 
-// Template data organized by categories
-const starterTemplates = [
-  {
-    title: 'Litestar',
-    description: 'Starter for an API with OpenAPI documentation, validation and CRUD operations.',
-    path: 'https://github.com/litestar-org/litestar-templates/tree/main/basic-api',
-    logoIcon: 'i-lucide-leaf',
-    featured: true,
-    template: 'api'
-  },
-  {
-    title: 'Minimal Litestar',
-    description: 'Starter for a minimal API.',
-    path: 'https://github.com/litestar-org/litestar-templates/tree/main/hello-world',
-    logoIcon: 'i-lucide-globe',
-    template: 'minimal'
-  },
-  {
-    title: 'Plugin',
-    description: 'Starter for a plugin.',
-    path: 'https://github.com/litestar-org/litestar-templates/tree/main/cli-app',
-    logoIcon: 'i-lucide-terminal',
-    template: 'plugin'
-  },
-  {
-    title: 'Middleware',
-    description: 'Starter for a middleware.',
-    path: 'https://github.com/litestar-org/litestar-templates/tree/main/middleware',
-    logoIcon: 'i-lucide-layers',
-    template: 'middleware'
-  },
-  {
-    title: 'Advanced-Alchemy (SQLAlchemy + Alembic)',
-    description: 'Starter with ORM, database migration and services for a Rest API',
-    path: 'https://github.com/litestar-org/litestar-templates/tree/main/sqlalchemy-template',
-    logoIcon: 'i-lucide-database',
-    template: 'advanced-alchemy'
-  },
-  {
-    title: 'JWT Authentication',
-    description: 'Complete authentication system with JWT tokens, user management, and protected routes.',
-    path: 'https://github.com/litestar-org/litestar-templates/tree/main/jwt-auth',
-    logoIcon: 'i-lucide-shield-check',
-    template: 'jwt-auth'
-  }
-]
+// // Template data organized by categories
+// const starterTemplates = [
+//   {
+//     title: 'Litestar',
+//     description: 'Starter for an API with OpenAPI documentation, validation and CRUD operations.',
+//     path: 'https://github.com/litestar-org/litestar-templates/tree/main/basic-api',
+//     logoIcon: 'i-lucide-leaf',
+//     featured: true,
+//     template: 'api'
+//   },
+//   {
+//     title: 'Minimal Litestar',
+//     description: 'Starter for a minimal API.',
+//     path: 'https://github.com/litestar-org/litestar-templates/tree/main/hello-world',
+//     logoIcon: 'i-lucide-globe',
+//     template: 'minimal'
+//   },
+//   {
+//     title: 'Plugin',
+//     description: 'Starter for a plugin.',
+//     path: 'https://github.com/litestar-org/litestar-templates/tree/main/cli-app',
+//     logoIcon: 'i-lucide-terminal',
+//     template: 'plugin'
+//   },
+//   {
+//     title: 'Middleware',
+//     description: 'Starter for a middleware.',
+//     path: 'https://github.com/litestar-org/litestar-templates/tree/main/middleware',
+//     logoIcon: 'i-lucide-layers',
+//     template: 'middleware'
+//   },
+//   {
+//     title: 'Advanced-Alchemy (SQLAlchemy + Alembic)',
+//     description: 'Starter with ORM, database migration and services for a Rest API',
+//     path: 'https://github.com/litestar-org/litestar-templates/tree/main/sqlalchemy-template',
+//     logoIcon: 'i-lucide-database',
+//     template: 'advanced-alchemy'
+//   },
+//   {
+//     title: 'JWT Authentication',
+//     description: 'Complete authentication system with JWT tokens, user management, and protected routes.',
+//     path: 'https://github.com/litestar-org/litestar-templates/tree/main/jwt-auth',
+//     logoIcon: 'i-lucide-shield-check',
+//     template: 'jwt-auth'
+//   }
+// ]
 
 </script>
 
 <template>
   <UContainer>
     <UPageHero
-      :title="title"
-      :description="description"
-      :links="links"
+      :title="templateData?.hero.title"
+      :description="templateData?.hero.description"
+      :links="templateData?.hero.links"
     >
     </UPageHero>
 
@@ -178,7 +174,7 @@ const starterTemplates = [
     >
     <UPageGrid>
         <TemplateCard
-          v-for="(template, index) in starterTemplates"
+          v-for="(template, index) in templateData?.starters"
           :key="`starter-${index}`"
           :template="template"
         />

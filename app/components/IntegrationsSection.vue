@@ -3,7 +3,7 @@
     title="Unlock synergy, seamless integrations with Litestar"
     description="Explore Litestar seamless integrations with other tools and platforms, enhancing productivity and workflow efficiency."
     :ui="{
-      root: 'bg-gradient-to-b border-t border-default from-muted dark:from-muted/40 to-default',
+      root: 'bg-gradient-to-b from-muted dark:from-muted/40 to-default',
       title: 'text-left',
       description: 'text-left text-lg text-muted-foreground max-w-3xl'
     }"
