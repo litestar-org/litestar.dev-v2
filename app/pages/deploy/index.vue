@@ -13,7 +13,7 @@ const links: ButtonProps[] = [
   {
     icon: 'i-lucide-rocket',
     label: 'Deployment Guide',
-    to: '/docs/getting-started/deployment',
+    to: '#',
     color: 'neutral',
     size: 'md'
   }

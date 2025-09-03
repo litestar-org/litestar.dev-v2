@@ -5,6 +5,15 @@ const { resolve } = createResolver(import.meta.url)
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  nitro: {
+    prerender: {
+      concurrency: 1,
+      crawlLinks: true,
+      routes: ['/'],
+      ignore: ['/plugins/advanced-alchemy'],
+    }
+  },
+  logLevel: 'verbose',  // Add this line
   compatibilityDate: '2025-07-15',
   runtimeConfig: {
     public: {
@@ -14,16 +23,7 @@ export default defineNuxtConfig({
       contributorsUrl: 'https://github.com/litestar-org/litestar/graphs/contributors',
     }
   },
-  devtools: { enabled: true },
-  nitro: {
-    devProxy: {
-      '/api': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
-        prependPath: true,
-      }
-    }
-  },
+  devtools: { enabled: false },
   modules: [
     '@nuxt/ui',
     '@nuxt/test-utils',
@@ -38,20 +38,33 @@ export default defineNuxtConfig({
     'motion-v/nuxt',
   ],
   app: {
+    baseURL: '/',
     pageTransition: false,
     layoutTransition: false
   },
   css: ['~/assets/css/main.css'],
   content: {
-    // experimental: { nativeSqlite: true },
+    experimental: { sqliteConnector: 'better-sqlite3' },
     build: {
       markdown: {
+        remarkPlugins: {
+          'remark-emoji': {
+
+          },
+          // Add remark-gfm
+          'remark-gfm': {
+
+          },  
+          'remark-rehype': {
+            // Options
+          },
+        },
         highlight: {
           theme: {
             default: 'material-theme-lighter',
             dark: 'material-theme-palenight'
           },
-          langs: ['sql', 'diff', 'ini', 'python', 'toml']
+          langs: ['sql', 'diff', 'ini', 'python', 'toml','shell']
         }
       }
     },
@@ -59,7 +72,7 @@ export default defineNuxtConfig({
   mdc: {
     highlight: {
       noApiRoute: false,
-      // langs: ['js', 'python', 'toml'],
+      langs: ['js', 'python', 'toml','shell'],
     }
   },
   hooks: {

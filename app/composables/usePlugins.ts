@@ -19,7 +19,8 @@ export const pluginImage = function (icon: string = '', _size: number = 80) {
   if (!icon) return
 
   if (/^https?:\/\//.test(icon)) return icon
-  return `https://raw.githubusercontent.com/litestar-org/plugins/main/icons/${icon}`
+  return 'https://fr.wikipedia.org/static/images/icons/wikipedia.png'
+  // return `https://raw.githubusercontent.com/litestar-org/plugins/main/icons/${icon}`
   // if (/\.svg$/.test(icon)) return `https://raw.githubuserxcontent.com/nuxt/modules/main/icons/${icon}`
 
   // return `https://ipx.nuxt.com/s_${size},f_auto/gh/nuxt/modules/main/icons/${icon}`

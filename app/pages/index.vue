@@ -91,7 +91,7 @@ const selectedTemplateTab = ref('starter')
       <template #links>
         <div class="flex flex-col gap-4">
           <div class="flex items-center flex-wrap gap-2">
-            <UButton to="/docs/getting-started/installation" size="xl" trailing-icon="i-lucide-arrow-right">
+            <UButton to="https://docs.litestar.dev/" size="xl" trailing-icon="i-lucide-arrow-right">
               Get started
             </UButton>
             <UButton to="https://github.com/litestar-org/litestar" target="_blank" size="xl" color="neutral" variant="subtle" leading-icon="i-simple-icons-github">
@@ -187,16 +187,16 @@ const selectedTemplateTab = ref('starter')
     <USeparator />
 
     <UPageSection
-      :title="page.component_customization.title"
-      :features="page.component_customization.features"
-      :links="page.component_customization.links"
+      :title="page.scale.title"
+      :features="page.scale.features"
+      :links="page.scale.links"
       orientation="horizontal"
     >
       <template #description>
-        <MDC :value="page.component_customization.description" cache-key="index-component-customization-description" />
+        <MDC :value="page.scale.description" cache-key="index-component-customization-description" />
       </template>
 
-      <MDC :value="page.component_customization.code" cache-key="index-component-customization-code" />
+      <MDC :value="page.scale.code" cache-key="index-component-customization-code" />
     </UPageSection>
 
     <USeparator />

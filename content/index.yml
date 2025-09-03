@@ -1,7 +1,7 @@
 hero:
   cta:
-    label: Litestar v3 is out
-    to: /blog/v3-18
+    label: New Litestar website
+    to: /blog/new-website
     icon: i-lucide-arrow-right
   tabs:
     - title: Minimal
@@ -273,14 +273,14 @@ features:
   cta:
     title: 'Explore Litestar now'
     label: Start reading docs
-    to: /docs
+    to: https://docs.litestar.dev/
     icon: i-lucide-arrow-right
-component_customization:
+scale:
   title: Built to scale
   description: Litestar leverages proven open source technologies to deliver exceptional performance and developer experience.
   links:
     - label: Explore documentation
-      to: /docs/getting-started/theme#customize-theme
+      to: https://docs.litestar.dev/
       variant: outline
       color: neutral
       trailingIcon: i-lucide-arrow-right
@@ -360,8 +360,8 @@ modules:
   title: Extend Litestar with modules
   description: Litestar has a rich module ecosystem, with both official and community-driven modules. This accelerates development by providing ready-to-use solutions for common needs.
   links:
-    - label: Explore all modules
-      to: /modules
+    - label: Explore all plugins
+      to: /plugins
       icon: i-lucide-arrow-right
       color: neutral
       trailing: true

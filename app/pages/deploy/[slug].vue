@@ -51,18 +51,10 @@ if (provider.value?.website) {
     target: '_blank'
   })
 }
-if (provider.value?.nitroPreset) {
-  links.push({
-    icon: 'i-lucide-zap',
-    label: 'Nitro Preset',
-    to: `https://nitro.unjs.io/deploy/providers/${provider.value?.nitroPreset}`,
-    target: '_blank'
-  })
-}
 links.push({
   icon: 'i-lucide-pen',
   label: 'Edit this page',
-  to: `https://github.com/nuxt/nuxt.com/edit/main/content/3.deploy/${route.params.slug}.md`,
+  to: `https://github.com/litestar-org/litestar-dev/edit/main/content/3.deploy/${route.params.slug}.md`,
   target: '_blank'
 })
 </script>

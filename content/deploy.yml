@@ -6,6 +6,6 @@ navigation.icon: i-lucide-rocket
 links:
   - label: 'Deployment Guide'
     icon: i-lucide-cloud
-    to: '/docs/getting-started/deployment'
+    to: '#'
     color: neutral
     size: md

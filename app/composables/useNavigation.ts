@@ -205,7 +205,7 @@ const _useNavigation = () => {
               root: 'rounded-none bg-transparent'
             }
           },
-          to: `/modules/${plugin.name}`
+          to: `/plugins/${plugin.name}`
         }))
     }
 

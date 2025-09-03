@@ -78,7 +78,7 @@ const items = computed(() => [
     {
       label: 'View on pypi',
       icon: 'i-lucide-package',
-      to: plugin?.npm ? `https://pypi.org/project/${plugin?.npm}` : '#',
+      to: plugin?.pypi ? `https://pypi.org/project/${plugin?.pypi}` : '#',
       target: '_blank'
     }
   ]
@@ -137,7 +137,7 @@ const items = computed(() => [
             <UTooltip text="Monthly PyPi Downloads">
               <NuxtLink
                 class="flex items-center gap-1 hover:text-highlighted"
-                :to="plugin?.npm ? `https://pypi.org/project/${plugin.npm}` : '#'"
+                :to="plugin?.npm ? `https://pypi.org/project/${plugin.pypi}` : '#'"
                 target="_blank"
               >
                 <UIcon name="i-lucide-circle-arrow-down" class="size-4 shrink-0" />
@@ -152,29 +152,7 @@ const items = computed(() => [
                 target="_blank"
               >
                 <UIcon name="i-lucide-star" class="size-4 shrink-0" />
-                <span class="text-sm font-medium whitespace-normal">{{ formatNumber(plugin.stats?.stars || 0) }}</span>
-              </NuxtLink>
-            </UTooltip>
-
-            <UTooltip v-if="selectedSort.key === 'publishedAt'" :text="`Updated ${formatDateByLocale('en', plugin?.stats?.publishedAt)}`">
-              <NuxtLink
-                class="flex items-center gap-1 hover:text-highlighted"
-                :to="plugin?.repo ? `https://github.com/${plugin?.repo}` : '#'"
-                target="_blank"
-              >
-                <UIcon name="i-lucide-radio" class="size-4 shrink-0" />
-                <span class="text-sm font-medium whitespace-normal">{{ date }}</span>
-              </NuxtLink>
-            </UTooltip>
-
-            <UTooltip v-if="selectedSort.key === 'createdAt'" :text="`Created ${formatDateByLocale('en', plugin?.stats?.createdAt)}`">
-              <NuxtLink
-                class="flex items-center gap-1 hover:text-highlighted"
-                :to="plugin?.repo ? `https://github.com/${plugin?.repo}` : '#'"
-                target="_blank"
-              >
-                <UIcon name="i-lucide-package" class="size-4 shrink-0" />
-                <span class="text-sm font-medium whitespace-normal">{{ date }}</span>
+                <span class="text-sm font-medium whitespace-normal">{{ formatNumber(plugin.stars || 0) }}</span>
               </NuxtLink>
             </UTooltip>
           </div>

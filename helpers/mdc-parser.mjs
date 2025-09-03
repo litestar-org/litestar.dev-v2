@@ -192,6 +192,7 @@ const bundledLangs = {
   jsx: () => import('shiki/langs/jsx.mjs'),
   json: () => import('shiki/langs/json.mjs'),
   python: () => import('shiki/langs/python.mjs'),
+  shell: () => import('shiki/langs/shell.mjs'),
   toml: () => import('shiki/langs/toml.mjs')
 }
 const bundledThemes = {
@@ -222,7 +223,7 @@ export async function parseMdc(content) {
     },
     highlight: {
       highlighter,
-      langs: ['js', 'vue', 'python', 'toml'],
+      langs: ['js', 'vue', 'python', 'shell', 'toml'],
       theme: {
         default: 'material-theme-lighter',
         dark: 'material-theme-palenight'

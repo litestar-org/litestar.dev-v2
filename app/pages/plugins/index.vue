@@ -276,7 +276,7 @@ initializePlugins()
         <UPageGrid v-if="filteredPlugins?.length" class="lg:grid-cols-2 xl:grid-cols-3">
           <PluginItem
             v-for="(plugin, index) in displayedPlugins"
-            :key="index"
+            :key="plugin.key"
             :plugin="plugin"
             :is-added="pluginsToAdd.includes(plugin)"
             @add="pluginsToAdd.push(plugin)"
@@ -298,16 +298,16 @@ initializePlugins()
           </template>
         </UPageGrid>
 
-        <EmptyCard v-else :label="`There is no module found for ${q} yet. Become the first one to create it!`">
+        <EmptyCard v-else :label="`No plugin found for ${q}.`">
           <UButton
             label="Contribute on GitHub"
             color="neutral"
-            to="https://github.com/nuxt/modules"
+            to="https://github.com/litestar-org/plugins"
             target="_blank"
             size="md"
             @click="$router.replace({ query: {} })"
           />
-          <UButton to="/docs/guide/going-further/modules" color="neutral" size="md" label="How to create a module?" />
+          <UButton to="#" color="neutral" variant="outline" size="md" label="How to create a plugin?" />
         </EmptyCard>
       </UPageBody>
 
