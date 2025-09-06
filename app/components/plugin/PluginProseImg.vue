@@ -2,7 +2,16 @@
 import { hasProtocol, joinURL } from 'ufo'
 
 const route = useRoute()
-const { data: module } = useNuxtData(`module-${route.params?.slug}`)
+const { data: plugin } = useNuxtData(`plugin-${route.params?.slug}`)
+
+interface Source {
+  srcset: string
+  media?: string
+  type?: string
+  sizes?: string
+  theme?: 'light' | 'dark'
+}
+
 
 const props = defineProps({
   src: {
@@ -20,12 +29,15 @@ const props = defineProps({
   height: {
     type: [String, Number],
     default: undefined
+  },
+  sources: {
+    type: [Array, String],
   }
 })
 const src = computed(() => {
-  if (hasProtocol(props.src) || !module.value?.repo) return props.src
-  const repo = module.value.repo.split('#')[0]
-  return joinURL('https://raw.githubusercontent.com/', repo, module.value.stats.defaultBranch, props.src)
+  if (hasProtocol(props.src) || !plugin.value?.repo) return props.src
+  const repo = plugin.value.repo.split('#')[0]
+  return joinURL('https://raw.githubusercontent.com/', repo, plugin.value.stats.defaultBranch, props.src)
 })
 </script>
 

@@ -17,68 +17,10 @@ defineOgImageComponent('Docs', {
 
 const urlGitHubMember = 'https://github.com/orgs/litestar-org/people'
 
-const maintainers = [
-    {
-    name: 'Janek Nouvertné',
-    role: 'Maintainer',
-    avatar: 'https://github.com/provinzkraut.png',
-    github: 'https://github.com/provinzkraut'
-  },
-  {
-    name: 'Cody Fincher',
-    role: 'Maintainer',
-    avatar: 'https://github.com/cofin.png',
-    github: 'https://github.com/cofin'
-  },
-  {
-    name: 'Jacob Coffee',
-    role: 'Maintainer', 
-    avatar: 'https://github.com/JacobCoffee.png',
-    github: 'https://github.com/JacobCoffee'
-  },
-  {
-    name: 'Peter Schutt',
-    role: 'Maintainer',
-    avatar: 'https://github.com/peterschutt.png',
-    github: 'https://github.com/peterschutt'
-  },
-  {
-    name: 'Andrew Truong',
-    role: 'Maintainer',
-    avatar: 'https://github.com/adhtruong.png',
-    github: 'https://github.com/adhtruong'
-  },
-  {
-    name: 'Julien Courtès',
-    role: 'Maintainer',
-    avatar: 'https://github.com/Kumzy.png',
-    github: 'https://github.com/Kumzy'
-  },
-  {
-    name: 'DanCardin',
-    role: 'Member',
-    avatar: 'https://github.com/DanCardin.png',
-    github: 'https://github.com/DanCardin'
-  },
-  {
-    name: 'Euri10',
-    role: 'Member',
-    avatar: 'https://github.com/Euri10.png',
-    github: 'https://github.com/Euri10'
-  }, 
-  {
-    name: 'Harshal Laheri',
-    role: 'Member',
-    avatar: 'https://github.com/Harshal6927.png',
-    github: 'https://github.com/Harshal6927'
-  }, 
-  {
-    name: 'Sobolevn',
-    role: 'Member',
-    avatar: 'https://github.com/sobolevn.png',
-    github: 'https://github.com/sobolevn'
-  }, 
-]
+const [{ data: maintainersData }] = await Promise.all([
+  useAsyncData('maintainers', () => queryCollection('maintainers').order('role', 'ASC').all()),
+])
+const maintainers = maintainersData.value
 
 const features = [
   {
@@ -124,21 +66,6 @@ const stats = [
     to: 'https://github.com/litestar-org/litestar/blob/main/LICENSE'
   }
 
-]
-
-const organizationalStructure = [
-  {
-    icon: 'i-lucide-user-check',
-    title: 'Members',
-    description: 'Significant contributors with limited admin permissions who have made notable contributions to the project.',
-    to: 'https://github.com/orgs/litestar-org/people',
-    target: '_blank'
-  },
-  {
-    icon: 'i-lucide-crown',
-    title: 'Maintainers',
-    description: 'Long-term members deeply involved in project development. Can be nominated by any organization member and require unanimous approval from current maintainers.'
-  }
 ]
 
 const timelineItems = [
@@ -269,7 +196,7 @@ const contributionWays = [
       >
           <UPageGrid>
             <UPageCard
-              v-for="maintainer in maintainers"
+              v-for="maintainer in maintainersData"
               :key="maintainer.name"
               class="text-center"
             >
@@ -304,13 +231,15 @@ const contributionWays = [
               </div>
             </UPageCard>
           </UPageGrid>
-          <AboutContributors />
+          <p class="text-center text-lg sm:text-xl/8 text-muted">
+            Litestar was made possible by all the contributors that participated in the project over time. Thank you!
+          </p>
       </UPageSection>
 
       <!-- Ways to Contribute and Get Involved -->
       <UPageSection
         title="Ways to Contribute"
-        description="Explore the various ways you can contribute to the Litestar project and get involved with the community."
+        description=" Litestar welcomes contributors from all backgrounds and skill levels. Join our growing community to help by answering questions, improving documentation, joining discussions, or contributing to development."
         :ui="{
           title: 'text-center',
           description: 'text-center',

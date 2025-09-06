@@ -12,6 +12,13 @@ const Image = z.object({
   height: z.number().optional()
 })
 
+const Maintainer = z.object({
+  name: z.string(),
+  role: z.string(),
+  avatar: z.string(),
+  github: z.string()
+})
+
 const DualModeImage = z.object({
   light: z.string().editor({ input: 'media' }),
   dark: z.string().editor({ input: 'media' }),
@@ -210,6 +217,15 @@ export default defineContentConfig({
       type: 'data',
       source: 'templates/*',
       schema: Template
+    }),
+    maintainers: defineCollection({
+      type: 'data',
+      source: 'maintainers/*',
+      schema: Maintainer
+    }),
+    plugins: defineCollection({
+      type: 'page',
+      source: 'plugins/*.md',
     }),
     starters: defineCollection({
       type: 'data',

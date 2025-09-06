@@ -48,16 +48,10 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         remarkPlugins: {
-          'remark-emoji': {
-
-          },
           // Add remark-gfm
           'remark-gfm': {
 
           },  
-          'remark-rehype': {
-            // Options
-          },
         },
         highlight: {
           theme: {

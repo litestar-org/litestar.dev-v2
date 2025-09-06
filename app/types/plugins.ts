@@ -44,8 +44,6 @@ export interface Plugin {
     name: string
     github: string
     avatar?: string
-    twitter?: string
-    bluesky?: string
   }[]
   contributors?: {
     id: number

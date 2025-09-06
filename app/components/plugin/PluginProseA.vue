@@ -12,7 +12,7 @@
 import { hasProtocol, joinURL } from 'ufo'
 
 const route = useRoute()
-const { data: module } = useNuxtData(`module-${route.params?.slug}`)
+const { data: plugin } = useNuxtData(`plugin-${route.params?.slug}`)
 
 const props = defineProps({
   href: {
@@ -27,7 +27,7 @@ const props = defineProps({
 })
 
 const href = computed(() => {
-  if (hasProtocol(props.href) || !module.value?.github) return props.href
-  return joinURL(module.value.github, 'blob', module.value.stats?.defaultBranch || 'main', props.href)
+  if (hasProtocol(props.href) || !plugin.value?.github) return props.href
+  return joinURL(plugin.value.github, 'blob', plugin.value.stats?.defaultBranch || 'main', props.href)
 })
 </script>

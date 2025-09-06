@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { Plugin } from '~/types'
-// import { PluginProseA, PluginProseKbd, PluginProseImg } from '#components'
-// import { parseMarkdown } from '@nuxtjs/mdc/runtime'
+import { PluginProseA, PluginProseKbd, PluginProseImg } from '#components'
+import { parseMarkdown } from '@nuxtjs/mdc/runtime'
+import { color } from 'motion-v'
+// import PluginProseA from '~/components/plugin/PluginProseA.vue'
 // import { useAsyncData } from '#imports'
 
 definePageMeta({
@@ -12,20 +14,31 @@ const route = useRoute()
 const { default: pluginsData } = await import('~/data/plugins.json')
 const plugin = ref<Plugin | null>(pluginsData.find((p: Plugin) => p.key === route.params.slug) || null)
 
+const { data: plg } = await useAsyncData(`plugin-${route.params.slug}`, () => {
+  return queryCollection('plugins').path(`/plugins/${route.params.slug}`).first()
+})
+
+
 // if (!plugin.value) {
 //   throw createError({ statusCode: 404, statusMessage: 'Plugin not found', fatal: true })
 // }
 // console.log(plugin.value)
 // Fetch README from GitHub
-// const readme = ref<any>(null)
+const readme = ref<any>(null)
 
 // const { data } = await useFetch(`https://raw.githubusercontent.com/${plugin.value.repo}/main/README.md`)
 
 // console.log(data)
 
 // readme.value = data.value 
-// const { data: readmeContent } = await useAsyncData<any>(() => parseMarkdown(readme.value))
+// const { data: readmeContent } = await useAsyncData('markdown', () => parseMarkdown(readme.value))
+// const { data: readmeContent } = await useAsyncData<any>(() => parseMarkdown(plg))
+const readmeContent = computed(() => plg.value ? plg.value?.body.value : null)
+const readmeContent2 = computed(() => plg.value ? plg.value : null)
 
+console.log(plg.value?.body)
+console.log(readmeContent.value)
+console.log(readmeContent2)
 // console.log(readmeContent)
 // if (plugin.value?.repo) {
 //   try {
@@ -80,6 +93,16 @@ const links = computed(() => {
     })
   }
   
+  if (plugin.value.changelog) {
+    linkList.push({
+      icon: 'i-lucide-scroll-text',
+      label: 'Changelog',
+      to: plugin.value.changelog,
+      target: '_blank'
+    })
+  }
+  
+  
   if (plugin.value.learn_more) {
     linkList.push({
       icon: 'i-lucide-link',
@@ -92,6 +115,78 @@ const links = computed(() => {
   return linkList
 })
 
+const detailsLinks = computed(() => {
+  if (!plugin.value) return []
+  
+  const details = [
+    {
+      label: `Updated ${publishedAgo.value}`,
+      to: `https://github.com/${plugin.value.repo}`,
+      icon: 'i-lucide-radio'
+    },
+    {
+      label: `Created ${createdAgo.value}`,
+      to: `https://github.com/${plugin.value.repo}`,
+      icon: 'i-lucide-package'
+    }
+  ]
+  
+  // Add Python versions as separate entries (static for testing)
+  // if (plugin.value.python_versions) {
+  //   const versions = Array.isArray(plugin.value.python_versions) 
+  //     ? plugin.value.python_versions 
+  //     : [plugin.value.python_versions]
+    
+  //   versions.forEach(version => {
+  //     details.push({
+  //       label: `Python ${version}`,
+  //       icon: 'i-simple-icons-python'
+  //     })
+  //   })
+  // }
+  
+  // Static Python versions moved to compatibility section below
+  
+  // if (plugin.value.license) {
+    details.push({
+      label: 'MIT License',
+      to: plugin.value.license,
+      icon: 'i-lucide-scale',
+      target: '_blank'
+    // })
+  })
+  
+  return details
+})
+
+const compatibilityLinks = computed(() => {
+  if (!plugin.value) return []
+  
+  // Static Python versions for testing
+  const staticVersions = ['3.10', '3.11', '3.12', '3.13']
+  return staticVersions.map(version => ({
+    label: `Python ${version}`,
+    icon: 'i-simple-icons-python'
+  }))
+})
+
+const litestarCompatibility = computed(() => {
+  if (!plugin.value) return []
+  
+  // Static Litestar versions for testing
+  return [
+    {
+      label: 'Litestar v2',
+      icon: 'i-lucide-circle-x',
+      color: 'neutral'
+    },
+    {
+      label: 'Litestar v3',
+      icon: 'i-lucide-check-circle-2',
+      color: 'success'
+    }
+  ]
+})
 
 const title = computed(() => plugin.value?.pypi || plugin.value?.name)
 const description = computed(() => plugin.value?.description || 'A Litestar plugin')
@@ -141,8 +236,8 @@ const createdAgo = computed(() => plugin.value?.stats?.createdAt ? useTimeAgo(pl
       </template>
 
       <div class="flex flex-col lg:flex-row lg:items-center gap-3 mt-4">
-        <UTooltip text="Monthly NPM Downloads">
-          <NuxtLink class="flex items-center gap-1.5" :to="`https://npm.chart.dev/${plugin.npm}`" target="_blank">
+        <UTooltip text="Monthly PyPi Downloads">
+          <NuxtLink class="flex items-center gap-1.5" :to="`https://pypistats.org/packages/${plugin.pypi}`" target="_blank">
             <UIcon name="i-lucide-circle-arrow-down" class="size-5 shrink-0" />
             <span class="text-sm font-medium">{{ formatNumber(plugin.stats?.downloads || 0) }} downloads</span>
           </NuxtLink>
@@ -166,6 +261,7 @@ const createdAgo = computed(() => plugin.value?.stats?.createdAt ? useTimeAgo(pl
           </NuxtLink>
         </UTooltip>
 
+
         <div class="mx-3 h-6 border-l border-gray-200 dark:border-gray-800 w-px hidden lg:block" />
 
         <div v-for="(maintainer, index) in plugin.maintainers" :key="maintainer.github" class="flex items-center gap-3">
@@ -181,7 +277,7 @@ const createdAgo = computed(() => plugin.value?.stats?.createdAt ? useTimeAgo(pl
 
     <UPage>
       <UPageBody>
-
+        <ContentRenderer  v-if="readmeContent2?.body" :value="readmeContent2" :components="{ PluginProseA: picture, a: PluginProseA, img: PluginProseImg, kbd: PluginProseKbd }" class="first:[&_picture]:block first:[&_picture]:mb-4" />
       </UPageBody>
 
       <template #right>
@@ -190,8 +286,24 @@ const createdAgo = computed(() => plugin.value?.stats?.createdAt ? useTimeAgo(pl
             <div class="hidden lg:block space-y-6">
               <UPageLinks title="Links" :links="links" />
 
-
               <USeparator type="dashed" />
+
+              <UPageLinks title="Details" :links="detailsLinks" />
+              
+              <USeparator type="dashed" />
+              
+              <UPageLinks title="Python Compatibility" :links="compatibilityLinks" />
+              
+              <USeparator type="dashed" />
+              
+              <UPageLinks title="Litestar Compatibility" :links="litestarCompatibility">
+                <template #link="{ link }">
+                  <UBadge size="lg" :icon="link.icon" :color="link.color" variant="subtle">{{ link.label }}</UBadge>
+                </template>
+              </UPageLinks>
+              
+              <USeparator type="dashed" />
+              
               <SocialLinks />
             </div>
           </template>
