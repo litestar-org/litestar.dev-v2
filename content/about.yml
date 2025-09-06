@@ -1,0 +1,68 @@
+hero:
+  title: About Litestar
+  description: Learn about the Litestar organization, our community-driven approach, and the team of maintainers who make it all possible.
+organization:
+  title: Our Organization
+  description: |
+    Litestar is developed by volunteers and outside contributors, led by a dedicated team of Maintainers.
+    Our community-driven project encourages user involvement and values every contribution.
+  features:
+    - title: Community-Driven
+      icon: i-lucide-users
+      description: Developed by volunteers and outside contributors with an open, welcoming approach to all participants.
+    - title: Every Contribution Welcome
+      icon: i-lucide-heart
+      description: We follow the All Contributors guidelines and appreciate every form of contribution, big or small.
+    - title: Open Participation
+      icon: i-lucide-message-circle
+      description: 'Join our community through issues, discussions, pull requests, and code contributions.'
+maintainers:
+  title: Meet Our Maintainers and Members
+  description: Litestar is developed by a dedicated team of maintainers and contributors who ensure the project's success.
+  acknowledgment: Litestar was made possible by all the contributors that participated in the project over time. Thank you!
+history:
+  title: Project History
+  description: Litestar has evolved significantly since its inception, originally starting as 'Starlite'. The rebranding to 'Litestar' in version 2.0 marked a new chapter, avoiding confusion with similar frameworks.
+  timeline:
+    - title: Originally "Starlite"
+      description: The project began its journey under the name "Starlite", establishing itself as a powerful ASGI framework.
+      icon: i-lucide-star
+      color: primary
+      date: January 2022
+      value: initial
+    - title: Renamed to "Litestar" in v2.0
+      description: To avoid confusion with similar framework names, we rebranded to "Litestar" with version 2.0, marking a new chapter in our development.
+      icon: i-lucide-arrow-right
+      color: primary
+      date: October 2023
+      value: litestar
+    - title: Litestar v3.0 Release
+      description: Major version release bringing enhanced performance, new features, and improved developer experience to the framework.
+      icon: i-lucide-rocket
+      color: primary
+      date: Q3 2025
+      value: v3
+contributing:
+  title: Ways to Contribute
+  description: Litestar welcomes contributors from all backgrounds and skill levels. Join our growing community to help by answering questions, improving documentation, joining discussions, or contributing to development.
+  features:
+    - title: Opening Issues
+      description: Report bugs, request features, or ask questions to help improve the project.
+      icon: i-lucide-bug
+      to: https://github.com/litestar-org/litestar/issues/new
+    - title: Participating in Discussions
+      description: Share ideas, help others, and engage with the community in our discussions.
+      icon: i-lucide-message-square
+      to: https://github.com/litestar-org/litestar/discussions
+    - title: Reviewing Pull Requests
+      description: Help review code changes and provide feedback to maintain high quality.
+      icon: i-lucide-eye
+      to: https://github.com/litestar-org/litestar/pulls
+    - title: Contributing Code
+      description: Submit bug fixes, new features, or improvements to the codebase.
+      icon: i-lucide-code
+      to: https://github.com/litestar-org/litestar/blob/main/CONTRIBUTING.md
+    - title: Contributing Documentation
+      description: Improve the documentation or fix errors.
+      icon: i-lucide-book
+      to: https://github.com/litestar-org/litestar/blob/main/CONTRIBUTING.md

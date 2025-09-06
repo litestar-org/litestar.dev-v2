@@ -163,6 +163,24 @@ export default defineContentConfig({
         }),
       })
     }),
+    about: defineCollection({
+      type: 'data',
+      source: 'about.yml',
+      schema: z.object({
+        hero: z.object({
+          title: z.string(),
+          description: z.string(),
+        }),
+        organization: PageSection,
+        maintainers: PageSection.extend({
+          acknowledgment: z.string()
+        }),
+        history: PageSection.extend({
+          timeline: z.string()
+        }),
+        contributing: PageSection,
+      })
+    }),
     templatePage: defineCollection({
       type: 'data',
       source: 'template.yml',

@@ -1,6 +1,16 @@
 <script setup lang="ts">
-const title = 'About Litestar'
-const description = 'Learn about the Litestar organization, our community-driven approach, and the team of maintainers who make it all possible.'
+
+const [{ data: page }, { data: maintainers }] = await Promise.all([
+  useAsyncData('about', () => queryCollection('about').first()),
+  useAsyncData('maintainers', () => queryCollection('maintainers').order('role', 'ASC').all()),
+])
+
+if (!page.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
+}
+
+const title = page.value?.hero.title
+const description = page.value?.hero.description
 
 useSeoMeta({
   titleTemplate: '%s',
@@ -14,31 +24,6 @@ defineOgImageComponent('Docs', {
   title: 'About Litestar',
   description
 })
-
-const urlGitHubMember = 'https://github.com/orgs/litestar-org/people'
-
-const [{ data: maintainersData }] = await Promise.all([
-  useAsyncData('maintainers', () => queryCollection('maintainers').order('role', 'ASC').all()),
-])
-const maintainers = maintainersData.value
-
-const features = [
-  {
-    icon: 'i-lucide-users',
-    title: 'Community-Driven',
-    description: 'Developed by volunteers and outside contributors with an open, welcoming approach to all participants.'
-  },
-  {
-    icon: 'i-lucide-heart',
-    title: 'Every Contribution Welcome',
-    description: 'We follow the All Contributors guidelines and appreciate every form of contribution, big or small.'
-  },
-  {
-    icon: 'i-lucide-message-circle',
-    title: 'Open Participation',
-    description: 'Join our community through issues, discussions, pull requests, and code contributions.'
-  }
-]
 
 const stats = [
   {
@@ -95,38 +80,12 @@ const timelineItems = [
   }
 ]
 
-const contributionWays = [
-  {
-    icon: 'i-lucide-bug',
-    title: 'Opening Issues',
-    description: 'Report bugs, request features, or ask questions to help improve the project.',
-    to: 'https://github.com/litestar-org/litestar/issues/new'
-  },
-  {
-    icon: 'i-lucide-message-square',
-    title: 'Participating in Discussions',
-    description: 'Share ideas, help others, and engage with the community in our discussions.',
-    to: 'https://github.com/litestar-org/litestar/discussions'
-  },
-  {
-    icon: 'i-lucide-eye',
-    title: 'Reviewing Pull Requests',
-    description: 'Help review code changes and provide feedback to maintain high quality.',
-    to: 'https://github.com/litestar-org/litestar/pulls'
-  },
-  {
-    icon: 'i-lucide-code',
-    title: 'Contributing Code',
-    description: 'Submit bug fixes, new features, or improvements to the codebase.',
-    to: 'https://github.com/litestar-org/litestar/blob/main/CONTRIBUTING.md'
-  }
-]
 </script>
 
 <template>
     <UPageHero
-      :title="title"
-      :description="description"
+      :title="page?.hero.title"
+      :description="page?.hero.description"
       icon="i-lucide-building-2"
     />
       <!-- Stats Section -->
@@ -146,19 +105,21 @@ const contributionWays = [
         </div>
       </UPageSection>
 
+      <USeparator />
+
       <!-- Organization Overview -->
       <UPageSection
-        title="Our Organization"
-        description="Litestar is developed by volunteers and outside contributors, led by a dedicated team of Maintainers. Our community-driven project encourages user involvement and values every contribution."
+        :title="page?.organization.title"
+        :description="page?.organization.description"
         :ui="{
           title: 'text-center',
           description: 'text-center',
-          root: 'bg-gradient-to-b border-t border-default from-muted dark:from-muted/40 to-default',
+          root: 'bg-gradient-to-b from-muted dark:from-muted/40 to-default',
         }">
           <UPageGrid
           >
             <UPageCard
-              v-for="feature in features"
+              v-for="feature in page?.organization.features"
               :key="feature.title"
               :icon="feature.icon"
               :title="feature.title"
@@ -169,8 +130,8 @@ const contributionWays = [
 
       <!-- Project History -->
       <UPageSection
-        title="Project History"
-        description="Litestar has evolved significantly since its inception, originally starting as 'Starlite'. The rebranding to 'Litestar' in version 2.0 marked a new chapter, avoiding confusion with similar frameworks."
+        :title="page?.history.title"
+        :description="page?.history.description"
         :ui="{
           title: 'text-center',
           description: 'text-center',
@@ -185,8 +146,8 @@ const contributionWays = [
 
       <!-- Maintainers Team -->
       <UPageSection
-        title="Meet Our Maintainers and Members"
-        description="Litestar is developed by a dedicated team of maintainers and contributors who ensure the project's success."
+        :title="page?.maintainers.title"
+        :description="page?.maintainers.description"
         :ui="{
           title: 'text-center',
           description: 'text-center',
@@ -196,7 +157,7 @@ const contributionWays = [
       >
           <UPageGrid>
             <UPageCard
-              v-for="maintainer in maintainersData"
+              v-for="maintainer in maintainers"
               :key="maintainer.name"
               class="text-center"
             >
@@ -232,14 +193,21 @@ const contributionWays = [
             </UPageCard>
           </UPageGrid>
           <p class="text-center text-lg sm:text-xl/8 text-muted">
-            Litestar was made possible by all the contributors that participated in the project over time. Thank you!
+            {{ page?.maintainers.acknowledgment }}
+          </p>
+          <p class="text-center text-lg sm:text-xl/8 text-muted">
+            <UButton 
+              :to="urlGitHubMember"
+              icon="i-simple-icons-github" 
+              target="_blank" 
+              color="neutral">All contributors</UButton>
           </p>
       </UPageSection>
 
       <!-- Ways to Contribute and Get Involved -->
       <UPageSection
-        title="Ways to Contribute"
-        description=" Litestar welcomes contributors from all backgrounds and skill levels. Join our growing community to help by answering questions, improving documentation, joining discussions, or contributing to development."
+        :title="page?.contributing.title"
+        :description="page?.contributing.description"
         :ui="{
           title: 'text-center',
           description: 'text-center',
@@ -248,7 +216,7 @@ const contributionWays = [
         }">
         <UPageGrid class="grid-cols-1 md:grid-cols-2">
           <UPageCard
-            v-for="way in contributionWays"
+            v-for="way in page?.contributing.features"
             :key="way.title"
             :icon="way.icon"
             :title="way.title"
