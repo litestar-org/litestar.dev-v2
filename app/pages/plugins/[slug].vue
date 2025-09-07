@@ -3,6 +3,8 @@ import type { Plugin } from '~/types'
 import { PluginProseA, PluginProseKbd, PluginProseImg } from '#components'
 import { parseMarkdown } from '@nuxtjs/mdc/runtime'
 import { color } from 'motion-v'
+import type { PluginsCollectionItem } from '@nuxt/content'
+import { routerKey } from 'vue-router'
 // import PluginProseA from '~/components/plugin/PluginProseA.vue'
 // import { useAsyncData } from '#imports'
 
@@ -11,12 +13,16 @@ definePageMeta({
 })
 const route = useRoute()
 
-const { default: pluginsData } = await import('~/data/plugins.json')
-const plugin = ref<Plugin | null>(pluginsData.find((p: Plugin) => p.key === route.params.slug) || null)
+const [{ data: plugin }, { data: pluginReadme }] = await Promise.all([
+  useAsyncData(`plugin-${route.params.slug}`, () => queryCollection('plugins').path(route.path).first()),
+  useAsyncData(`plugin-readme-${route.params.slug}`, () => queryCollection('pluginsReadme').path(`/pluginsreadme/${route.params.slug}`).first())
+])
+// const { default: pluginsData } = await import('~/data/plugins.json')
+// const plugin = ref<PluginsCollectionItem | null>(pluginsData.find((p: PluginsCollectionItem) => p.key === route.params.slug) || null)
 
-const { data: plg } = await useAsyncData(`plugin-${route.params.slug}`, () => {
-  return queryCollection('plugins').path(`/plugins/${route.params.slug}`).first()
-})
+// const { data: plg } = await useAsyncData(`plugin-${route.params.slug}`, () => {
+//   return queryCollection('plugins').path(`/plugins/${route.params.slug}`).first()
+// })
 
 
 // if (!plugin.value) {
@@ -33,12 +39,8 @@ const readme = ref<any>(null)
 // readme.value = data.value 
 // const { data: readmeContent } = await useAsyncData('markdown', () => parseMarkdown(readme.value))
 // const { data: readmeContent } = await useAsyncData<any>(() => parseMarkdown(plg))
-const readmeContent = computed(() => plg.value ? plg.value?.body.value : null)
-const readmeContent2 = computed(() => plg.value ? plg.value : null)
+const readmeContent2 = computed(() => pluginReadme.value ? pluginReadme.value : null)
 
-console.log(plg.value?.body)
-console.log(readmeContent.value)
-console.log(readmeContent2)
 // console.log(readmeContent)
 // if (plugin.value?.repo) {
 //   try {
@@ -103,11 +105,11 @@ const links = computed(() => {
   }
   
   
-  if (plugin.value.learn_more) {
+  if (plugin.value.issues) {
     linkList.push({
-      icon: 'i-lucide-link',
-      label: 'Learn more',
-      to: plugin.value.learn_more,
+      icon: 'i-lucide-bug',
+      label: 'Issues',
+      to: plugin.value.issues,
       target: '_blank'
     })
   }
@@ -147,24 +149,23 @@ const detailsLinks = computed(() => {
   
   // Static Python versions moved to compatibility section below
   
-  // if (plugin.value.license) {
+  if (plugin.value.license) {
     details.push({
       label: 'MIT License',
       to: plugin.value.license,
       icon: 'i-lucide-scale',
       target: '_blank'
-    // })
-  })
-  
+    })
+  }
+
   return details
 })
 
 const compatibilityLinks = computed(() => {
-  if (!plugin.value) return []
+  if (!plugin.value?.python_compatibility?.compatible) return []
   
-  // Static Python versions for testing
-  const staticVersions = ['3.10', '3.11', '3.12', '3.13']
-  return staticVersions.map(version => ({
+  // Use actual Python compatibility data from content
+  return plugin.value.python_compatibility.compatible.map(version => ({
     label: `Python ${version}`,
     icon: 'i-simple-icons-python'
   }))
@@ -188,10 +189,10 @@ const litestarCompatibility = computed(() => {
   ]
 })
 
-const title = computed(() => plugin.value?.pypi || plugin.value?.name)
-const description = computed(() => plugin.value?.description || 'A Litestar plugin')
-const publishedAgo = computed(() => plugin.value?.stats?.publishedAt ? useTimeAgo(plugin.value.stats.publishedAt).value : '')
-const createdAgo = computed(() => plugin.value?.stats?.createdAt ? useTimeAgo(plugin.value.stats.createdAt).value : '')
+const title = computed(() => plugin.value?.name )
+const description = computed(() => plugin.value?.description)
+const publishedAgo = computed(() => plugin.value?.updated_at ? useTimeAgo(plugin.value.updated_at).value : '')
+const createdAgo = computed(() => plugin.value?.created_at ? useTimeAgo(plugin.value.created_at).value : '')
 
 // useSeoMeta({
 //   titleTemplate: '%s · Litestar Plugins',
@@ -213,7 +214,7 @@ const createdAgo = computed(() => plugin.value?.stats?.createdAt ? useTimeAgo(pl
   <UContainer v-if="plugin">
     <UPageHeader :description="plugin.description" :ui="{ headline: 'mb-8' }">
       <template #headline>
-        <UBreadcrumb :items="[{ label: 'Plugins', to: '/plugins' }, { to: { name: 'plugins', query: { category: plugin.category } }, label: plugin.category }, { label: plugin.pypi }]" />
+        <UBreadcrumb :items="[{ label: 'Plugins', to: '/plugins' }, { to: { name: 'plugins', query: { category: plugin.category } }, label: plugin.category }, { label: plugin.name }]" />
       </template>
       <template #title>
         <div class="flex items-center gap-4">
@@ -226,7 +227,7 @@ const createdAgo = computed(() => plugin.value?.stats?.createdAt ? useTimeAgo(pl
           />
 
           <div>
-            {{ plugin.pypi }}
+            {{ plugin.name }}
 
             <UTooltip v-if="plugin.type === 'official'" text="Official plugin" class="tracking-normal">
               <UIcon name="i-lucide-medal" class="size-6 text-primary" />
@@ -239,7 +240,7 @@ const createdAgo = computed(() => plugin.value?.stats?.createdAt ? useTimeAgo(pl
         <UTooltip text="Monthly PyPi Downloads">
           <NuxtLink class="flex items-center gap-1.5" :to="`https://pypistats.org/packages/${plugin.pypi}`" target="_blank">
             <UIcon name="i-lucide-circle-arrow-down" class="size-5 shrink-0" />
-            <span class="text-sm font-medium">{{ formatNumber(plugin.stats?.downloads || 0) }} downloads</span>
+            <span class="text-sm font-medium">{{ formatNumber(plugin.monthly_downloads || 0) }} downloads</span>
           </NuxtLink>
         </UTooltip>
 
@@ -248,7 +249,7 @@ const createdAgo = computed(() => plugin.value?.stats?.createdAt ? useTimeAgo(pl
         <UTooltip text="GitHub Stars">
           <NuxtLink class="flex items-center gap-1.5" :to="`https://github.com/${plugin.repo}`" target="_blank">
             <UIcon name="i-lucide-star" class="size-5 shrink-0" />
-            <span class="text-sm font-medium">{{ formatNumber(plugin.stars || plugin.stats?.stars || 0) }} stars</span>
+            <span class="text-sm font-medium">{{ formatNumber(plugin.stars || 0) }} stars</span>
           </NuxtLink>
         </UTooltip>
 

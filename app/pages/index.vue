@@ -7,10 +7,11 @@ definePageMeta({
   heroBackground: '-z-10'
 })
 
-const [{ data: page }, { data: starters }, { data: templates }] = await Promise.all([
+const [{ data: page }, { data: starters }, { data: templates }, { data: plugins }] = await Promise.all([
   useAsyncData('index', () => queryCollection('index').first()),
   useAsyncData('starters', () => queryCollection('starters').all()),
-  useAsyncData('templates', () => queryCollection('templates').all())
+  useAsyncData('templates', () => queryCollection('templates').all()),
+  useAsyncData('plugins', () => queryCollection('plugins').all())
 ])
 
 const installCommands = ref<TabsItem[]>([
@@ -40,13 +41,8 @@ const tabs = computed(() => page.value?.hero.tabs.map(tab => ({
   content: tab.content
 })))
 
-const { data: pluginsData } = await useAsyncData('plugins', async () => {
-  const plugins = await import('~/data/plugins.json')
-  return plugins.default
-})
-
 const officialPluginsLitestar = computed(() => 
-  pluginsData.value?.filter(plugin => plugin.type === 'official') || []
+  plugins.value?.filter(plugin => plugin.type === 'official') || []
 )
 
 const selectedTemplateTab = ref('starter')

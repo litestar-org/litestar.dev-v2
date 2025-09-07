@@ -1,6 +1,7 @@
-import type { Plugin, Filter, Stats } from '~/types'
+import type { PluginsCollectionItem } from '@nuxt/content'
+import type { Filter, Stats } from '~/types'
 
-type PluginStatsKeys = 'version' | 'downloads' | 'stars' | 'publishedAt' | 'createdAt'
+type PluginStatsKeys = 'version' | 'monthly_downloads' | 'stars' | 'updated_at' | 'created_at'
 
 const iconsMap = {
   Official: 'i-lucide-medal',
@@ -34,23 +35,33 @@ export const usePlugins = () => {
   const route = useRoute()
   const router = useRouter()
   const stats = useState<Stats>('plugin-stats', () => ({
-    maintainers: 0,
-    contributors: 0,
-    plugins: 0
+    stars: 0,
+    version: '',
+    monthly_downloads: 0,
+    discord: 0,
+    contributors: 0
   }))
-  const plugins = useState<Plugin[]>('plugins', () => [])
-  const plugin = useState<Plugin>('plugin', () => ({} as Plugin))
+  const plugins = useState<PluginsCollectionItem[]>('plugins', () => [])
+  const plugin = useState<PluginsCollectionItem>('plugin', () => ({} as PluginsCollectionItem))
 
   // Data fetching
   async function fetchList() {
-    // console.log(plugins.value.length)
     if (plugins.value.length) {
       return
     }
-    // Import plugins from local JSON file
-    const { default: pluginsData } = await import('~/data/plugins.json')
-    plugins.value = pluginsData
-    // console.log(plugins.value)
+
+    try {
+      // Fetch plugins from individual YAML files
+      const { data } = await useAsyncData('plugins', async () => {
+        const collection = await queryCollection('plugins')
+        return await collection.all()
+      })
+      console.log("plugin data", data)
+      plugins.value = data.value || []
+    } catch (error) {
+      console.error('Failed to fetch plugins from content:', error)
+      plugins.value = []
+    }
   }
 
   // Data
@@ -104,12 +115,8 @@ export const usePlugins = () => {
     return route.query.q as string
   })
 
-  const isSponsorOrOfficial = (a: Plugin, b: Plugin) => {
-    if (a.sponsor && !b.sponsor) {
-      return -1
-    } else if (!a.sponsor && b.sponsor) {
-      return 1
-    } else if (a.type === 'official' && b.type !== 'official') {
+  const isOfficial = (a: PluginsCollectionItem, b: PluginsCollectionItem) => {
+    if (a.type === 'official' && b.type !== 'official') {
       return -1
     } else if (a.type !== 'official' && b.type === 'official') {
       return 1
@@ -118,9 +125,9 @@ export const usePlugins = () => {
     }
   }
 
-  const filteredPlugins = computed<Plugin[]>(() => {
+  const filteredPlugins = computed<PluginsCollectionItem[]>(() => {
     let filteredPlugins = [...plugins.value]
-      .filter((plugin: Plugin) => {
+      .filter((plugin: PluginsCollectionItem) => {
         if (selectedCategory.value) {
           if (selectedCategory.value.key === 'Official') {
             return plugin.type === 'official'
@@ -130,16 +137,19 @@ export const usePlugins = () => {
           }
         }
         const queryRegExp = searchTextRegExp(q.value as string)
-        if (q.value && !['name', 'npm', 'category', 'description', 'repo'].map(field => plugin[field as keyof Plugin]).filter(Boolean).some(value => typeof value === 'string' && value.search(queryRegExp) !== -1)) {
+        if (q.value && !['name', 'pypi', 'category', 'description', 'repo'].map(field => plugin[field as keyof PluginsCollectionItem]).filter(Boolean).some(value => typeof value === 'string' && value.search(queryRegExp) !== -1)) {
           return false
         }
 
         return true
       })
-      .sort((a: Plugin, b: Plugin) => {
+      .sort((a: PluginsCollectionItem, b: PluginsCollectionItem) => {
         const sortKey = selectedSort.value?.key as PluginStatsKeys
-        if (sortKey && a.stats && b.stats) {
-          return (b.stats[sortKey] as number) - (a.stats[sortKey] as number)
+        if (sortKey && sortKey === 'monthly_downloads') {
+          return (b.monthly_downloads || 0) - (a.monthly_downloads || 0)
+        }
+        if (sortKey && sortKey === 'stars') {
+          return (b.stars || 0) - (a.stars || 0)
         }
         return 0
       })
@@ -148,9 +158,9 @@ export const usePlugins = () => {
       filteredPlugins = filteredPlugins.reverse()
     }
 
-    // sponsored & official plugins in first place if no sort or order by
+    // official plugins in first place if no sort or order by
     if (!route.query.sortBy && !route.query.orderBy) {
-      return filteredPlugins.sort(isSponsorOrOfficial)
+      return filteredPlugins.sort(isOfficial)
     }
     return filteredPlugins
   })

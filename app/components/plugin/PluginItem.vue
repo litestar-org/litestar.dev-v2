@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { PluginsCollectionItem } from '@nuxt/content';
 import type { Plugin } from '~/types'
 
 const emit = defineEmits<{
@@ -7,7 +8,7 @@ const emit = defineEmits<{
 }>()
 
 const { plugin, showBadge = true, isAdded } = defineProps<{
-  plugin: Plugin
+  plugin: PluginC
   showBadge?: boolean
   isAdded: boolean
 }>()
@@ -15,12 +16,12 @@ const { plugin, showBadge = true, isAdded } = defineProps<{
 const { copy } = useClipboard()
 const { selectedSort } = usePlugins()
 const date = computed(() => {
-  if (selectedSort.value.key === 'publishedAt' && plugin?.stats?.publishedAt) {
-    return useTimeAgo(plugin.stats.publishedAt)
+  if (selectedSort.value.key === 'updated_at' && plugin?.updated_at) {
+    return useTimeAgo(plugin.updated_at)
   }
 
-  if (plugin?.stats?.createdAt) {
-    return useTimeAgo(plugin.stats.createdAt)
+  if (plugin?.created_at) {
+    return useTimeAgo(plugin.created_at)
   }
   
   return 'N/A'
@@ -33,7 +34,7 @@ function copyInstallCommand(pluginName: string) {
   copy(command, { title: 'Command copied to clipboard:', description: command })
 }
 
-function togglePlugin(plugin: Plugin) {
+function togglePlugin(plugin: PluginsCollectionItem) {
   console.log(plugin)
   if (isAdded) {
     emit('remove', plugin)
@@ -121,14 +122,6 @@ const items = computed(() => [
         label="Official"
       />
 
-      <UBadge
-        v-if="showBadge && plugin?.sponsor"
-        class="shine absolute top-4 right-4 sm:top-6 sm:right-6"
-        variant="subtle"
-        color="important"
-        label="Sponsor"
-      />
-
       <template #footer>
         <USeparator type="dashed" class="mb-4" />
 
@@ -141,7 +134,7 @@ const items = computed(() => [
                 target="_blank"
               >
                 <UIcon name="i-lucide-circle-arrow-down" class="size-4 shrink-0" />
-                <span class="text-sm font-medium whitespace-normal">{{ formatNumber(plugin?.stats?.downloads || 0) }}</span>
+                <span class="text-sm font-medium whitespace-normal">{{ formatNumber(plugin?.monthly_downloads || 0) }}</span>
               </NuxtLink>
             </UTooltip>
 

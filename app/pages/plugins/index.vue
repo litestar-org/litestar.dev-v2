@@ -14,7 +14,7 @@ const el = useTemplateRef<HTMLElement>('el')
 const { packageManagers, selectedPackageManager } = usePackageManager()
 
 const { replaceRoute } = useFilters('plugins')
-const { fetchList, filteredPlugins, q, categories, plugins, stats, selectedSort, selectedOrder, selectedCategory, sorts } = usePlugins()
+const { fetchList, filteredPlugins, q, categories, plugins, selectedSort, selectedOrder, selectedCategory, sorts } = usePlugins()
 
 
 const title = 'Litestar plugins'
@@ -105,6 +105,8 @@ const clearAllPlugins = () => {
 }
 
 initializePlugins()
+console.log(plugins)
+console.log(filteredPlugins)
 </script>
 
 <template>

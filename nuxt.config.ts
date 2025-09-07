@@ -9,8 +9,8 @@ export default defineNuxtConfig({
     prerender: {
       concurrency: 1,
       crawlLinks: true,
-      routes: ['/'],
-      ignore: ['/plugins/advanced-alchemy'],
+      // routes: ['/'],
+      // ignore: ['/plugins/advanced-alchemy'],
     }
   },
   logLevel: 'verbose',  // Add this line

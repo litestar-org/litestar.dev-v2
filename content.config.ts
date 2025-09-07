@@ -126,6 +126,43 @@ const Starter = z.object({
   featured: z.boolean().optional()
 })
 
+const Plugin = z.object({
+  key: z.string(),
+  name: z.string(),
+  description: z.string(),
+  pypi: z.string(),
+  repo: z.string(),
+  github: z.string(),
+  website: z.string(),
+  documentation: z.string(),
+  category: z.string(),
+  type: z.string(),
+  maintainers: z.array(z.object({
+    name: z.string(),
+    github: z.string(),
+    avatar: z.string().optional()
+  })),
+  compatibility: z.object({
+    litestar: z.string().optional()
+  }),
+  icon: z.string(),
+  license: z.string().optional(),
+  stars: z.number().optional(),
+  monthly_downloads: z.number().optional(),
+  latest_version: z.string().optional(),
+  updated_at: z.string().optional(),
+  created_at: z.string().optional(),
+  python_compatibility_raw: z.string().optional(),
+  python_compatibility: z.object({
+    raw: z.string(),
+    specifier_set: z.string(),
+    compatible: z.array(z.string()).optional()
+  }).optional(),
+  changelog: z.string().optional(),
+  issues: z.string().optional(),
+  sponsor: z.boolean().optional()
+})
+
 export default defineContentConfig({
   collections: {
     index: defineCollection({
@@ -241,9 +278,14 @@ export default defineContentConfig({
       source: 'maintainers/*',
       schema: Maintainer
     }),
+    pluginsReadme: defineCollection({
+      type: 'page',
+      source: 'pluginsReadme/*.md',
+    }),
     plugins: defineCollection({
       type: 'page',
-      source: 'plugins/*.md',
+      source: 'plugins/*.yml',
+      schema: Plugin
     }),
     starters: defineCollection({
       type: 'data',
