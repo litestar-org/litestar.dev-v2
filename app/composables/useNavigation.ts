@@ -17,6 +17,7 @@ function _useHeaderLinks() {
       icon: 'i-lucide-graduation-cap',
       to: '#',
       search: false,
+      disabled: true,
     }, {
       label: 'Plugins',
       to: '/plugins',
