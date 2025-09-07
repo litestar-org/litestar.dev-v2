@@ -9,6 +9,7 @@ hero:
       content: |
         ::code-tree{defaultValue="main.py" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
         ```python [main.py]
+        import uvicorn
         from litestar import Litestar, get
 
         @get("/")
@@ -16,6 +17,9 @@ hero:
             return {"message": "Hello, World!"}
 
         app = Litestar(route_handlers=[hello])
+
+        if __name__ == "__main__":
+            uvicorn.run(app)
         ```
 
         ```toml [pyproject.toml]
@@ -26,155 +30,134 @@ hero:
         readme = "README.md"
         requires-python = ">=3.13"
         dependencies = [
-            "litestar>=3.0.0",
+            "litestar[standard]>=3.0.0",
         ]
         ```
         ::
     - title: Routing
       icon: i-lucide-milestone
       content: |
-        ::code-tree{defaultValue="pages/index.vue" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
-        ```vue [app.vue]
-        <template>
-          <NuxtPage />
-        </template>
+        ::code-tree{defaultValue="main.py" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
+        ```python [controllers/class_controller.py]
+        from litestar import Controller, get
+
+        class MyController(Controller):
+            path = "/class"
+
+            @get("/{name:str}")
+            async def greet(self, name: str) -> dict[str, str]:
+                return {"message": f"Hello, {name}!"}
         ```
 
-        ```json [package.json]
-        {
-          "name": "nuxt-routing",
-          "private": true,
-          "type": "module",
-          "scripts": {
-            "dev": "nuxt dev",
-            "build": "nuxt build",
-            "generate": "nuxt generate",
-            "preview": "nuxt preview"
-          },
-          "dependencies": {
-            "nuxt": "latest"
-          }
-        }
+        ```python [controllers/router_controller.py]
+        from litestar import Router
+        from litestar.handlers import get
+
+        @get("/")
+        async def index() -> dict[str, str]:
+            return {"message": "Hello, World!"}
+
+        router = Router(path="/greet", route_handlers=[index])
         ```
 
-        ```vue [pages/index.vue]
-        <template>
-          <h1>Index page</h1>
-          <NuxtLink to="/blog/hello-world">
-            Go to blog post
-          </NuxtLink>
-        </template>
+        ```python [main.py]
+        import uvicorn
+        from litestar import Litestar
+        from controllers.class_controller import MyController
+        from controllers.router_controller import router
+
+        app = Litestar(route_handlers=[MyController, router])
+
+        if __name__ == "__main__":
+            uvicorn.run(app)
         ```
-        ```vue [pages/blog/[slug\\].vue]
-        <template>
-          <h1>Blog post {{ $route.params.slug }}</h1>
-        </template>
+
+        ```toml [pyproject.toml]
+        [project]
+        name = "litestar-routing-example"
+        version = "0.1.0"
+        description = "A Litestar routing example"
+        readme = "README.md"
+        requires-python = ">=3.13"
+        dependencies = [
+            "litestar[standard]>=3.0.0",
+        ]
         ```
         ::
     - title: Websockets
       icon: i-lucide-unplug
       content: |
-        ::code-tree{defaultValue="pages/index.vue" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
-        ```vue [app.vue]
-        <template>
-          <NuxtPage />
-        </template>
+        ::code-tree{defaultValue="main.py" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
+        ```python [main.py]
+        import uvicorn
+        from litestar import Litestar, websocket
+        from litestar.connection import WebSocket
+
+        @websocket("/")
+        async def echo_socket(socket: WebSocket) -> None:
+            await socket.accept()
+            while True:
+                data = await socket.receive_text()
+                await socket.send_text(f"Your message: {data}")
+
+        app = Litestar(route_handlers=[echo_socket])
+
+        if __name__ == "__main__":
+            uvicorn.run(app)
         ```
 
-        ```json [package.json]
-        {
-          "name": "nuxt-data-fetching",
-          "private": true,
-          "type": "module",
-          "scripts": {
-            "dev": "nuxt dev",
-            "build": "nuxt build",
-            "generate": "nuxt generate",
-            "preview": "nuxt preview"
-          },
-          "dependencies": {
-            "nuxt": "latest"
-          }
-        }
-        ```
-
-        ```vue [pages/index.vue]
-        <script setup lang="ts">
-        const { data: page } = await useFetch('/api/cms/home')
-        </script>
-
-        <template>
-          <h1>{{ page.title }}</h1>
-          <NuxtLink to="/blog/hello-world">
-            Go to blog post
-          </NuxtLink>
-        </template>
-        ```
-        ```vue [pages/blog/[slug\\].vue]
-        <script setup lang="ts">
-          const { slug } = useRoute().params
-          const { data: post } = await useFetch(`/api/cms/blog/${slug}`)
-        </script>
-
-        <template>
-          <h1>{{ post.title }}</h1>
-          <NuxtLink to="/">
-            Go to home
-          </NuxtLink>
-        </template>
+        ```toml [pyproject.toml]
+        [project]
+        name = "litestar-websockets-echo"
+        version = "0.1.0"
+        description = "A Litestar websockets echo example"
+        readme = "README.md"
+        requires-python = ">=3.13"
+        dependencies = [
+            "litestar[standard]>=3.0.0",
+        ]
         ```
         ::
     - title: DTOs
       icon: i-lucide-wand-sparkles
       content: |
-        ::code-tree{defaultValue="app.vue" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
-        ```vue [app.vue]
-        <script setup>
-        const message = ref('Nuxt')
-        const hello = () => sayHello(message.value)
-        </script>
+        ::code-tree{defaultValue="main.py" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
+        ```python [main.py]
+        import uvicorn
+        from litestar import Litestar, post
+        from litestar.dto.msgspec_dto import MsgspecDTO
+        from litestar.dto import DTOConfig
+        from msgspec import Struct
 
-        <template>
-          <main>
-            <h1>Demo with auto imports</h1>
-            <form @submit.prevent="hello">
-              <MyInput v-model="message" />
-              <button type="submit">Say Hello</button>
-            </form>
-          </main>
-        </template>
+        class User(Struct):
+            name: str
+            email: str
+            password: str
+
+        class UserResponseDTO(MsgspecDTO[User]):
+            config = DTOConfig(exclude={"password"})
+
+        @post("/users", return_dto=UserResponseDTO)
+        async def create_user(data: User) -> User:
+            # In a real application, you would save the user to a database.
+            return User(name=data.name, email=data.email, password=data.password)
+
+        app = Litestar(route_handlers=[create_user], debug=True)
+
+        if __name__ == "__main__":
+            uvicorn.run(app)
         ```
 
-        ```vue [components/MyInput.vue]
-        <script setup>
-        const modelValue = defineModel<string>()
-        </script>
-
-        <template>
-          <input v-model="modelValue" />
-        </template>
-        ```
-        ```ts [composables/say-hello.ts]
-        export function sayHello(message = 'World') {
-          alert(`Hello ${upperCase(message)}!`)
-        }
-        ```
-
-        ```json [package.json]
-        {
-          "name": "hello-nuxt",
-          "private": true,
-          "type": "module",
-          "scripts": {
-            "dev": "nuxt dev",
-            "build": "nuxt build",
-            "generate": "nuxt generate",
-            "preview": "nuxt preview"
-          },
-          "dependencies": {
-            "nuxt": "latest"
-          }
-        }
+        ```toml [pyproject.toml]
+        [project]
+        name = "litestar-dto-example"
+        version = "0.1.0"
+        description = "A Litestar DTO example"
+        readme = "README.md"
+        requires-python = ">=3.13"
+        dependencies = [
+            "litestar[standard]>=3.0.0"
+        ]
         ```
         ::
     - title: OpenAPI
