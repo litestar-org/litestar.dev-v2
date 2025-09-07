@@ -51,44 +51,44 @@ function _useHeaderLinks() {
 export const useHeaderLinks = import.meta.client ? createSharedComposable(_useHeaderLinks) : _useHeaderLinks
 
 const footerLinks = [{
+  label: 'Framework',
+  children: [{
+    label: 'Documentation',
+    to: 'https://docs.litestar.dev',
+    target: '_blank'
+  }, {
+    label: 'Changelog',
+    to: 'https://docs.litestar.dev/latest/release-notes/changelog.html',
+    target: '_blank'
+  }, {
+    label: 'API Reference',
+    to: 'https://docs.litestar.dev/latest/reference/index.html',
+    target: '_blank'
+  }]
+}, {
+  label: 'Ecosystem',
+  children: [{
+    label: 'Plugins',
+    to: '/plugins',
+  }, {
+    label: 'Templates',
+    to: '/templates',
+  }, {
+    label: 'Deploy',
+    to: '/deploy',
+  }]
+}, {
   label: 'Community',
   children: [{
-    label: 'Nuxters',
-    to: 'https://nuxters.nuxt.com',
+    label: 'About',
+    to: '/about'
+  }, {
+    label: 'Blog',
+    to: '/blog'
+  }, {
+    label: 'Sponsor us',
+    to: 'https://github.com/sponsors/litestar-org',
     target: '_blank'
-  }, {
-    label: 'Team',
-    to: '/team'
-  }, {
-    label: 'Design Kit',
-    to: '/design-kit'
-  }]
-}, {
-  label: 'Products',
-  children: [{
-    label: 'Nuxt UI Pro',
-    to: 'https://ui.nuxt.com/pro?utm_source=nuxt-website&utm_medium=footer',
-    target: '_blank'
-  }, {
-    label: 'Nuxt Studio',
-    to: 'https://content.nuxt.com/studio/?utm_source=nuxt-website&utm_medium=footer',
-    target: '_blank'
-  }, {
-    label: 'NuxtHub',
-    to: 'https://hub.nuxt.com/?utm_source=nuxt-website&utm_medium=footer',
-    target: '_blank'
-  }]
-}, {
-  label: 'Enterprise',
-  children: [{
-    label: 'Support',
-    to: '/enterprise/support'
-  }, {
-    label: 'Agencies',
-    to: '/enterprise/agencies'
-  }, {
-    label: 'Sponsors',
-    to: '/enterprise/sponsors'
   }]
 }]
 
