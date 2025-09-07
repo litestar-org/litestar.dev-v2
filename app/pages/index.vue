@@ -14,18 +14,15 @@ const [{ data: page }, { data: starters }, { data: templates }, { data: plugins 
   useAsyncData('plugins', () => queryCollection('plugins').all())
 ])
 
-const installCommands = ref<TabsItem[]>([
-  {
-    label: 'pip',
-    icon: 'i-custom-python',
-    content: 'pip install litestar'
-  },
-  {
-    label: 'uv',
-    icon: 'i-custom-uv',
-    content: 'uv add litestar'
-  }
-])
+const { packageManagers, selectedPackageManager } = usePackageManager()
+
+const installCommands = computed<TabsItem[]>(() => 
+  packageManagers.map(pm => ({
+    label: pm.label,
+    icon: pm.icon,
+    content: pm.command + ' litestar'
+  }))
+)
 
 // Templates tab configuration
 const templateTabs = ref<TabsItem[]>([
