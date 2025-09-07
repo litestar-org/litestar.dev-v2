@@ -195,10 +195,10 @@ const _useNavigation = () => {
       }
 
       pluginsGroup.items = plugins.value
-        .filter(plugin => ['name', 'npm', 'repo'].map(field => plugin[field as keyof typeof plugin]).filter(Boolean).some(value => typeof value === 'string' && value.search(searchTextRegExp(searchTerm.value)) !== -1))
+        .filter(plugin => ['name', 'pypi', 'repo'].map(field => plugin[field as keyof typeof plugin]).filter(Boolean).some(value => typeof value === 'string' && value.search(searchTextRegExp(searchTerm.value)) !== -1))
         .map(plugin => ({
           id: `plugin-${plugin.name}`,
-          label: plugin.npm,
+          label: plugin.pypi,
           suffix: plugin.description,
           avatar: {
             src: pluginImage(plugin.icon),

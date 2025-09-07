@@ -130,7 +130,7 @@ const items = computed(() => [
             <UTooltip text="Monthly PyPi Downloads">
               <NuxtLink
                 class="flex items-center gap-1 hover:text-highlighted"
-                :to="plugin?.npm ? `https://pypi.org/project/${plugin.pypi}` : '#'"
+                :to="plugin?.pypi ? `https://pypi.org/project/${plugin.pypi}` : '#'"
                 target="_blank"
               >
                 <UIcon name="i-lucide-circle-arrow-down" class="size-4 shrink-0" />
@@ -157,7 +157,7 @@ const items = computed(() => [
                 color="neutral"
                 size="xs"
                 variant="outline"
-                @click="copyInstallCommand(plugin?.name)"
+                @click="copyInstallCommand(plugin?.key)"
               >
                 <span class="sr-only">Copy command to install {{ plugin?.name }}</span>
               </UButton>

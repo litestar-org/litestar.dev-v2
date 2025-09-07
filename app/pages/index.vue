@@ -87,7 +87,7 @@ const selectedTemplateTab = ref('starter')
       <template #links>
         <div class="flex flex-col gap-4">
           <div class="flex items-center flex-wrap gap-2">
-            <UButton to="https://docs.litestar.dev/" size="xl" trailing-icon="i-lucide-arrow-right">
+            <UButton to="https://docs.litestar.dev/" size="xl" trailing-icon="i-lucide-arrow-right" target="_blank">
               Get started
             </UButton>
             <UButton to="https://github.com/litestar-org/litestar" target="_blank" size="xl" color="neutral" variant="subtle" leading-icon="i-simple-icons-github">
