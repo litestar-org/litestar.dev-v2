@@ -122,9 +122,7 @@ hero:
       icon: i-lucide-wand-sparkles
       content: |
         ::code-tree{defaultValue="main.py" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
-        ```python [main.py]
-        import uvicorn
-        from litestar import Litestar, post
+        ```python [schema.py]
         from litestar.dto.msgspec_dto import MsgspecDTO
         from litestar.dto import DTOConfig
         from msgspec import Struct
@@ -136,10 +134,15 @@ hero:
 
         class UserResponseDTO(MsgspecDTO[User]):
             config = DTOConfig(exclude={"password"})
+        ```
+
+        ```python [main.py]
+        import uvicorn
+        from litestar import Litestar, post
+        from schema import User, UserResponseDTO
 
         @post("/users", return_dto=UserResponseDTO)
         async def create_user(data: User) -> User:
-            # In a real application, you would save the user to a database.
             return User(name=data.name, email=data.email, password=data.password)
 
         app = Litestar(route_handlers=[create_user], debug=True)
