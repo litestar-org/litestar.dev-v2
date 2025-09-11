@@ -2,33 +2,34 @@
 import type { ButtonProps } from '@nuxt/ui-pro'
 
 definePageMeta({
-  heroBackground: 'opacity-70 -z-10'
+  heroBackground: 'opacity-70 -z-10',
 })
 
 const { fetchList, hostingProviders, deploymentTechnologies } = useDeploy()
 
 const title = 'Deploy Litestar App'
-const description = 'Discover the different ways to deploy your Litestar project on different hosting providers and deployment technologies.'
+const description =
+  'Discover the different ways to deploy your Litestar project on different hosting providers and deployment technologies.'
 const links: ButtonProps[] = [
   {
     icon: 'i-lucide-rocket',
     label: 'Deployment Guide',
     to: '#',
     color: 'neutral',
-    size: 'md'
-  }
+    size: 'md',
+  },
 ]
 useSeoMeta({
   titleTemplate: '%s',
   title,
   description,
   ogDescription: description,
-  ogTitle: title
+  ogTitle: title,
 })
 
 defineOgImageComponent('Docs', {
   title: 'Deploy Litestar',
-  description
+  description,
 })
 
 await fetchList()
@@ -36,11 +37,7 @@ await fetchList()
 
 <template>
   <UContainer>
-    <UPageHero
-      :title="title"
-      :description="description"
-      :links="links"
-    />
+    <UPageHero :title="title" :description="description" :links="links" />
 
     <UPage>
       <UPageBody>
@@ -51,10 +48,11 @@ await fetchList()
               Hosting Providers
             </h2>
             <p class="text-gray-600 dark:text-gray-400">
-              Choose from various cloud platforms and hosting services to deploy your Litestar application.
+              Choose from various cloud platforms and hosting services to deploy
+              your Litestar application.
             </p>
           </div>
-          
+
           <UPageGrid>
             <UPageCard
               v-for="(provider, index) in hostingProviders"
@@ -64,7 +62,11 @@ await fetchList()
               :description="provider.description"
             >
               <template #leading>
-                <UIcon v-if="provider.logoIcon" :name="provider.logoIcon" class="size-10 text-black dark:text-white" />
+                <UIcon
+                  v-if="provider.logoIcon"
+                  :name="provider.logoIcon"
+                  class="size-10 text-black dark:text-white"
+                />
               </template>
               <UBadge
                 v-if="provider.featured === true"
@@ -76,11 +78,10 @@ await fetchList()
               <template #title>
                 {{ provider.title }}
               </template>
-              
+
               <template #description>
                 <span class="line-clamp-2">{{ provider.description }}</span>
               </template>
-              
             </UPageCard>
           </UPageGrid>
         </section>
@@ -92,10 +93,11 @@ await fetchList()
               Deployment Technologies
             </h2>
             <p class="text-gray-600 dark:text-gray-400">
-              Select the right ASGI server or deployment technology to run your Litestar application efficiently.
+              Select the right ASGI server or deployment technology to run your
+              Litestar application efficiently.
             </p>
           </div>
-          
+
           <UPageGrid>
             <UPageCard
               v-for="(tech, index) in deploymentTechnologies"
@@ -105,8 +107,17 @@ await fetchList()
               :description="tech.description"
             >
               <template #leading>
-                <NuxtImg v-if="tech.logoIcon && tech.logoIcon.endsWith('.png')" :src="tech.logoIcon" class="size-10 text-black dark:text-white" />
-                <UIcon v-else-if="tech.logoIcon" :name="tech.logoIcon"   class="size-10 object-contain" alt="" />
+                <NuxtImg
+                  v-if="tech.logoIcon && tech.logoIcon.endsWith('.png')"
+                  :src="tech.logoIcon"
+                  class="size-10 text-black dark:text-white"
+                />
+                <UIcon
+                  v-else-if="tech.logoIcon"
+                  :name="tech.logoIcon"
+                  class="size-10 object-contain"
+                  alt=""
+                />
               </template>
               <UBadge
                 v-if="tech.featured === true"

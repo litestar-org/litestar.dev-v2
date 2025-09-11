@@ -11,17 +11,18 @@ export default defineNuxtConfig({
       crawlLinks: true,
       // routes: ['/'],
       // ignore: ['/plugins/advanced-alchemy'],
-    }
+    },
   },
-  logLevel: 'verbose',  // Add this line
+  logLevel: 'verbose', // Add this line
   compatibilityDate: '2025-07-15',
   runtimeConfig: {
     public: {
       githubUrl: 'https://github.com/litestar-org/litestar',
       discordUrl: 'https://discord.gg/litestar',
       pypiUrl: 'https://pypi.org/project/litestar/',
-      contributorsUrl: 'https://github.com/litestar-org/litestar/graphs/contributors',
-    }
+      contributorsUrl:
+        'https://github.com/litestar-org/litestar/graphs/contributors',
+    },
   },
   devtools: { enabled: false },
   modules: [
@@ -30,7 +31,6 @@ export default defineNuxtConfig({
     'nuxt-content-twoslash',
     '@nuxt/image',
     '@nuxt/content',
-    '@nuxt/eslint',
     '@nuxt/scripts',
     '@vueuse/nuxt',
     '@nuxtjs/mdc',
@@ -40,7 +40,7 @@ export default defineNuxtConfig({
   app: {
     baseURL: '/',
     pageTransition: false,
-    layoutTransition: false
+    layoutTransition: false,
   },
   css: ['~/assets/css/main.css'],
   content: {
@@ -49,25 +49,23 @@ export default defineNuxtConfig({
       markdown: {
         remarkPlugins: {
           // Add remark-gfm
-          'remark-gfm': {
-
-          },  
+          'remark-gfm': {},
         },
         highlight: {
           theme: {
             default: 'material-theme-lighter',
-            dark: 'material-theme-palenight'
+            dark: 'material-theme-palenight',
           },
-          langs: ['sql', 'diff', 'ini', 'python', 'toml','shell']
-        }
-      }
+          langs: ['sql', 'diff', 'ini', 'python', 'toml', 'shell'],
+        },
+      },
     },
   },
   mdc: {
     highlight: {
       noApiRoute: false,
-      langs: ['js', 'python', 'toml','shell'],
-    }
+      langs: ['js', 'python', 'toml', 'shell'],
+    },
   },
   hooks: {
     'content:file:afterParse': async ({ file, content }) => {
@@ -79,27 +77,28 @@ export default defineNuxtConfig({
         // @ts-expect-error -- TODO: fix this
         delete content.meta.body
       }
-    }
+    },
   },
   icon: {
-    customCollections: [{
-      prefix: 'custom',
-      dir: resolve('./app/assets/icons')
-    }],
+    customCollections: [
+      {
+        prefix: 'custom',
+        dir: resolve('./app/assets/icons'),
+      },
+    ],
     clientBundle: {
       scan: true,
-      includeCustomCollections: true
+      includeCustomCollections: true,
     },
-    provider: 'iconify'
+    provider: 'iconify',
   },
   twoslash: {
     floatingVueOptions: {
-      classMarkdown: 'prose prose-primary dark:prose-invert'
+      classMarkdown: 'prose prose-primary dark:prose-invert',
     },
     // Skip Twoslash in dev to improve performance. Turn this on when you want to explicitly test twoslash in dev.
     enableInDev: false,
     // Do not throw when twoslash fails, the typecheck should be down in github.com/nuxt/nuxt's CI
-    throws: false
-  }
-
+    throws: false,
+  },
 })

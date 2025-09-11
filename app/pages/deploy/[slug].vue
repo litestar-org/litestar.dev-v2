@@ -2,21 +2,27 @@
 import { kebabCase } from 'scule'
 
 definePageMeta({
-  heroBackground: 'opacity-30 -z-10'
+  heroBackground: 'opacity-30 -z-10',
 })
 const route = useRoute()
 
 const [{ data: provider }, { data: surround }] = await Promise.all([
-  useAsyncData(`${kebabCase(route.path)}-provider`, () => queryCollection('deploy').path(route.path).first()),
+  useAsyncData(`${kebabCase(route.path)}-provider`, () =>
+    queryCollection('deploy').path(route.path).first(),
+  ),
   useAsyncData(`${kebabCase(route.path)}-surround`, () => {
     return queryCollectionItemSurroundings('deploy', route.path, {
-      fields: ['description']
+      fields: ['description'],
     })
-  })
+  }),
 ])
 
 if (!provider.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Hosting Platform not found', fatal: true })
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Hosting Platform not found',
+    fatal: true,
+  })
 }
 
 const title = provider.value?.title
@@ -27,13 +33,13 @@ useSeoMeta({
   title,
   description,
   ogDescription: description,
-  ogTitle: `Deploy Litestar to ${title}`
+  ogTitle: `Deploy Litestar to ${title}`,
 })
 
 defineOgImageComponent('Docs', {
   headline: 'Deploy To',
   title,
-  description
+  description,
 })
 
 const links = [] as Array<{
@@ -48,14 +54,14 @@ if (provider.value?.website) {
     icon: 'i-lucide-globe',
     label: provider.value?.title,
     to: provider.value?.website,
-    target: '_blank'
+    target: '_blank',
   })
 }
 links.push({
   icon: 'i-lucide-pen',
   label: 'Edit this page',
   to: `https://github.com/litestar-org/litestar-dev/edit/main/content/3.deploy/${route.params.slug}.md`,
-  target: '_blank'
+  target: '_blank',
 })
 </script>
 
@@ -67,12 +73,22 @@ links.push({
         :ui="{ headline: 'mb-8' }"
       >
         <template #headline>
-          <UBreadcrumb :items="[{ label: 'Deploy', to: '/deploy' }, { label: provider.title }]" class="max-w-full" />
+          <UBreadcrumb
+            :items="[
+              { label: 'Deploy', to: '/deploy' },
+              { label: provider.title },
+            ]"
+            class="max-w-full"
+          />
         </template>
 
         <template #title>
           <div class="flex items-center gap-4">
-            <UIcon v-if="provider.logoIcon" :name="provider.logoIcon" class="w-10" />
+            <UIcon
+              v-if="provider.logoIcon"
+              :name="provider.logoIcon"
+              class="w-10"
+            />
             <NuxtImg v-else :src="provider.logoSrc" class="size-10" />
 
             <span>{{ provider.title }}</span>
@@ -93,7 +109,10 @@ links.push({
           <UContentToc :links="provider.body.toc?.links || []">
             <template #bottom>
               <div class="hidden lg:block space-y-6">
-                <USeparator v-if="links?.length && provider.body?.toc?.links?.length" type="dashed" />
+                <USeparator
+                  v-if="links?.length && provider.body?.toc?.links?.length"
+                  type="dashed"
+                />
                 <UPageLinks title="Links" :links="links" />
                 <USeparator type="dashed" />
                 <SocialLinks />

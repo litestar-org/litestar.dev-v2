@@ -18,8 +18,8 @@ const shuffleArray = (array: Plugin[]) => {
 const marqueePluginsData = useState<Plugin[][]>('marqueePlugins', () => [])
 
 const getRandomDelay = (rowIndex: number, index: number) => {
-  const baseDelay = (rowIndex * 0.3) + (index * 0.05)
-  const randomOffset = ((rowIndex * 13) + index) % 10 * 0.1
+  const baseDelay = rowIndex * 0.3 + index * 0.05
+  const randomOffset = ((rowIndex * 13 + index) % 10) * 0.1
   return baseDelay + randomOffset
 }
 
@@ -36,11 +36,15 @@ const initMarqueePlugins = () => {
   marqueePluginsData.value = [row1, row2, row3]
 }
 
-watch(() => props.plugins, (newVal?: Plugin[]) => {
-  if (newVal?.length && !marqueePluginsData.value.length) {
-    initMarqueePlugins()
-  }
-}, { immediate: true })
+watch(
+  () => props.plugins,
+  (newVal?: Plugin[]) => {
+    if (newVal?.length && !marqueePluginsData.value.length) {
+      initMarqueePlugins()
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
@@ -52,7 +56,7 @@ watch(() => props.plugins, (newVal?: Plugin[]) => {
         :reverse="rowIndex % 2 === 1"
         :overlay="false"
         :ui="{
-          root: `[--gap:--spacing(4)] [--duration:400s]`
+          root: `[--gap:--spacing(4)] [--duration:400s]`,
         }"
         class="mb-(--gap)"
       >
@@ -62,15 +66,15 @@ watch(() => props.plugins, (newVal?: Plugin[]) => {
           :initial="{
             scale: 0.5,
             opacity: 0,
-            filter: 'blur(10px)'
+            filter: 'blur(10px)',
           }"
           :animate="{
             scale: 1,
             opacity: 1,
-            filter: 'blur(0px)'
+            filter: 'blur(0px)',
           }"
           :transition="{
-            delay: getRandomDelay(rowIndex, index)
+            delay: getRandomDelay(rowIndex, index),
           }"
           class="flex items-center justify-center size-16 rounded-lg bg-muted p-2 border border-default dark:shadow-lg"
         >
@@ -85,8 +89,14 @@ watch(() => props.plugins, (newVal?: Plugin[]) => {
       </UPageMarquee>
     </div>
 
-    <div class="absolute left-0 top-0 bottom-0 w-1/2 z-10 bg-linear-to-bl from-default/30 to-default to-40%" />
-    <div class="absolute right-0 top-0 bottom-0 w-1/2 z-10 bg-linear-to-br from-default/30 to-default to-40%" />
-    <div class="absolute top-0 left-0 right-0 size-full z-10 bg-linear-to-t from-default to-default/15" />
+    <div
+      class="absolute left-0 top-0 bottom-0 w-1/2 z-10 bg-linear-to-bl from-default/30 to-default to-40%"
+    />
+    <div
+      class="absolute right-0 top-0 bottom-0 w-1/2 z-10 bg-linear-to-br from-default/30 to-default to-40%"
+    />
+    <div
+      class="absolute top-0 left-0 right-0 size-full z-10 bg-linear-to-t from-default to-default/15"
+    />
   </div>
 </template>

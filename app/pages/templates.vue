@@ -1,17 +1,21 @@
 <script setup lang="ts">
-
 definePageMeta({
-  heroBackground: 'opacity-70 -z-10'
+  heroBackground: 'opacity-70 -z-10',
 })
 
-const [{ data: templateData }, { data: starters }, { data: templates }] = await Promise.all([
-  useAsyncData('templatePage', () => queryCollection('templatePage').first()),
-  useAsyncData('starters', () => queryCollection('starters').all()),
-  useAsyncData('templates', () => queryCollection('templates').all())
-])
+const [{ data: templateData }, { data: starters }, { data: templates }] =
+  await Promise.all([
+    useAsyncData('templatePage', () => queryCollection('templatePage').first()),
+    useAsyncData('starters', () => queryCollection('starters').all()),
+    useAsyncData('templates', () => queryCollection('templates').all()),
+  ])
 
 if (!templateData.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Page not found',
+    fatal: true,
+  })
 }
 
 const title = templateData.value?.hero.title
@@ -22,12 +26,12 @@ useSeoMeta({
   title: title,
   description: description,
   ogDescription: description,
-  ogTitle: title
+  ogTitle: title,
 })
 
 defineOgImageComponent('Docs', {
   title: 'Litestar Templates',
-  description: templateData.value?.hero.description
+  description: templateData.value?.hero.description,
 })
 </script>
 
@@ -42,7 +46,7 @@ defineOgImageComponent('Docs', {
 
     <!-- <UPage>
       <UPageBody> -->
-        <!-- Starter Templates Section -->
+    <!-- Starter Templates Section -->
     <UPageSection
       id="starters"
       title="Starter Templates"
@@ -52,7 +56,7 @@ defineOgImageComponent('Docs', {
         description: 'text-left',
       }"
     >
-    <UPageGrid>
+      <UPageGrid>
         <StarterCard
           v-for="(starter, index) in starters"
           :key="`starter-${index}`"
@@ -61,7 +65,7 @@ defineOgImageComponent('Docs', {
       </UPageGrid>
     </UPageSection>
 
-      <!-- </UPageBody>
+    <!-- </UPageBody>
     </UPage> -->
 
     <UPageSection
@@ -73,45 +77,58 @@ defineOgImageComponent('Docs', {
         description: 'text-left',
       }"
     >
-
-    <!-- Dynamic Templates from Content Collection -->
-    <UPageSection
-      v-for="(template, index) in templates"
-      :key="index"
-      :title="template.title"
-      :description="template.description"
-      :links="template.links"
-      :features="template.features"
-      orientation="horizontal"
-      class="lg:border-t border-default"
-      :ui="{
-        title: 'lg:text-4xl',
-        wrapper: 'lg:py-16 lg:border-r border-default order-last lg:pr-16',
-        container: 'lg:py-0',
-        links: 'gap-x-3'
-      }"
-    >
-      <div class="lg:border-x border-default h-full flex items-center lg:bg-muted/20">
-        <Motion class="flex-1" :initial="{ opacity: 0, transform: 'translateY(10px)' }" :while-in-view="{ opacity: 1, transform: 'translateY(0px)' }" :in-view-options="{ once: true }" :transition="{ duration: 0.5, delay: 0.2 }">
-          <UColorModeImage
-            v-if="template.thumbnail"
-            v-bind="template.thumbnail"
-            class="w-full h-auto border lg:border-y lg:border-x-0 border-default rounded-sm lg:rounded-none"
-            :alt="`Template ${index} thumbnail`"
-            width="656"
-            height="369"
-            loading="lazy"
-          />
-          <UCarousel
-            v-else-if="template.images"
-            v-slot="{ item }"
-            :items="(template.images as any[])"
-            dots
+      <!-- Dynamic Templates from Content Collection -->
+      <UPageSection
+        v-for="(template, index) in templates"
+        :key="index"
+        :title="template.title"
+        :description="template.description"
+        :links="template.links"
+        :features="template.features"
+        orientation="horizontal"
+        class="lg:border-t border-default"
+        :ui="{
+          title: 'lg:text-4xl',
+          wrapper: 'lg:py-16 lg:border-r border-default order-last lg:pr-16',
+          container: 'lg:py-0',
+          links: 'gap-x-3',
+        }"
+      >
+        <div
+          class="lg:border-x border-default h-full flex items-center lg:bg-muted/20"
+        >
+          <Motion
+            class="flex-1"
+            :initial="{ opacity: 0, transform: 'translateY(10px)' }"
+            :while-in-view="{ opacity: 1, transform: 'translateY(0px)' }"
+            :in-view-options="{ once: true }"
+            :transition="{ duration: 0.5, delay: 0.2 }"
           >
-            <NuxtImg v-bind="item" class="w-full h-full object-cover" width="576" height="360" loading="lazy" />
-          </UCarousel>
-        </Motion>
-      </div>
+            <UColorModeImage
+              v-if="template.thumbnail"
+              v-bind="template.thumbnail"
+              class="w-full h-auto border lg:border-y lg:border-x-0 border-default rounded-sm lg:rounded-none"
+              :alt="`Template ${index} thumbnail`"
+              width="656"
+              height="369"
+              loading="lazy"
+            />
+            <UCarousel
+              v-else-if="template.images"
+              v-slot="{ item }"
+              :items="template.images as any[]"
+              dots
+            >
+              <NuxtImg
+                v-bind="item"
+                class="w-full h-full object-cover"
+                width="576"
+                height="360"
+                loading="lazy"
+              />
+            </UCarousel>
+          </Motion>
+        </div>
       </UPageSection>
     </UPageSection>
   </UContainer>

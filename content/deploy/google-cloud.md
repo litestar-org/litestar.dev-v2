@@ -66,8 +66,8 @@ env_variables:
   PYTHONPATH: /opt/python
 
 handlers:
-- url: /.*
-  script: auto
+  - url: /.*
+    script: auto
 
 automatic_scaling:
   min_instances: 0
@@ -134,13 +134,16 @@ server {
 For all deployment methods, you can set environment variables:
 
 ### Cloud Run
+
 ```bash
 gcloud run services update litestar-app \
   --set-env-vars DATABASE_URL=your-db-url
 ```
 
 ### App Engine
+
 Add to `app.yaml`:
+
 ```yaml
 env_variables:
   DATABASE_URL: your-db-url

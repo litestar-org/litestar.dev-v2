@@ -1,7 +1,12 @@
 import type { PluginsCollectionItem } from '@nuxt/content'
 import type { Filter, Stats } from '~/types'
 
-type PluginStatsKeys = 'version' | 'monthly_downloads' | 'stars' | 'updated_at' | 'created_at'
+type PluginStatsKeys =
+  | 'version'
+  | 'monthly_downloads'
+  | 'stars'
+  | 'updated_at'
+  | 'created_at'
 
 const iconsMap = {
   Official: 'i-lucide-medal',
@@ -13,7 +18,7 @@ const iconsMap = {
   Performance: 'i-lucide-gauge',
   Request: 'i-lucide-unplug',
   Security: 'i-lucide-shield',
-  UI: 'i-lucide-layout'
+  UI: 'i-lucide-layout',
 }
 
 export const pluginImage = function (icon: string = '', _size: number = 80) {
@@ -39,10 +44,13 @@ export const usePlugins = () => {
     version: '',
     monthly_downloads: 0,
     discord: 0,
-    contributors: 0
+    contributors: 0,
   }))
   const plugins = useState<PluginsCollectionItem[]>('plugins', () => [])
-  const plugin = useState<PluginsCollectionItem>('plugin', () => ({} as PluginsCollectionItem))
+  const plugin = useState<PluginsCollectionItem>(
+    'plugin',
+    () => ({}) as PluginsCollectionItem,
+  )
 
   // Data fetching
   async function fetchList() {
@@ -56,7 +64,7 @@ export const usePlugins = () => {
         const collection = await queryCollection('plugins')
         return await collection.all()
       })
-      console.log("plugin data", data)
+      console.log('plugin data', data)
       plugins.value = data.value || []
     } catch (error) {
       console.error('Failed to fetch plugins from content:', error)
@@ -74,41 +82,48 @@ export const usePlugins = () => {
 
   const orders: Filter[] = [
     { key: 'desc', label: 'Desc', icon: 'i-lucide-arrow-down-wide-narrow' },
-    { key: 'asc', label: 'Asc', icon: 'i-lucide-arrow-up-wide-narrow' }
+    { key: 'asc', label: 'Asc', icon: 'i-lucide-arrow-up-wide-narrow' },
   ]
 
   const categories = computed<Filter[]>(() => {
-    return Object.keys(iconsMap)
-      .map((category) => {
-        return {
-          key: category,
-          label: category,
-          active: route.query.category === category,
-          to: { name: 'plugins', query: category === route.query.category ? undefined : { category }, state: { smooth: '#smooth' } },
-          icon: iconsMap[category as keyof typeof iconsMap] || undefined,
-          click: (e: Event) => {
-            if (route.query.category !== category) {
-              return
-            }
-
-            e.preventDefault()
-
-            router.replace({ query: { ...route.query, category: undefined } })
+    return Object.keys(iconsMap).map((category) => {
+      return {
+        key: category,
+        label: category,
+        active: route.query.category === category,
+        to: {
+          name: 'plugins',
+          query: category === route.query.category ? undefined : { category },
+          state: { smooth: '#smooth' },
+        },
+        icon: iconsMap[category as keyof typeof iconsMap] || undefined,
+        click: (e: Event) => {
+          if (route.query.category !== category) {
+            return
           }
-        }
-      })
+
+          e.preventDefault()
+
+          router.replace({ query: { ...route.query, category: undefined } })
+        },
+      }
+    })
   })
 
   const selectedCategory = computed(() => {
-    return categories.value.find(category => category.label === route.query.category)
+    return categories.value.find(
+      (category) => category.label === route.query.category,
+    )
   })
 
   const selectedSort = computed(() => {
-    return sorts.find(sort => sort.key === route.query.sortBy) || sorts[0]
+    return sorts.find((sort) => sort.key === route.query.sortBy) || sorts[0]
   })
 
   const selectedOrder = computed(() => {
-    return orders.find(order => order.key === route.query.orderBy) || orders[0]
+    return (
+      orders.find((order) => order.key === route.query.orderBy) || orders[0]
+    )
   })
 
   const q = computed<string>(() => {
@@ -137,7 +152,16 @@ export const usePlugins = () => {
           }
         }
         const queryRegExp = searchTextRegExp(q.value as string)
-        if (q.value && !['name', 'pypi', 'category', 'description', 'repo'].map(field => plugin[field as keyof PluginsCollectionItem]).filter(Boolean).some(value => typeof value === 'string' && value.search(queryRegExp) !== -1)) {
+        if (
+          q.value &&
+          !['name', 'pypi', 'category', 'description', 'repo']
+            .map((field) => plugin[field as keyof PluginsCollectionItem])
+            .filter(Boolean)
+            .some(
+              (value) =>
+                typeof value === 'string' && value.search(queryRegExp) !== -1,
+            )
+        ) {
           return false
         }
 
@@ -186,6 +210,6 @@ export const usePlugins = () => {
     // selectedVersion,
     selectedSort,
     selectedOrder,
-    q
+    q,
   }
 }

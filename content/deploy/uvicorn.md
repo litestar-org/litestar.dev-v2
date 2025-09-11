@@ -157,18 +157,18 @@ uvicorn --config uvicorn.json
 
 ```yaml
 # uvicorn.yaml
-app: "app.main:app"
-host: "0.0.0.0"
+app: 'app.main:app'
+host: '0.0.0.0'
 port: 8000
 workers: 4
-loop: "uvloop"
-http: "httptools"
-log_level: "info"
+loop: 'uvloop'
+http: 'httptools'
+log_level: 'info'
 access_log: true
 proxy_headers: true
-forwarded_allow_ips: "*"
-ssl_keyfile: "/path/to/key.pem"
-ssl_certfile: "/path/to/cert.pem"
+forwarded_allow_ips: '*'
+ssl_keyfile: '/path/to/key.pem'
+ssl_certfile: '/path/to/cert.pem'
 ```
 
 ## Process Management with Gunicorn
@@ -362,7 +362,7 @@ services:
   litestar:
     build: .
     ports:
-      - "8000:8000"
+      - '8000:8000'
     environment:
       - DATABASE_URL=postgresql://user:password@postgres:5432/litestar_db
       - SECRET_KEY=your-secret-key
@@ -399,8 +399,8 @@ services:
   nginx:
     image: nginx:alpine
     ports:
-      - "80:80"
-      - "443:443"
+      - '80:80'
+      - '443:443'
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./ssl:/etc/nginx/ssl
@@ -422,7 +422,7 @@ upstream litestar_backend {
     server 127.0.0.1:8002;
     server 127.0.0.1:8003;
     server 127.0.0.1:8004;
-    
+
     # Health checks (nginx plus)
     # health_check interval=10s;
 }
@@ -449,17 +449,17 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-        
+
         # WebSocket support
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
-        
+
         # Timeouts
         proxy_connect_timeout 60s;
         proxy_send_timeout 60s;
         proxy_read_timeout 60s;
-        
+
         # Buffer sizes
         proxy_buffering on;
         proxy_buffer_size 128k;
@@ -527,12 +527,12 @@ async def detailed_health_check() -> dict:
     try:
         # Check database connectivity
         # await database.execute("SELECT 1")
-        
+
         # System metrics
         cpu_percent = psutil.cpu_percent(interval=1)
         memory = psutil.virtual_memory()
         disk = psutil.disk_usage('/')
-        
+
         return {
             "status": "healthy",
             "timestamp": asyncio.get_event_loop().time(),
@@ -569,10 +569,10 @@ class MetricsMiddleware(AbstractMiddleware):
 
         request = Request(scope=scope, receive=receive)
         start_time = time.time()
-        
+
         # Process request
         response = await self.app(scope, receive, send)
-        
+
         # Log metrics
         duration = time.time() - start_time
         logger.info(
@@ -580,7 +580,7 @@ class MetricsMiddleware(AbstractMiddleware):
             f"Status: {response.status_code} "
             f"Duration: {duration:.3f}s"
         )
-        
+
         return response
 ```
 

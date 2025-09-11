@@ -64,21 +64,21 @@ Create a configuration file for NGINX Unit:
 
 ```json
 {
-    "listeners": {
-        "*:8080": {
-            "pass": "applications/litestar"
-        }
-    },
-    "applications": {
-        "litestar": {
-            "type": "python 3.11",
-            "path": "/path/to/your/app",
-            "home": "/path/to/your/venv",
-            "module": "main",
-            "callable": "app",
-            "protocol": "asgi"
-        }
+  "listeners": {
+    "*:8080": {
+      "pass": "applications/litestar"
     }
+  },
+  "applications": {
+    "litestar": {
+      "type": "python 3.11",
+      "path": "/path/to/your/app",
+      "home": "/path/to/your/venv",
+      "module": "main",
+      "callable": "app",
+      "protocol": "asgi"
+    }
+  }
 }
 ```
 
@@ -86,54 +86,54 @@ Create a configuration file for NGINX Unit:
 
 ```json
 {
-    "listeners": {
-        "*:8080": {
-            "pass": "upstreams/litestar-backend"
-        }
+  "listeners": {
+    "*:8080": {
+      "pass": "upstreams/litestar-backend"
+    }
+  },
+  "upstreams": {
+    "litestar-backend": {
+      "servers": {
+        "127.0.0.1:8001": {},
+        "127.0.0.1:8002": {},
+        "127.0.0.1:8003": {}
+      }
+    }
+  },
+  "applications": {
+    "litestar-1": {
+      "type": "python 3.11",
+      "path": "/path/to/your/app",
+      "home": "/path/to/your/venv",
+      "module": "main",
+      "callable": "app",
+      "protocol": "asgi",
+      "processes": 2,
+      "working_directory": "/path/to/your/app",
+      "environment": {
+        "DATABASE_URL": "postgresql://user:pass@localhost/db",
+        "SECRET_KEY": "your-secret-key"
+      }
+    }
+  },
+  "routes": [
+    {
+      "match": {
+        "uri": "/api/*"
+      },
+      "action": {
+        "pass": "applications/litestar-1"
+      }
     },
-    "upstreams": {
-        "litestar-backend": {
-            "servers": {
-                "127.0.0.1:8001": {},
-                "127.0.0.1:8002": {},
-                "127.0.0.1:8003": {}
-            }
-        }
-    },
-    "applications": {
-        "litestar-1": {
-            "type": "python 3.11",
-            "path": "/path/to/your/app",
-            "home": "/path/to/your/venv",
-            "module": "main",
-            "callable": "app",
-            "protocol": "asgi",
-            "processes": 2,
-            "working_directory": "/path/to/your/app",
-            "environment": {
-                "DATABASE_URL": "postgresql://user:pass@localhost/db",
-                "SECRET_KEY": "your-secret-key"
-            }
-        }
-    },
-    "routes": [
-        {
-            "match": {
-                "uri": "/api/*"
-            },
-            "action": {
-                "pass": "applications/litestar-1"
-            }
-        },
-        {
-            "match": {
-                "uri": "/static/*"
-            },
-            "action": {
-                "share": "/path/to/static/files"
-            }
-        }
-    ]
+    {
+      "match": {
+        "uri": "/static/*"
+      },
+      "action": {
+        "share": "/path/to/static/files"
+      }
+    }
+  ]
 }
 ```
 
@@ -248,25 +248,25 @@ curl -X PUT -d '"4"' \
 
 ```json
 {
-    "applications": {
-        "litestar": {
-            "type": "python 3.11",
-            "path": "/opt/litestar-app",
-            "home": "/opt/litestar-app/venv",
-            "module": "main",
-            "callable": "application",
-            "protocol": "asgi",
-            "processes": {
-                "max": 4,
-                "spare": 1,
-                "idle_timeout": 30
-            },
-            "limits": {
-                "timeout": 30,
-                "requests": 1000
-            }
-        }
+  "applications": {
+    "litestar": {
+      "type": "python 3.11",
+      "path": "/opt/litestar-app",
+      "home": "/opt/litestar-app/venv",
+      "module": "main",
+      "callable": "application",
+      "protocol": "asgi",
+      "processes": {
+        "max": 4,
+        "spare": 1,
+        "idle_timeout": 30
+      },
+      "limits": {
+        "timeout": 30,
+        "requests": 1000
+      }
     }
+  }
 }
 ```
 
@@ -274,36 +274,36 @@ curl -X PUT -d '"4"' \
 
 ```json
 {
-    "listeners": {
-        "*:8080": {
-            "pass": "routes"
-        }
-    },
-    "routes": [
-        {
-            "match": {
-                "uri": "/static/*"
-            },
-            "action": {
-                "share": "/opt/litestar-app/static$uri"
-            }
-        },
-        {
-            "action": {
-                "pass": "applications/litestar"
-            }
-        }
-    ],
-    "applications": {
-        "litestar": {
-            "type": "python 3.11",
-            "path": "/opt/litestar-app",
-            "home": "/opt/litestar-app/venv",
-            "module": "main",
-            "callable": "application",
-            "protocol": "asgi"
-        }
+  "listeners": {
+    "*:8080": {
+      "pass": "routes"
     }
+  },
+  "routes": [
+    {
+      "match": {
+        "uri": "/static/*"
+      },
+      "action": {
+        "share": "/opt/litestar-app/static$uri"
+      }
+    },
+    {
+      "action": {
+        "pass": "applications/litestar"
+      }
+    }
+  ],
+  "applications": {
+    "litestar": {
+      "type": "python 3.11",
+      "path": "/opt/litestar-app",
+      "home": "/opt/litestar-app/venv",
+      "module": "main",
+      "callable": "application",
+      "protocol": "asgi"
+    }
+  }
 }
 ```
 
@@ -311,36 +311,33 @@ curl -X PUT -d '"4"' \
 
 ```json
 {
-    "certificates": {
-        "litestar-cert": {
-            "key": "/path/to/private.key",
-            "chain": [
-                "/path/to/cert.pem",
-                "/path/to/intermediate.pem"
-            ]
-        }
-    },
-    "listeners": {
-        "*:443": {
-            "pass": "applications/litestar",
-            "tls": {
-                "certificate": "litestar-cert"
-            }
-        },
-        "*:80": {
-            "pass": "routes/redirect"
-        }
-    },
-    "routes": {
-        "redirect": [
-            {
-                "action": {
-                    "return": 301,
-                    "location": "https://$host$request_uri"
-                }
-            }
-        ]
+  "certificates": {
+    "litestar-cert": {
+      "key": "/path/to/private.key",
+      "chain": ["/path/to/cert.pem", "/path/to/intermediate.pem"]
     }
+  },
+  "listeners": {
+    "*:443": {
+      "pass": "applications/litestar",
+      "tls": {
+        "certificate": "litestar-cert"
+      }
+    },
+    "*:80": {
+      "pass": "routes/redirect"
+    }
+  },
+  "routes": {
+    "redirect": [
+      {
+        "action": {
+          "return": 301,
+          "location": "https://$host$request_uri"
+        }
+      }
+    ]
+  }
 }
 ```
 
@@ -362,13 +359,13 @@ curl --unix-socket /var/run/unit/control.sock \
 
 ```json
 {
-    "settings": {
-        "http": {
-            "log_route": true,
-            "server_version": false
-        }
-    },
-    "access_log": "/var/log/unit/access.log"
+  "settings": {
+    "http": {
+      "log_route": true,
+      "server_version": false
+    }
+  },
+  "access_log": "/var/log/unit/access.log"
 }
 ```
 
@@ -397,19 +394,19 @@ EOF
 
 ```json
 {
-    "applications": {
-        "litestar": {
-            "processes": {
-                "max": 8,
-                "spare": 2,
-                "idle_timeout": 60
-            },
-            "limits": {
-                "timeout": 60,
-                "requests": 10000
-            }
-        }
+  "applications": {
+    "litestar": {
+      "processes": {
+        "max": 8,
+        "spare": 2,
+        "idle_timeout": 60
+      },
+      "limits": {
+        "timeout": 60,
+        "requests": 10000
+      }
     }
+  }
 }
 ```
 

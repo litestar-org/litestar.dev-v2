@@ -167,7 +167,7 @@ granian --config granian.toml
 # CPU-bound applications
 granian --interface asgi --workers 8 --threads 1 app.main:app
 
-# I/O-bound applications  
+# I/O-bound applications
 granian --interface asgi --workers 4 --threads 4 app.main:app
 
 # Auto-detect CPU cores
@@ -263,7 +263,7 @@ services:
   litestar:
     build: .
     ports:
-      - "8000:8000"
+      - '8000:8000'
     environment:
       - DATABASE_URL=postgresql://user:password@postgres:5432/litestar_db
       - SECRET_KEY=your-secret-key
@@ -317,12 +317,12 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-        
+
         # WebSocket support
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
-        
+
         # Timeouts
         proxy_connect_timeout 60s;
         proxy_send_timeout 60s;

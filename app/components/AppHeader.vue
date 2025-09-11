@@ -17,7 +17,6 @@ const latestVersion = computed(() => {
   return versionMatch ? versionMatch[0] : undefined
 })
 
-
 // const mobileNavigation = computed<ContentNavigationItem[]>(() => {
 //   // Show Migration and Bridge on mobile only when user is reading them
 //   const docsLink = navigation.value.find(link => link.path === version.value.path)
@@ -51,7 +50,6 @@ const latestVersion = computed(() => {
 
 //   return topLevelWithChildren.some(link => link.children?.some(child => currentPath.startsWith(child.path as string)))
 // })
-
 </script>
 
 <template>
@@ -60,16 +58,28 @@ const latestVersion = computed(() => {
       <NuxtLink to="/" class="flex gap-2 items-end" aria-label="Back to home">
         <LitestarLogo ref="logo" class="block w-auto h-6" />
 
-        <UTooltip v-if="latestVersion" :text="`Latest release: v${stats?.version || 3}`" class="md:block">
-          <UBadge variant="subtle" size="sm" class="mb-[2px] rounded font-semibold text-[12px]/3" color="primary">
+        <UTooltip
+          v-if="latestVersion"
+          :text="`Latest release: v${stats?.version || 3}`"
+          class="md:block"
+        >
+          <UBadge
+            variant="subtle"
+            size="sm"
+            class="mb-[2px] rounded font-semibold text-[12px]/3"
+            color="primary"
+          >
             v{{ latestVersion }}
           </UBadge>
         </UTooltip>
-
       </NuxtLink>
     </template>
 
-    <UNavigationMenu :items="headerLinks" variant="link" :ui="{ linkLeadingIcon: 'hidden' }" />
+    <UNavigationMenu
+      :items="headerLinks"
+      variant="link"
+      :ui="{ linkLeadingIcon: 'hidden' }"
+    />
 
     <template #right>
       <UTooltip text="Search" :kbds="['meta', 'K']">
@@ -103,7 +113,7 @@ const latestVersion = computed(() => {
           color="neutral"
           :label="stats ? formatNumber(stats.stars) : '...'"
           :ui="{
-            label: 'hidden sm:inline-flex'
+            label: 'hidden sm:inline-flex',
           }"
         >
           <span class="sr-only">Litestar on GitHub</span>
