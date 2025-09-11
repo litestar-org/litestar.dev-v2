@@ -20,9 +20,6 @@ const isDark = computed(() => colorMode.value === 'dark')
               A modern, fast Python ASGI framework for building APIs that scale.
             </p>
           </template>
-          <template #right>
-            <NewsletterForm />
-          </template>
         </UFooterColumns>
       </UContainer>
     </template>
