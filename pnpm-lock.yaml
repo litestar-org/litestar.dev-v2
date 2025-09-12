@@ -98,6 +98,9 @@ importers:
       '@shikijs/transformers':
         specifier: ^3.12.2
         version: 3.12.2
+      husky:
+        specifier: ^9.1.7
+        version: 9.1.7
       nuxt-content-twoslash:
         specifier: ^0.1.2
         version: 0.1.2(@nuxtjs/mdc@0.17.4(magicast@0.3.5))(magicast@0.3.5)
@@ -5435,6 +5438,14 @@ packages:
         integrity: sha512-eKCa6bwnJhvxj14kZk5NCPc6Hb6BdsU9DZcOnmQKSnO1VKrfV0zCvtttPZUsBvjmNDn8rpcJfpwSYnHBjc95MQ==,
       }
     engines: { node: '>=18.18.0' }
+
+  husky@9.1.7:
+    resolution:
+      {
+        integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==,
+      }
+    engines: { node: '>=18' }
+    hasBin: true
 
   ieee754@1.2.1:
     resolution:
@@ -12978,6 +12989,8 @@ snapshots:
   human-signals@5.0.0: {}
 
   human-signals@8.0.1: {}
+
+  husky@9.1.7: {}
 
   ieee754@1.2.1: {}
 
