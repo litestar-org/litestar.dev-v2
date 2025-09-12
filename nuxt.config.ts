@@ -36,7 +36,13 @@ export default defineNuxtConfig({
     '@nuxtjs/mdc',
     'nuxt-og-image',
     'motion-v/nuxt',
+    '@nuxtjs/google-fonts',
   ],
+  googleFonts: {
+    families: {
+      Inter: [400, 500, 600, 700],
+    },
+  },
   app: {
     baseURL: '/',
     pageTransition: false,
