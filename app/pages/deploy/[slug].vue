@@ -20,7 +20,7 @@ const [{ data: provider }, { data: surround }] = await Promise.all([
 if (!provider.value) {
   throw createError({
     statusCode: 404,
-    statusMessage: 'Hosting Platform not found',
+    statusMessage: 'Hosting Platform/Deployment not found',
     fatal: true,
   })
 }
@@ -60,7 +60,7 @@ if (provider.value?.website) {
 links.push({
   icon: 'i-lucide-pen',
   label: 'Edit this page',
-  to: `https://github.com/litestar-org/litestar-dev/edit/main/content/3.deploy/${route.params.slug}.md`,
+  to: `https://github.com/litestar-org/litestar-dev/edit/main/content/deploy/${route.params.slug}.md`,
   target: '_blank',
 })
 </script>
@@ -116,7 +116,6 @@ links.push({
                 <UPageLinks title="Links" :links="links" />
                 <USeparator type="dashed" />
                 <SocialLinks />
-                <Ads />
               </div>
             </template>
           </UContentToc>
