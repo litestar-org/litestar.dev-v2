@@ -31,11 +31,11 @@ const title = article.value.seo?.title || article.value.title
 const description = article.value.seo?.description || article.value.description
 
 useSeoMeta({
-  titleTemplate: '%s · Nuxt Blog',
+  titleTemplate: '%s · Litestar Blog',
   title,
   description,
   ogDescription: description,
-  ogTitle: `${title} · Nuxt Blog`,
+  ogTitle: `${title} · Litestar Blog`,
 })
 
 if (article.value.image) {
@@ -51,7 +51,7 @@ if (article.value.image) {
 function formatSocialIntentQueryText(handle: string | undefined): string {
   const credit = handle ? ` by @${handle}` : ''
   const body = article.value.title + credit
-  const link = `https://nuxt.com${article.value.path}`
+  const link = `https://litestar.dev${article.value.path}`
   return encodeURIComponent(`${body}\n\n${link}`)
 }
 
@@ -67,7 +67,7 @@ const socialLinks = computed(() =>
         {
           label: 'LinkedIn',
           icon: 'i-simple-icons-linkedin',
-          to: `https://www.linkedin.com/sharing/share-offsite/?url=https://nuxt.com${article.value.path}`,
+          to: `https://www.linkedin.com/sharing/share-offsite/?url=https://litestar.dev${article.value.path}`,
         },
         {
           label: 'Bluesky',
@@ -197,7 +197,6 @@ const links = [
                 <UPageLinks title="Links" :links="links" />
                 <USeparator type="dashed" />
                 <SocialLinks />
-                <Ads />
               </div>
             </template>
           </UContentToc>
