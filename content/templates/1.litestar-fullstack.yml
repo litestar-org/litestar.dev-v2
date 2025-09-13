@@ -5,21 +5,21 @@ thumbnail:
   dark: 'https://assets.hub.nuxt.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJodHRwczovL2Rhc2hib2FyZC10ZW1wbGF0ZS5udXh0LmRldiIsImlhdCI6MTczOTQ2MzU2N30._VElt4uvLjvAMdnTLytCInOajMElzWDKbmvOaMZhZUI.jpg?theme=dark'
   light: 'https://assets.hub.nuxt.com/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJodHRwczovL2Rhc2hib2FyZC10ZW1wbGF0ZS5udXh0LmRldiIsImlhdCI6MTczOTQ2MzU2N30._VElt4uvLjvAMdnTLytCInOajMElzWDKbmvOaMZhZUI.jpg?theme=light'
 features:
-  - title: Built with React
-    icon: i-lucide-layout-list
-  - title: Easily editable content via Markdown & YAML
-    icon: i-simple-icons-markdown
-  - title: Fully responsive design
-    icon: i-lucide-smartphone
+  - title: Database integration with Advanced Alchemy
+    icon: i-lucide-database
+  - title: User authentication/registration and access rights
+    icon: i-lucide-user
+  - title: Front-end using React
+    icon: i-simple-icons-react
 links:
   - label: Preview
-    to: '#'
+    to: 'https://github.com/litestar-org/litestar-fullstack'
     target: _blank
-    leadingIcon: i-logos-nuxt-icon
+    leadingIcon: i-custom-litestar
     trailingIcon: i-lucide-arrow-up-right
     color: neutral
   - label: Repository
-    to: '#'
+    to: 'https://github.com/litestar-org/litestar-fullstack'
     target: _blank
     leadingIcon: i-simple-icons-github
     trailingIcon: i-lucide-arrow-up-right
