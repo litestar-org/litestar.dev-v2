@@ -17,7 +17,7 @@ onMounted(() => {
 
 <template>
   <div>
-    <BannerVersion />
+    <!-- <BannerVersion /> -->
 
     <AppHeader />
 
