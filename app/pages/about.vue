@@ -86,6 +86,11 @@ const timelineItems = [
     value: 'v3',
   },
 ]
+
+defineOgImageComponent('Page', {
+  title: 'About Litestar',
+  description,
+})
 </script>
 
 <template>
