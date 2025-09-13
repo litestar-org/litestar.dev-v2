@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:nuxt.com)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
+      "Bash(mkdir:*)",
+      "mcp__ide__getDiagnostics"
+    ],
+    "deny": [],
+    "defaultMode": "acceptEdits"
+  }
+}

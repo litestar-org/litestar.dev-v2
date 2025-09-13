@@ -220,12 +220,12 @@ const createdAgo = computed(() =>
 //   ogTitle: computed(() => `${title.value} · Litestar Plugins`)
 // })
 
-// defineOgImageComponent('Plugin', {
-//   plugin: plugin.value,
-//   headline: 'Litestar Plugins',
-//   title: title.value,
-//   description: description.value
-// })
+defineOgImageComponent('OgImagePlugin', {
+  plugin: plugin.value,
+  headline: 'Litestar Plugin',
+  title: title.value,
+  description: description.value
+})
 </script>
 
 <template>
@@ -350,7 +350,6 @@ const createdAgo = computed(() =>
           v-if="readmeContent2?.body"
           :value="readmeContent2"
           :components="{
-            PluginProseA: picture,
             a: PluginProseA,
             img: PluginProseImg,
             kbd: PluginProseKbd,
