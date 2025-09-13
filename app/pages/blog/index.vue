@@ -3,6 +3,7 @@ definePageMeta({
   heroBackground: 'opacity-70 -z-10',
 })
 const { fetchList, articles } = useBlog()
+const { enrichArticlesWithImages } = useBlogImages()
 
 const page = {
   title: 'Litestar Blog',
@@ -16,12 +17,20 @@ useSeoMeta({
   ogDescription: page.description,
   ogTitle: page.title,
 })
+
 defineOgImageComponent('Page', {
   title: page.title,
   description: page.description,
 })
 
+// Enrich articles with OG images when no image is specified
+const articlesWithImages = computed(() => {
+  return enrichArticlesWithImages(articles.value || [])
+})
+
 await fetchList()
+
+// console.log('ARTICLES:', articlesWithImages.value)
 </script>
 
 <template>
@@ -37,7 +46,7 @@ await fetchList()
       <UContainer>
         <UBlogPosts class="mb-12 md:grid-cols-2 lg:grid-cols-3">
           <UBlogPost
-            v-for="(article, index) in articles"
+            v-for="(article, index) in articlesWithImages"
             :key="article.path"
             :to="article.path"
             :title="article.title"
