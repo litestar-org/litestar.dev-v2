@@ -5,17 +5,29 @@
 @theme static {
   --font-sans: 'Public Sans', sans-serif;
 
-  --color-green-50: #effdf5;
-  --color-green-100: #d9fbe8;
-  --color-green-200: #b3f5d1;
-  --color-green-300: #75edae;
-  --color-green-400: #00dc82;
-  --color-green-500: #00c16a;
-  --color-green-600: #00a155;
-  --color-green-700: #007f45;
-  --color-green-800: #016538;
-  --color-green-900: #0a5331;
-  --color-green-950: #052e16;
+  --color-litestar-50: #fefcf3;
+  --color-litestar-100: #fdf8e6;
+  --color-litestar-200: #fbefc4;
+  --color-litestar-300: #f8e397;
+  --color-litestar-400: #f4d55a;
+  --color-litestar-500: #edb641;
+  --color-litestar-600: #dfa52e;
+  --color-litestar-700: #ba8726;
+  --color-litestar-800: #966b23;
+  --color-litestar-900: #7a5620;
+  --color-litestar-950: #472f0f;
+
+  --color-litestar-secondary-50: #f8f9fb;
+  --color-litestar-secondary-100: #f0f2f6;
+  --color-litestar-secondary-200: #dfe4ea;
+  --color-litestar-secondary-300: #c7d0da;
+  --color-litestar-secondary-400: #a8b6c5;
+  --color-litestar-secondary-500: #8e9cb0;
+  --color-litestar-secondary-600: #7a8499;
+  --color-litestar-secondary-700: #6b7185;
+  --color-litestar-secondary-800: #5a5f6e;
+  --color-litestar-secondary-900: #4a4f5c;
+  --color-litestar-secondary-950: #202235;
 }
 
 :root {

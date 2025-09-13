@@ -163,7 +163,7 @@ const stats = [
             <UBadge
               class="shine mb-2"
               variant="subtle"
-              :color="maintainer.role === 'Member' ? 'secondary' : 'primary'"
+              :color="maintainer.role === 'Member' ? 'info' : 'primary'"
               :label="maintainer.role"
             />
             <UButton

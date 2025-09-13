@@ -5,8 +5,8 @@ export default defineAppConfig({
     //   preference: 'light',
     // },
     colors: {
-      primary: 'yellow',
-      neutral: 'slate',
+      primary: 'litestar',
+      secondary: 'litestar-secondary',
     },
     pageHero: {
       slots: {
