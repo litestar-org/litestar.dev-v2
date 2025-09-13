@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 defineProps<{
   title: string
   description: string
@@ -23,6 +22,5 @@ defineProps<{
         {{ description }}
       </p>
     </div>
-
   </div>
 </template>
