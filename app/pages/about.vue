@@ -31,23 +31,25 @@ defineOgImageComponent('Page', {
   title: title,
   description,
 })
+const { stats: data } = useStats()
+
 
 const stats = [
   {
     label: 'Maintainers',
-    value: '6',
+    value: maintainers.value?.filter(m => m.role === 'Maintainer').length ?? '',
     icon: 'i-lucide-user-check',
     to: '#maintainers',
   },
   {
     label: 'Contributors',
-    value: '160+',
+    value: data.value?.contributors ?? '',
     icon: 'i-lucide-users',
     to: 'https://discord.gg/litestar',
   },
   {
     label: 'Version',
-    value: '3.0',
+    value: data.value?.version ?? '',
     icon: 'i-lucide-tag',
     to: 'https://github.com/litestar-org/litestar/releases',
   },
@@ -58,7 +60,6 @@ const stats = [
     to: 'https://github.com/litestar-org/litestar/blob/main/LICENSE',
   },
 ]
-
 </script>
 
 <template>
