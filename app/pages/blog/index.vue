@@ -16,8 +16,7 @@ useSeoMeta({
   ogDescription: page.description,
   ogTitle: page.title,
 })
-defineOgImageComponent('Docs', {
-  headline: 'Blog',
+defineOgImageComponent('Page', {
   title: page.title,
   description: page.description,
 })

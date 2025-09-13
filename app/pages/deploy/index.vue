@@ -27,8 +27,8 @@ useSeoMeta({
   ogTitle: title,
 })
 
-defineOgImageComponent('Docs', {
-  title: 'Deploy Litestar',
+defineOgImageComponent('Page', {
+  title: title,
   description,
 })
 

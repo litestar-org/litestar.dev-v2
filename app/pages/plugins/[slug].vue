@@ -35,7 +35,6 @@ const [{ data: plugin }, { data: pluginReadme }] = await Promise.all([
 // }
 // console.log(plugin.value)
 // Fetch README from GitHub
-const readme = ref<any>(null)
 
 // const { data } = await useFetch(`https://raw.githubusercontent.com/${plugin.value.repo}/main/README.md`)
 
@@ -212,13 +211,13 @@ const createdAgo = computed(() =>
   plugin.value?.created_at ? useTimeAgo(plugin.value.created_at).value : '',
 )
 
-// useSeoMeta({
-//   titleTemplate: '%s · Litestar Plugins',
-//   title,
-//   description,
-//   ogDescription: description,
-//   ogTitle: computed(() => `${title.value} · Litestar Plugins`)
-// })
+useSeoMeta({
+  titleTemplate: '%s · Litestar Plugins',
+  title,
+  description,
+  ogDescription: description,
+  ogTitle: computed(() => `${title.value} · Litestar Plugins`),
+})
 
 defineOgImageComponent('OgImagePlugin', {
   plugin: plugin.value,
