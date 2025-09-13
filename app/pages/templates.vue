@@ -3,6 +3,7 @@ definePageMeta({
   heroBackground: 'opacity-70 -z-10',
 })
 
+// Retrieving the data for the page, starters, and templates
 const [{ data: templateData }, { data: starters }, { data: templates }] =
   await Promise.all([
     useAsyncData('templatePage', () => queryCollection('templatePage').first()),
@@ -10,6 +11,7 @@ const [{ data: templateData }, { data: starters }, { data: templates }] =
     useAsyncData('templates', () => queryCollection('templates').all()),
   ])
 
+// Creating a 404 if no data found
 if (!templateData.value) {
   throw createError({
     statusCode: 404,
@@ -18,9 +20,11 @@ if (!templateData.value) {
   })
 }
 
+// Extracting title and description for SEO and OG Image
 const title = templateData.value?.hero.title
 const description = templateData.value?.hero.description
 
+// SEO Meta
 useSeoMeta({
   titleTemplate: '%s',
   title: title,
@@ -29,17 +33,18 @@ useSeoMeta({
   ogTitle: title,
 })
 
-defineOgImageComponent('Docs', {
-  title: 'Litestar Templates',
-  description: templateData.value?.hero.description,
+// Open Graph Image
+defineOgImageComponent('Page', {
+  title: title,
+  description: description,
 })
 </script>
 
 <template>
   <UContainer>
     <UPageHero
-      :title="templateData?.hero.title"
-      :description="templateData?.hero.description"
+      :title="title"
+      :description="description"
       :links="templateData?.hero.links"
     >
     </UPageHero>
@@ -49,8 +54,8 @@ defineOgImageComponent('Docs', {
     <!-- Starter Templates Section -->
     <UPageSection
       id="starters"
-      title="Starter Templates"
-      description="Perfect for learning Litestar fundamentals or building simple applications quickly."
+      :title="templateData?.starter.title"
+      :description="templateData?.starter.description"
       :ui="{
         title: 'text-left !text-3xl',
         description: 'text-left',
@@ -70,8 +75,8 @@ defineOgImageComponent('Docs', {
 
     <UPageSection
       id="templates"
-      title="Templates"
-      description="Complete application templates with databases, authentication, and advanced features."
+      :title="templateData?.template.title"
+      :description="templateData?.template.description"
       :ui="{
         title: 'text-left !text-3xl',
         description: 'text-left',

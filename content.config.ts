@@ -1,4 +1,5 @@
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
+// import { z } from 'zod'
 
 const TitleIconFeature = z.object({
   title: z.string(),
@@ -241,6 +242,8 @@ export default defineContentConfig({
       source: 'template.yml',
       schema: z.object({
         hero: PageHero,
+        starter: PageSection,
+        template: PageSection,
       }),
     }),
     blog: defineCollection({
