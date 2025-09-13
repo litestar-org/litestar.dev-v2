@@ -28,6 +28,15 @@ const DualModeImage = z.object({
   alt: z.string().optional(),
 })
 
+const Timeline = z.object({
+  date: z.string().optional(),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  icon: z.string().editor({ input: 'icon' }).optional(),
+  avatar: Image.optional(),
+  value: z.union([z.string(), z.number()]).optional(),
+})
+
 const Link = z.object({
   label: z.string(),
   to: z.string(),
@@ -232,7 +241,7 @@ export default defineContentConfig({
           acknowledgment: z.string(),
         }),
         history: PageSection.extend({
-          timeline: z.string(),
+          timeline: z.array(Timeline),
         }),
         contributing: PageSection,
       }),

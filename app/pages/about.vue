@@ -14,6 +14,8 @@ if (!page.value) {
   })
 }
 
+const config = useRuntimeConfig()
+
 const title = page.value?.hero.title
 const description = page.value?.hero.description
 
@@ -25,8 +27,8 @@ useSeoMeta({
   ogTitle: title,
 })
 
-defineOgImageComponent('Docs', {
-  title: 'About Litestar',
+defineOgImageComponent('Page', {
+  title: title,
   description,
 })
 
@@ -57,40 +59,6 @@ const stats = [
   },
 ]
 
-const timelineItems = [
-  {
-    title: 'Originally "Starlite"',
-    description:
-      'The project began its journey under the name "Starlite", establishing itself as a powerful ASGI framework.',
-    icon: 'i-lucide-star',
-    color: 'primary',
-    date: 'January 2022',
-    value: 'initial',
-  },
-  {
-    title: 'Renamed to "Litestar" in v2.0',
-    description:
-      'To avoid confusion with similar framework names, we rebranded to "Litestar" with version 2.0, marking a new chapter in our development.',
-    icon: 'i-lucide-arrow-right',
-    color: 'primary',
-    date: 'October 2023',
-    value: 'litestar',
-  },
-  {
-    title: 'Litestar v3.0 Release',
-    description:
-      'Major version release bringing enhanced performance, new features, and improved developer experience to the framework.',
-    icon: 'i-lucide-rocket',
-    color: 'primary',
-    date: 'Q3 2025',
-    value: 'v3',
-  },
-]
-
-defineOgImageComponent('Page', {
-  title: 'About Litestar',
-  description,
-})
 </script>
 
 <template>
@@ -158,12 +126,13 @@ defineOgImageComponent('Page', {
     }"
   >
     <div class="max-w-4xl mx-auto">
-      <UTimeline :items="timelineItems" :default-value="1" />
+      <UTimeline :items="page?.history.timeline" :default-value="1" />
     </div>
   </UPageSection>
 
   <!-- Maintainers Team -->
   <UPageSection
+    id="maintainers"
     :title="page?.maintainers.title"
     :description="page?.maintainers.description"
     :ui="{
@@ -215,7 +184,7 @@ defineOgImageComponent('Page', {
     </p>
     <p class="text-center text-lg sm:text-xl/8 text-muted">
       <UButton
-        :to="urlGitHubMember"
+        :to="config.public.contributorsUrl"
         icon="i-simple-icons-github"
         target="_blank"
         color="neutral"
