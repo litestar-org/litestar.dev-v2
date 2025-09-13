@@ -224,7 +224,7 @@ defineOgImageComponent('OgImagePlugin', {
   plugin: plugin.value,
   headline: 'Litestar Plugin',
   title: title.value,
-  description: description.value
+  description: description.value,
 })
 </script>
 

@@ -51,17 +51,17 @@ const officialPluginsLitestar = computed(
 const selectedTemplateTab = ref('starter')
 
 const title = 'Litestar: The Modern Python ASGI Framework'
-const description = 'Build blazing fast APIs with automatic documentation, dependency injection, and type safety. Litestar makes complex web development simple and intuitive.'
+const description =
+  'Build blazing fast APIs with automatic documentation, dependency injection, and type safety. Litestar makes complex web development simple and intuitive.'
 useSeoMeta({
   title,
   titleTemplate: '%s',
   description,
   ogDescription: description,
-  ogTitle: title
+  ogTitle: title,
 })
 
-defineOgImageComponent('OgImageMain', {
-})
+defineOgImageComponent('OgImageMain', {})
 </script>
 
 <template>
