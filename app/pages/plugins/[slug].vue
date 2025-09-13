@@ -202,12 +202,12 @@ const createdAgo = computed(() => plugin.value?.created_at ? useTimeAgo(plugin.v
 //   ogTitle: computed(() => `${title.value} · Litestar Plugins`)
 // })
 
-// defineOgImageComponent('Plugin', {
-//   plugin: plugin.value,
-//   headline: 'Litestar Plugins',
-//   title: title.value,
-//   description: description.value
-// })
+defineOgImageComponent('OgImagePlugin', {
+  plugin: plugin.value,
+  headline: 'Litestar Plugin',
+  title: title.value,
+  description: description.value
+})
 </script>
 
 <template>
@@ -278,7 +278,7 @@ const createdAgo = computed(() => plugin.value?.created_at ? useTimeAgo(plugin.v
 
     <UPage>
       <UPageBody>
-        <ContentRenderer  v-if="readmeContent2?.body" :value="readmeContent2" :components="{ PluginProseA: picture, a: PluginProseA, img: PluginProseImg, kbd: PluginProseKbd }" class="first:[&_picture]:block first:[&_picture]:mb-4" />
+        <ContentRenderer  v-if="readmeContent2?.body" :value="readmeContent2" :components="{ a: PluginProseA, img: PluginProseImg, kbd: PluginProseKbd }" class="first:[&_picture]:block first:[&_picture]:mb-4" />
       </UPageBody>
 
       <template #right>
