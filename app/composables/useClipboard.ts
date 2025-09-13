@@ -4,7 +4,15 @@ type toastOptions = {
   title?: string
   description?: string
   icon?: string
-  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'important' | 'neutral'
+  color?:
+    | 'primary'
+    | 'secondary'
+    | 'info'
+    | 'success'
+    | 'warning'
+    | 'error'
+    | 'important'
+    | 'neutral'
 }
 
 export const useClipboard = () => {
@@ -21,6 +29,6 @@ export const useClipboard = () => {
 
   return {
     copy,
-    copied
+    copied,
   }
 }

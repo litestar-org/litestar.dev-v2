@@ -6,22 +6,31 @@ const isDark = computed(() => colorMode.value === 'dark')
 </script>
 
 <template>
-    <USeparator icon="i-custom-litestar" class="h-px" />
+  <USeparator icon="i-custom-litestar" class="h-px" />
 
-    <UFooter :ui="{ top: 'border-b border-default', root: 'bg-gray-50 dark:bg-gray-900' }">
+  <UFooter
+    :ui="{
+      top: 'border-b border-default',
+      root: 'bg-gray-50 dark:bg-gray-900',
+    }"
+  >
     <template #top>
       <UContainer>
         <UFooterColumns :columns="footerLinks">
           <template #left>
             <div class="flex items-center space-x-2 mb-4">
-              <UIcon :name="isDark ? 'i-custom-litestar-full-dark' : 'i-custom-litestar-full'" class="h-8 w-30" />
+              <UIcon
+                :name="
+                  isDark
+                    ? 'i-custom-litestar-full-dark'
+                    : 'i-custom-litestar-full'
+                "
+                class="h-8 w-30"
+              />
             </div>
             <p class="text-muted text-sm max-w-md">
               A modern, fast Python ASGI framework for building APIs that scale.
             </p>
-          </template>
-          <template #right>
-            <NewsletterForm />
           </template>
         </UFooterColumns>
       </UContainer>
@@ -29,7 +38,8 @@ const isDark = computed(() => colorMode.value === 'dark')
 
     <template #left>
       <p class="text-muted text-sm">
-        © {{ new Date().getFullYear() }} Litestar. Released under the MIT License.
+        © {{ new Date().getFullYear() }} Litestar. Released under the MIT
+        License.
       </p>
     </template>
 
@@ -52,6 +62,6 @@ const isDark = computed(() => colorMode.value === 'dark')
       >
         <span class="sr-only">Litestar on Discord</span>
       </UButton>
-
     </template>
-  </UFooter></template>
+  </UFooter>
+</template>

@@ -1,18 +1,17 @@
-
 <script setup lang="ts">
 defineProps({
   value: {
     type: String,
-    required: true
+    required: true,
   },
   label: {
     type: String,
-    required: false
+    required: false,
   },
   size: {
     type: String as PropType<'lg' | 'xl'>,
-    default: 'lg'
-  }
+    default: 'lg',
+  },
 })
 const { copy, copied } = useClipboard()
 </script>
@@ -26,10 +25,14 @@ const { copy, copied } = useClipboard()
       disabled
       icon="i-lucide-terminal"
       :ui="{
-        base: copied ? 'ring-primary' : ''
+        base: copied ? 'ring-primary' : '',
       }"
     >
-      <div class="absolute inset-0" :class="[copied ? 'cursor-default' : 'cursor-copy']" @click="copy(value)" />
+      <div
+        class="absolute inset-0"
+        :class="[copied ? 'cursor-default' : 'cursor-copy']"
+        @click="copy(value)"
+      />
       <template #trailing>
         <UButton
           :icon="copied ? 'i-lucide-check' : 'i-lucide-copy'"
@@ -38,7 +41,7 @@ const { copy, copied } = useClipboard()
           :padded="false"
           :class="{
             '!text-primary cursor-default': copied,
-            'cursor-copy': !copied
+            'cursor-copy': !copied,
           }"
           aria-label="copy button"
           @click="copy(value)"

@@ -209,7 +209,7 @@ hero:
         ```
         ::
 features:
-  title:  Everything you need to build modern APIs
+  title: Everything you need to build modern APIs
   description: Litestar provides all the tools you need out of the box, with minimal configuration required.
   features:
     - icon: i-lucide-sparkles
@@ -253,7 +253,7 @@ features:
       description: Easy to use WebSockets integration, featuring high- and low-level APIs and support for automatic data validation and serialization.
       to: https://docs.litestar.dev/2/usage/websockets.html
     - icon: i-simple-icons-typescript
-      title: Authentication And Authorization 
+      title: Authentication And Authorization
       description: Session and JWT based authentication and utilities at your disposal to start building your authentication layer with ease.
       to: https://docs.litestar.dev/2/usage/security/index.html
   cta:

@@ -10,7 +10,7 @@
       container: 'p-4 sm:p-4',
       wrapper: 'flex-row items-center gap-1.5',
       leading: 'mb-0',
-      leadingIcon: 'text-highlighted'
+      leadingIcon: 'text-highlighted',
     }"
   >
     <template #title>

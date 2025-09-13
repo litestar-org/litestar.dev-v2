@@ -1,4 +1,3 @@
-
 import type { ParsedContentFile } from '@nuxt/content'
 
 // export interface Stats {
@@ -30,7 +29,11 @@ export interface Plugin {
   type: string
   sponsor?: boolean
   // tags: string[]
-  compatibility: { litestar?: string, nuxt?: string, requires?: { bridge: boolean } }
+  compatibility: {
+    litestar?: string
+    nuxt?: string
+    requires?: { bridge: boolean }
+  }
   stats?: {
     version: string
     downloads: number

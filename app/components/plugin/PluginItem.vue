@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PluginsCollectionItem } from '@nuxt/content';
+import type { PluginsCollectionItem } from '@nuxt/content'
 import type { Plugin } from '~/types'
 
 const emit = defineEmits<{
@@ -7,7 +7,11 @@ const emit = defineEmits<{
   remove: [plugin: Plugin]
 }>()
 
-const { plugin, showBadge = true, isAdded } = defineProps<{
+const {
+  plugin,
+  showBadge = true,
+  isAdded,
+} = defineProps<{
   plugin: PluginC
   showBadge?: boolean
   isAdded: boolean
@@ -23,7 +27,7 @@ const date = computed(() => {
   if (plugin?.created_at) {
     return useTimeAgo(plugin.created_at)
   }
-  
+
   return 'N/A'
 })
 
@@ -31,7 +35,10 @@ const { selectedPackageManager } = usePackageManager()
 
 function copyInstallCommand(pluginName: string) {
   const command = `${selectedPackageManager.value.command} ${pluginName}`
-  copy(command, { title: 'Command copied to clipboard:', description: command })
+  copy(command, {
+    title: 'Command copied to clipboard:',
+    description: command,
+  })
 }
 
 function togglePlugin(plugin: PluginsCollectionItem) {
@@ -55,34 +62,36 @@ const items = computed(() => [
     {
       label: isAdded ? 'Remove plugin' : 'Add plugin',
       icon: isAdded ? 'i-lucide-minus' : 'i-lucide-plus',
-      onSelect: () => togglePlugin(plugin)
+      onSelect: () => togglePlugin(plugin),
     },
     {
       label: 'Copy install command',
       icon: 'i-lucide-terminal',
-      onSelect: () => copyInstallCommand(plugin?.name)
-    }
+      onSelect: () => copyInstallCommand(plugin?.name),
+    },
   ],
   [
     {
       icon: 'i-lucide-book',
       label: 'Documentation',
-      to: plugin?.website ? `${plugin?.website}?utm_source=nuxt.com&utm_medium=aside-module&utm_campaign=nuxt.com` : '#',
-      target: '_blank'
+      to: plugin?.website
+        ? `${plugin?.website}?utm_source=nuxt.com&utm_medium=aside-module&utm_campaign=nuxt.com`
+        : '#',
+      target: '_blank',
     },
     {
       label: 'View on GitHub',
       icon: 'i-lucide-github',
       to: plugin?.repo ? `https://github.com/${plugin?.repo}` : '#',
-      target: '_blank'
+      target: '_blank',
     },
     {
       label: 'View on pypi',
       icon: 'i-lucide-package',
       to: plugin?.pypi ? `https://pypi.org/project/${plugin?.pypi}` : '#',
-      target: '_blank'
-    }
-  ]
+      target: '_blank',
+    },
+  ],
 ])
 </script>
 
@@ -100,7 +109,7 @@ const items = computed(() => [
         container: 'flex flex-col',
         wrapper: 'flex flex-col min-h-0 items-start',
         body: 'flex-none',
-        footer: 'w-full mt-auto pointer-events-auto pt-4 z-[1]'
+        footer: 'w-full mt-auto pointer-events-auto pt-4 z-[1]',
       }"
       @click="handleCardClick"
     >
@@ -130,11 +139,18 @@ const items = computed(() => [
             <UTooltip text="Monthly PyPi Downloads">
               <NuxtLink
                 class="flex items-center gap-1 hover:text-highlighted"
-                :to="plugin?.pypi ? `https://pypi.org/project/${plugin.pypi}` : '#'"
+                :to="
+                  plugin?.pypi ? `https://pypi.org/project/${plugin.pypi}` : '#'
+                "
                 target="_blank"
               >
-                <UIcon name="i-lucide-circle-arrow-down" class="size-4 shrink-0" />
-                <span class="text-sm font-medium whitespace-normal">{{ formatNumber(plugin?.monthly_downloads || 0) }}</span>
+                <UIcon
+                  name="i-lucide-circle-arrow-down"
+                  class="size-4 shrink-0"
+                />
+                <span class="text-sm font-medium whitespace-normal">{{
+                  formatNumber(plugin?.monthly_downloads || 0)
+                }}</span>
               </NuxtLink>
             </UTooltip>
 
@@ -145,7 +161,9 @@ const items = computed(() => [
                 target="_blank"
               >
                 <UIcon name="i-lucide-star" class="size-4 shrink-0" />
-                <span class="text-sm font-medium whitespace-normal">{{ formatNumber(plugin.stars || 0) }}</span>
+                <span class="text-sm font-medium whitespace-normal">{{
+                  formatNumber(plugin.stars || 0)
+                }}</span>
               </NuxtLink>
             </UTooltip>
           </div>
@@ -159,7 +177,9 @@ const items = computed(() => [
                 variant="outline"
                 @click="copyInstallCommand(plugin?.key)"
               >
-                <span class="sr-only">Copy command to install {{ plugin?.name }}</span>
+                <span class="sr-only"
+                  >Copy command to install {{ plugin?.name }}</span
+                >
               </UButton>
             </UTooltip>
           </div>
@@ -173,13 +193,22 @@ const items = computed(() => [
 .shine {
   text-decoration: none;
   display: inline-block;
-  mask-image: linear-gradient(-75deg, rgba(255,255,255,.8) 30%, #fff 50%, rgba(255,255,255,.8) 70%);
+  mask-image: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.8) 30%,
+    #fff 50%,
+    rgba(255, 255, 255, 0.8) 70%
+  );
   mask-size: 200%;
   animation: shine 2s linear infinite;
 }
 
 @keyframes shine {
-  from { -webkit-mask-position: 150%; }
-  to { -webkit-mask-position: -50%; }
+  from {
+    -webkit-mask-position: 150%;
+  }
+  to {
+    -webkit-mask-position: -50%;
+  }
 }
 </style>

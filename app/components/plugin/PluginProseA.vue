@@ -17,17 +17,22 @@ const { data: plugin } = useNuxtData(`plugin-${route.params?.slug}`)
 const props = defineProps({
   href: {
     type: String,
-    default: ''
+    default: '',
   },
   target: {
     type: String,
     default: undefined,
-    required: false
-  }
+    required: false,
+  },
 })
 
 const href = computed(() => {
   if (hasProtocol(props.href) || !plugin.value?.github) return props.href
-  return joinURL(plugin.value.github, 'blob', plugin.value.stats?.defaultBranch || 'main', props.href)
+  return joinURL(
+    plugin.value.github,
+    'blob',
+    plugin.value.stats?.defaultBranch || 'main',
+    props.href,
+  )
 })
 </script>

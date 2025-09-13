@@ -4,7 +4,7 @@ import type { Plugin } from '~/types'
 import { joinURL } from 'ufo'
 
 definePageMeta({
-  heroBackground: 'opacity-50'
+  heroBackground: 'opacity-50',
 })
 
 const input = useTemplateRef('input')
@@ -14,11 +14,21 @@ const el = useTemplateRef<HTMLElement>('el')
 const { packageManagers, selectedPackageManager } = usePackageManager()
 
 const { replaceRoute } = useFilters('plugins')
-const { fetchList, filteredPlugins, q, categories, plugins, selectedSort, selectedOrder, selectedCategory, sorts } = usePlugins()
-
+const {
+  fetchList,
+  filteredPlugins,
+  q,
+  categories,
+  plugins,
+  selectedSort,
+  selectedOrder,
+  selectedCategory,
+  sorts,
+} = usePlugins()
 
 const title = 'Litestar plugins'
-const description = 'Discover a list of Litestar plugins to enhance your application. From authentication to database integrations, find the perfect plugin to supercharge your Litestar project.'
+const description =
+  'Discover a list of Litestar plugins to enhance your application. From authentication to database integrations, find the perfect plugin to supercharge your Litestar project.'
 const site = useSiteConfig()
 
 useSeoMeta({
@@ -28,7 +38,7 @@ useSeoMeta({
   ogDescription: description,
   ogTitle: title,
   ogImage: joinURL(site.url, '/modules-social-card.jpg'),
-  twitterImage: joinURL(site.url, '/modules-social-card.jpg')
+  twitterImage: joinURL(site.url, '/modules-social-card.jpg'),
 })
 
 await fetchList()
@@ -36,13 +46,13 @@ await fetchList()
 defineShortcuts({
   '/': () => {
     input.value?.inputRef?.focus()
-  }
+  },
 })
 
 const breakpoints = useBreakpoints({
   sm: 640,
   md: 768,
-  lg: 1024
+  lg: 1024,
 })
 
 const isMobile = breakpoints.smaller('sm')
@@ -66,7 +76,7 @@ const loadMorePlugins = () => {
   setTimeout(() => {
     const nextItems = filteredPlugins.value.slice(
       currentLength,
-      currentLength + ITEMS_PER_PAGE
+      currentLength + ITEMS_PER_PAGE,
     )
     displayedPlugins.value.push(...nextItems)
     isLoading.value = false
@@ -80,7 +90,10 @@ const initializePlugins = () => {
 const debouncedLoadMore = useDebounceFn(loadMorePlugins, 50)
 
 watch(scrollY, (y) => {
-  if (window.innerHeight + y >= document.documentElement.scrollHeight - SCROLL_THRESHOLD) {
+  if (
+    window.innerHeight + y >=
+    document.documentElement.scrollHeight - SCROLL_THRESHOLD
+  ) {
     debouncedLoadMore()
   }
 })
@@ -92,11 +105,11 @@ watch(filteredPlugins, () => {
 })
 
 const copyAllInstallCommands = () => {
-  const pluginNames = pluginsToAdd.value.map(plugin => plugin.name).join(' ')
+  const pluginNames = pluginsToAdd.value.map((plugin) => plugin.name).join(' ')
   const command = `${selectedPackageManager.value.command} ${pluginNames}`
   copy(command, {
     title: 'Install command copied to clipboard:',
-    description: `Ready to install ${pluginsToAdd.value.length} plugin${pluginsToAdd.value.length > 1 ? 's' : ''} at once`
+    description: `Ready to install ${pluginsToAdd.value.length} plugin${pluginsToAdd.value.length > 1 ? 's' : ''} at once`,
   })
 }
 
@@ -117,15 +130,17 @@ console.log(filteredPlugins)
       class="z-20 relative pt-24"
       :ui="{
         title: 'text-4xl sm:text-7xl text-balance max-w-4xl mx-auto',
-        links: 'max-w-2xl mx-auto'
+        links: 'max-w-2xl mx-auto',
       }"
     >
       <template #title>
-        Ship faster with <span class="text-primary">{{ plugins.length }}+</span> Litestar Plugins
+        Ship faster with
+        <span class="text-primary">{{ plugins.length }}+</span> Litestar Plugins
       </template>
 
       <template #description>
-        Discover our list of plugins to supercharge your Litestar project.<br/>Created and maintained by people from the Litestar team and community.
+        Discover our list of plugins to supercharge your Litestar project.<br />Created
+        and maintained by people from the Litestar team and community.
       </template>
 
       <template #links>
@@ -161,7 +176,7 @@ console.log(filteredPlugins)
               <USelectMenu
                 :model-value="selectedSort"
                 :items="sorts"
-                :search-input=false
+                :search-input="false"
                 size="lg"
                 color="neutral"
                 class="w-auto"
@@ -174,7 +189,12 @@ console.log(filteredPlugins)
                 size="lg"
                 color="neutral"
                 variant="outline"
-                @click="replaceRoute('orderBy', selectedOrder.key === 'desc' ? 'asc' : 'desc')"
+                @click="
+                  replaceRoute(
+                    'orderBy',
+                    selectedOrder.key === 'desc' ? 'asc' : 'desc',
+                  )
+                "
               >
                 <span class="sr-only">Sort by {{ selectedOrder.label }}</span>
               </UButton>
@@ -182,7 +202,7 @@ console.log(filteredPlugins)
               <USelectMenu
                 v-model="selectedPackageManager"
                 :items="packageManagers"
-                :search-input=false
+                :search-input="false"
                 size="lg"
                 color="neutral"
                 variant="outline"
@@ -200,7 +220,7 @@ console.log(filteredPlugins)
               <USelectMenu
                 :model-value="selectedCategory"
                 :items="categories"
-                :search-input=false
+                :search-input="false"
                 size="lg"
                 color="neutral"
                 variant="outline"
@@ -222,7 +242,7 @@ console.log(filteredPlugins)
               <USelectMenu
                 :model-value="selectedSort"
                 :items="sorts"
-                :search-input=false
+                :search-input="false"
                 size="lg"
                 color="neutral"
                 class="flex-1"
@@ -234,13 +254,18 @@ console.log(filteredPlugins)
                 size="lg"
                 color="neutral"
                 variant="outline"
-                @click="replaceRoute('orderBy', selectedOrder.key === 'desc' ? 'asc' : 'desc')"
+                @click="
+                  replaceRoute(
+                    'orderBy',
+                    selectedOrder.key === 'desc' ? 'asc' : 'desc',
+                  )
+                "
               />
               <USelectMenu
                 v-model="selectedPackageManager"
                 :items="packageManagers"
                 size="lg"
-                :search-input=false
+                :search-input="false"
                 color="neutral"
                 variant="outline"
                 class="w-28"
@@ -272,21 +297,32 @@ console.log(filteredPlugins)
       <UPageBody>
         <div class="flex items-center gap-2 mb-4 text-muted">
           <UIcon name="i-lucide-info" class="size-4" />
-          <span class="text-xs">Shift+click to select plugins for bulk installation</span>
+          <span class="text-xs"
+            >Shift+click to select plugins for bulk installation</span
+          >
         </div>
 
-        <UPageGrid v-if="filteredPlugins?.length" class="lg:grid-cols-2 xl:grid-cols-3">
+        <UPageGrid
+          v-if="filteredPlugins?.length"
+          class="lg:grid-cols-2 xl:grid-cols-3"
+        >
           <PluginItem
             v-for="(plugin, index) in displayedPlugins"
             :key="plugin.key"
             :plugin="plugin"
             :is-added="pluginsToAdd.includes(plugin)"
             @add="pluginsToAdd.push(plugin)"
-            @remove="pluginsToAdd = pluginsToAdd.filter(p => p.name !== plugin.name)"
+            @remove="
+              pluginsToAdd = pluginsToAdd.filter((p) => p.name !== plugin.name)
+            "
           />
 
           <template v-if="isLoading">
-            <div v-for="n in ITEMS_PER_PAGE" :key="n" class="flex flex-col gap-4 p-4 rounded-lg border border-default">
+            <div
+              v-for="n in ITEMS_PER_PAGE"
+              :key="n"
+              class="flex flex-col gap-4 p-4 rounded-lg border border-default"
+            >
               <div class="flex items-center gap-3">
                 <USkeleton class="h-8 w-8 rounded" />
               </div>
@@ -309,7 +345,13 @@ console.log(filteredPlugins)
             size="md"
             @click="$router.replace({ query: {} })"
           />
-          <UButton to="#" color="neutral" variant="outline" size="md" label="How to create a plugin?" />
+          <UButton
+            to="#"
+            color="neutral"
+            variant="outline"
+            size="md"
+            label="How to create a plugin?"
+          />
         </EmptyCard>
       </UPageBody>
 
@@ -324,12 +366,14 @@ console.log(filteredPlugins)
           :transition="{ type: 'spring', stiffness: 400, damping: 30 }"
         >
           <div layout class="flex justify-center mb-6">
-            <div class="bg-default/80 backdrop-blur-lg rounded-full p-1 border border-default dark:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] flex items-center gap-4">
+            <div
+              class="bg-default/80 backdrop-blur-lg rounded-full p-1 border border-default dark:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] flex items-center gap-4"
+            >
               <motion.div class="flex items-center gap-1">
                 <UTooltip text="Copy install command">
                   <Motion
                     :press="{
-                      scale: 0.99
+                      scale: 0.99,
                     }"
                   >
                     <UButton
@@ -340,7 +384,9 @@ console.log(filteredPlugins)
                       class="font-medium rounded-full"
                       @click="copyAllInstallCommands"
                     >
-                      Install {{ pluginsToAdd.length }} plugin{{ pluginsToAdd.length > 1 ? 's' : '' }}
+                      Install {{ pluginsToAdd.length }} plugin{{
+                        pluginsToAdd.length > 1 ? 's' : ''
+                      }}
                     </UButton>
                   </Motion>
                 </UTooltip>
@@ -348,7 +394,7 @@ console.log(filteredPlugins)
                 <UTooltip text="Clear selection">
                   <Motion
                     :press="{
-                      scale: 0.99
+                      scale: 0.99,
                     }"
                   >
                     <UButton

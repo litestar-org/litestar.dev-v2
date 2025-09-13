@@ -226,12 +226,14 @@ container = database.get_container_client("your-container")
 ## Environment Variables
 
 ### App Service
+
 ```bash
 # Set application settings
 az webapp config appsettings set --resource-group litestar-rg --name your-litestar-app --settings DATABASE_URL=your-db-url SECRET_KEY=your-secret-key
 ```
 
 ### Container Instances
+
 ```bash
 # Set environment variables during deployment
 az container create \

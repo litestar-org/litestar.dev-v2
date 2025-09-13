@@ -5,6 +5,6 @@ export const useStats = () => {
   const stats = ref<Stats>(statsData as Stats)
 
   return {
-    stats
+    stats,
   }
-}  
+}

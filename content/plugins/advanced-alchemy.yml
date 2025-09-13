@@ -10,9 +10,9 @@ category: Database
 license: MIT
 type: official
 maintainers:
-- name: Cody Fincher
-  github: cofin
-  avatar: https://https://avatars.githubusercontent.com/u/204685?v=4
+  - name: Cody Fincher
+    github: cofin
+    avatar: https://https://avatars.githubusercontent.com/u/204685?v=4
 compatibility:
   litestar: '>=2.0.0'
 icon: advanced-alchemy.png
@@ -26,10 +26,10 @@ python_compatibility:
   raw: '>=3.9'
   specifier_set: '>=3.9'
   compatible:
-  - '3.9'
-  - '3.10'
-  - '3.11'
-  - '3.12'
-  - '3.13'
+    - '3.9'
+    - '3.10'
+    - '3.11'
+    - '3.12'
+    - '3.13'
 changelog: https://docs.advanced-alchemy.litestar.dev/latest/changelog
 issues: https://github.com/litestar-org/advanced-alchemy/issues/
