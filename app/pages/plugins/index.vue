@@ -37,8 +37,11 @@ useSeoMeta({
   description,
   ogDescription: description,
   ogTitle: title,
-  ogImage: joinURL(site.url, '/modules-social-card.jpg'),
-  twitterImage: joinURL(site.url, '/modules-social-card.jpg'),
+})
+
+defineOgImageComponent('Page', {
+  title: title,
+  description: description,
 })
 
 await fetchList()
@@ -118,8 +121,7 @@ const clearAllPlugins = () => {
 }
 
 initializePlugins()
-console.log(plugins)
-console.log(filteredPlugins)
+
 </script>
 
 <template>
