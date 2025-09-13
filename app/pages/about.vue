@@ -33,11 +33,11 @@ defineOgImageComponent('Page', {
 })
 const { stats: data } = useStats()
 
-
 const stats = [
   {
     label: 'Maintainers',
-    value: maintainers.value?.filter(m => m.role === 'Maintainer').length ?? '',
+    value:
+      maintainers.value?.filter((m) => m.role === 'Maintainer').length ?? '',
     icon: 'i-lucide-user-check',
     to: '#maintainers',
   },

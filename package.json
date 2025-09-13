@@ -10,7 +10,11 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "oxlint . --fix && prettier --write . --log-level warn",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test-unit": "npx vitest --project unit",
+    "test-nuxt": "npx vitest --project nuxt",
+    "test-all": "npx vitest"
+
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.67",
@@ -18,7 +22,6 @@
     "@nuxt/content": "3.6.3",
     "@nuxt/image": "1.11.0",
     "@nuxt/scripts": "0.11.10",
-    "@nuxt/test-utils": "3.19.2",
     "@nuxt/ui": "4.0.0-alpha.1",
     "@nuxtjs/google-fonts": "^3.2.0",
     "@nuxtjs/html-validator": "^2.1.0",
@@ -44,14 +47,18 @@
   },
   "packageManager": "pnpm@10.15.0",
   "devDependencies": {
+    "@nuxt/test-utils": "3.19.2",
     "@prettier/plugin-oxc": "^0.0.4",
     "@shikijs/transformers": "^3.12.2",
+    "@vue/test-utils": "^2.4.6",
+    "happy-dom": "^18.0.1",
     "husky": "^9.1.7",
     "nuxt-content-twoslash": "^0.1.2",
     "oxlint": "^1.15.0",
     "prettier": "^3.6.2",
     "shiki": "^3.12.2",
-    "twoslash": "^0.3.4"
+    "twoslash": "^0.3.4",
+    "vitest": "^3.2.4"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

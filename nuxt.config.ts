@@ -5,10 +5,12 @@ const { resolve } = createResolver(import.meta.url)
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: true,
   nitro: {
     prerender: {
       concurrency: 1,
       crawlLinks: true,
+      // failOnError: false,
       // routes: ['/'],
       // ignore: ['/plugins/advanced-alchemy'],
     },
@@ -24,10 +26,10 @@ export default defineNuxtConfig({
         'https://github.com/litestar-org/litestar/graphs/contributors',
     },
   },
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   modules: [
     '@nuxt/ui',
-    '@nuxt/test-utils',
+    '@nuxt/test-utils/module',
     'nuxt-content-twoslash',
     '@nuxt/image',
     '@nuxt/content',
