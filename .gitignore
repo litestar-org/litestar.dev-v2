@@ -3,3 +3,5 @@ tmp/
 .nuxt/
 .data/
 .output/
+.unlighthouse/
+dist/
