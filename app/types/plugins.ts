@@ -6,7 +6,7 @@ import type { ParsedContentFile } from '@nuxt/content'
 //   modules: number
 // }
 
-export interface ModuleUser {
+export interface PluginUser {
   name: string
   github: string
   twitter?: string
@@ -31,8 +31,6 @@ export interface Plugin {
   // tags: string[]
   compatibility: {
     litestar?: string
-    nuxt?: string
-    requires?: { bridge: boolean }
   }
   stats?: {
     version: string
@@ -47,11 +45,6 @@ export interface Plugin {
     name: string
     github: string
     avatar?: string
-  }[]
-  contributors?: {
-    id: number
-    username: string
-    contributions: number
   }[]
   readme?: ParsedContentFile
 }
