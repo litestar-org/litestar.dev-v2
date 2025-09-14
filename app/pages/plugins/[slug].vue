@@ -376,23 +376,6 @@ defineOgImageComponent('OgImagePlugin', {
 
               <USeparator type="dashed" />
 
-              <UPageLinks
-                title="Litestar Compatibility"
-                :links="litestarCompatibility"
-              >
-                <template #link="{ link }">
-                  <UBadge
-                    size="lg"
-                    :icon="link.icon"
-                    :color="link.color"
-                    variant="subtle"
-                    >{{ link.label }}</UBadge
-                  >
-                </template>
-              </UPageLinks>
-
-              <USeparator type="dashed" />
-
               <SocialLinks />
             </div>
           </template>
