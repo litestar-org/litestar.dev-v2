@@ -5,6 +5,7 @@ navigation.icon: i-lucide-rocket
 links:
   - label: 'Deployment Guide'
     icon: i-lucide-cloud
-    to: '#'
+    to: 'https://docs.litestar.dev/latest/topics/deployment/index.html'
     color: neutral
     size: md
+    target: '_blank'
