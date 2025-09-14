@@ -7,6 +7,7 @@ hero:
       to: 'https://github.com/litestar-org/litestar-templates'
       color: 'neutral'
       size: 'md'
+      disabled: true
 starter:
   title: Starter Templates
   description: Perfect for learning Litestar fundamentals or building simple applications quickly.
