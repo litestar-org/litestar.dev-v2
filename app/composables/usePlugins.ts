@@ -11,12 +11,12 @@ type PluginStatsKeys =
 const iconsMap = {
   Official: 'i-lucide-medal',
   Analytics: 'i-lucide-bar-chart',
+  Authentication: 'i-lucide-user',
   Database: 'i-lucide-database',
-  Extensions: 'i-lucide-puzzle',
+  'Background Processing': 'i-lucide-puzzle',
   Monitoring: 'i-lucide-timer',
-  Payment: 'i-lucide-credit-card',
   Performance: 'i-lucide-gauge',
-  Request: 'i-lucide-unplug',
+  Serialization: 'i-lucide-unplug',
   Security: 'i-lucide-shield',
   UI: 'i-lucide-layout',
 }

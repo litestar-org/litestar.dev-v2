@@ -23,6 +23,14 @@ const [{ data: plugin }, { data: pluginReadme }] = await Promise.all([
       .first(),
   ),
 ])
+
+if (!plugin.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Plugin not found',
+    fatal: true,
+  })
+}
 // const { default: pluginsData } = await import('~/data/plugins.json')
 // const plugin = ref<PluginsCollectionItem | null>(pluginsData.find((p: PluginsCollectionItem) => p.key === route.params.slug) || null)
 
@@ -182,24 +190,6 @@ const compatibilityLinks = computed(() => {
     label: `Python ${version}`,
     icon: 'i-simple-icons-python',
   }))
-})
-
-const litestarCompatibility = computed(() => {
-  if (!plugin.value) return []
-
-  // Static Litestar versions for testing
-  return [
-    {
-      label: 'Litestar v2',
-      icon: 'i-lucide-circle-x',
-      color: 'neutral',
-    },
-    {
-      label: 'Litestar v3',
-      icon: 'i-lucide-check-circle-2',
-      color: 'success',
-    },
-  ]
 })
 
 const title = computed(() => plugin.value?.name)
