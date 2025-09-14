@@ -8,14 +8,15 @@ export default defineNuxtConfig({
   ssr: true,
   nitro: {
     prerender: {
-      concurrency: 1,
+      // concurrency: 1,
       crawlLinks: true,
       // failOnError: false,
-      // routes: ['/'],
-      // ignore: ['/plugins/advanced-alchemy'],
+      routes: ['/robots.txt'],
+      ignore: [(route) => route.startsWith('/plugins')],
+      autoSubfolderIndex: false,
     },
   },
-  logLevel: 'verbose', // Add this line
+  logLevel: 'verbose',
   compatibilityDate: '2025-07-15',
   runtimeConfig: {
     public: {
@@ -40,6 +41,9 @@ export default defineNuxtConfig({
     'motion-v/nuxt',
     '@nuxtjs/google-fonts',
   ],
+  ogImage: {
+    fonts: ['Inter:400', 'Inter:500', 'Inter:600', 'Inter:700'],
+  },
   googleFonts: {
     families: {
       Inter: [400, 500, 600, 700],
