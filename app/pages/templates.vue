@@ -60,7 +60,10 @@ defineOgImageComponent('Page', {
         title: 'text-left !text-3xl',
         description: 'text-left',
       }"
-    >
+    > 
+      <template #title>{{templateData?.starter.title}}
+        <UBadge variant="subtle" size="xl">Coming soon</UBadge>
+      </template>
       <UPageGrid>
         <StarterCard
           v-for="(starter, index) in starters"

@@ -65,15 +65,16 @@ function copyCommand() {
       <USeparator type="dashed" class="mb-4" />
 
       <div class="flex items-center justify-between gap-2">
+        <!-- :to="starter.github" -->
         <UTooltip text="View on GitHub">
           <UButton
             icon="i-lucide-github"
             color="neutral"
             size="sm"
             variant="outline"
-            :to="starter.github"
             external
             @click.stop
+            disabled
           >
             GitHub
             <span class="sr-only">View {{ starter.title }} on GitHub</span>
@@ -81,12 +82,13 @@ function copyCommand() {
         </UTooltip>
 
         <UTooltip text="Copy command">
+          <!-- @click.stop="copyCommand()" -->
           <UButton
             icon="i-lucide-terminal"
             color="neutral"
             size="sm"
             variant="outline"
-            @click.stop="copyCommand()"
+            disabled
           >
             <span class="sr-only">Copy command for {{ starter.title }}</span>
           </UButton>
