@@ -64,7 +64,6 @@ export const usePlugins = () => {
         const collection = await queryCollection('plugins')
         return await collection.all()
       })
-      console.log('plugin data', data)
       plugins.value = data.value || []
     } catch (error) {
       console.error('Failed to fetch plugins from content:', error)

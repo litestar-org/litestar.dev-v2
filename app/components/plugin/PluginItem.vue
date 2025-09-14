@@ -42,7 +42,6 @@ function copyInstallCommand(pluginName: string) {
 }
 
 function togglePlugin(plugin: PluginsCollectionItem) {
-  console.log(plugin)
   if (isAdded) {
     emit('remove', plugin)
   } else {
