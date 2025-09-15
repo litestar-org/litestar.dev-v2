@@ -22,7 +22,9 @@
     "**/.output",
     "**/.vercel",
     "**/.netlify",
-    "**/public"
+    "**/public",
+    "**/content/plugins/",
+    "**/content/pluginsReadme/"
   ],
   "rules": {
     "for-direction": "error",
