@@ -45,7 +45,7 @@ const stats = [
     label: 'Contributors',
     value: data.value?.contributors ?? '',
     icon: 'i-lucide-users',
-    to: 'https://discord.gg/litestar',
+    to: 'https://github.com/litestar-org/litestar/graphs/contributors',
   },
   {
     label: 'Version',
@@ -75,7 +75,7 @@ const stats = [
         v-for="stat in stats"
         :key="stat.label"
         :to="stat.to"
-        target="_blank"
+        :target="stat.to?.startsWith('#') ? undefined : '_blank'"
         class="text-center p-6 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer group"
       >
         <UIcon

@@ -61,8 +61,8 @@ contributing:
     - title: Contributing Code
       description: Submit bug fixes, new features, or improvements to the codebase.
       icon: i-lucide-code
-      to: https://github.com/litestar-org/litestar/blob/main/CONTRIBUTING.md
+      to: https://github.com/litestar-org/litestar/blob/main/CONTRIBUTING.rst
     - title: Contributing Documentation
       description: Improve the documentation or fix errors.
       icon: i-lucide-book
-      to: https://github.com/litestar-org/litestar/blob/main/CONTRIBUTING.md
+      to: https://github.com/litestar-org/litestar/blob/main/CONTRIBUTING.rst
