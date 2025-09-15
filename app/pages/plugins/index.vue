@@ -121,7 +121,6 @@ const clearAllPlugins = () => {
 }
 
 initializePlugins()
-
 </script>
 
 <template>
