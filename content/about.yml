@@ -49,20 +49,15 @@ contributing:
     - title: Opening Issues
       description: Report bugs, request features, or ask questions to help improve the project.
       icon: i-lucide-bug
-      to: https://github.com/litestar-org/litestar/issues/new
     - title: Participating in Discussions
       description: Share ideas, help others, and engage with the community in our discussions.
       icon: i-lucide-message-square
-      to: https://github.com/litestar-org/litestar/discussions
     - title: Reviewing Pull Requests
       description: Help review code changes and provide feedback to maintain high quality.
       icon: i-lucide-eye
-      to: https://github.com/litestar-org/litestar/pulls
     - title: Contributing Code
       description: Submit bug fixes, new features, or improvements to the codebase.
       icon: i-lucide-code
-      to: https://github.com/litestar-org/litestar/blob/main/CONTRIBUTING.rst
     - title: Contributing Documentation
       description: Improve the documentation or fix errors.
       icon: i-lucide-book
-      to: https://github.com/litestar-org/litestar/blob/main/CONTRIBUTING.rst

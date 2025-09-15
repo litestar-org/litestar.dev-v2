@@ -25,6 +25,15 @@ export default defineNuxtConfig({
       pypiUrl: 'https://pypi.org/project/litestar/',
       contributorsUrl:
         'https://github.com/litestar-org/litestar/graphs/contributors',
+      contributing: {
+        issuesUrl: 'https://github.com/litestar-org/litestar/issues/new',
+        discussionsUrl: 'https://github.com/litestar-org/litestar/discussions',
+        pullRequestsUrl: 'https://github.com/litestar-org/litestar/pulls',
+        codeUrl:
+          'https://github.com/litestar-org/litestar/blob/main/CONTRIBUTING.rst',
+        documentationUrl:
+          'https://github.com/litestar-org/litestar/blob/main/CONTRIBUTING.rst',
+      },
     },
   },
   devtools: { enabled: true },
