@@ -4,7 +4,7 @@ import { kebabCase } from 'scule'
 definePageMeta({
   heroBackground: 'opacity-30 -z-10',
 })
-
+const config = useRuntimeConfig()
 const route = useRoute()
 const { copy } = useClipboard()
 
@@ -97,7 +97,7 @@ const links = [
   {
     icon: 'i-lucide-star',
     label: 'Star on GitHub',
-    to: 'https://github.com/litestar-org/litestar',
+    to: config.public.githubUrl,
     target: '_blank',
   },
   {

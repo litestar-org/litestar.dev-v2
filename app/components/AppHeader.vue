@@ -9,7 +9,7 @@ const { copy } = useClipboard()
 const { headerLinks } = useHeaderLinks()
 const { version } = useDocsVersion()
 const { packageManagers, selectedPackageManager } = usePackageManager()
-
+const config = useRuntimeConfig()
 const { tags } = useDocsTags()
 
 const latestVersion = computed(() => {
@@ -107,7 +107,7 @@ const latestVersion = computed(() => {
       <UTooltip text="Litestar on GitHub">
         <UButton
           icon="i-simple-icons-github"
-          to="https://github.com/litestar-org/litestar"
+          :to="config.public.githubUrl"
           target="_blank"
           variant="ghost"
           color="neutral"
@@ -123,7 +123,7 @@ const latestVersion = computed(() => {
       <UTooltip text="Discord">
         <UButton
           icon="i-simple-icons-discord"
-          to="https://discord.gg/litestar"
+          :to="config.public.discordUrl"
           target="_blank"
           variant="ghost"
           color="neutral"

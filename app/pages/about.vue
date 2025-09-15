@@ -45,7 +45,7 @@ const stats = [
     label: 'Contributors',
     value: data.value?.contributors ?? '',
     icon: 'i-lucide-users',
-    to: 'https://discord.gg/litestar',
+    to: config.public.discordUrl,
   },
   {
     label: 'Version',
@@ -235,7 +235,7 @@ const stats = [
         </p>
         <div class="flex flex-wrap justify-center gap-4">
           <UButton
-            to="https://github.com/litestar-org/litestar"
+            :to="config.public.githubUrl"
             target="_blank"
             icon="i-simple-icons-github"
             size="lg"
@@ -243,7 +243,7 @@ const stats = [
             Contribute on GitHub
           </UButton>
           <UButton
-            to="https://discord.gg/litestar"
+            :to="config.public.discordUrl"
             target="_blank"
             icon="i-simple-icons-discord"
             variant="outline"

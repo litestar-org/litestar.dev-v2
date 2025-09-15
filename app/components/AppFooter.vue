@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { footerLinks } = useFooterLinks()
+const config = useRuntimeConfig()
 const colorMode = useColorMode()
 
 const isDark = computed(() => colorMode.value === 'dark')
@@ -47,7 +48,7 @@ const isDark = computed(() => colorMode.value === 'dark')
       <UButton
         color="neutral"
         variant="ghost"
-        to="https://github.com/litestar-org/litestar"
+        :to="config.public.githubUrl"
         target="_blank"
         icon="i-simple-icons-github"
       >
@@ -56,7 +57,7 @@ const isDark = computed(() => colorMode.value === 'dark')
       <UButton
         color="neutral"
         variant="ghost"
-        to="https://discord.gg/litestar"
+        :to="config.public.discordUrl"
         target="_blank"
         icon="i-simple-icons-discord"
       >

@@ -2,7 +2,7 @@
   <div class="flex items-center">
     <UButton
       icon="i-simple-icons-discord"
-      to="https://discord.gg/litestar"
+      :to="config.public.discordUrl"
       target="_blank"
       variant="ghost"
       color="neutral"
@@ -12,7 +12,7 @@
     </UButton>
     <UButton
       icon="i-simple-icons-github"
-      to="https://github.com/litestar-org/litestar"
+      :to="config.public.githubUrl"
       target="_blank"
       variant="ghost"
       color="neutral"
@@ -22,3 +22,7 @@
     </UButton>
   </div>
 </template>
+
+<script setup lang="ts">
+const config = useRuntimeConfig()
+</script>
