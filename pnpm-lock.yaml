@@ -27,8 +27,8 @@ importers:
         specifier: 0.11.10
         version: 0.11.10(@unhead/vue@2.0.14(vue@3.5.21(typescript@5.9.2)))(db0@0.3.2(better-sqlite3@12.2.0))(ioredis@5.7.0)(magicast@0.3.5)(typescript@5.9.2)(vue@3.5.21(typescript@5.9.2))
       '@nuxt/ui':
-        specifier: 4.0.0-alpha.1
-        version: 4.0.0-alpha.1(@babel/parser@7.28.4)(change-case@5.4.4)(db0@0.3.2(better-sqlite3@12.2.0))(embla-carousel@8.6.0)(ioredis@5.7.0)(magicast@0.3.5)(typescript@5.9.2)(valibot@1.1.0(typescript@5.9.2))(vite@7.1.4(@types/node@24.3.3)(jiti@2.5.1)(lightningcss@1.30.1)(terser@5.44.0)(yaml@2.8.1))(vue-router@4.5.1(vue@3.5.21(typescript@5.9.2)))(vue@3.5.21(typescript@5.9.2))(zod@4.1.9)
+        specifier: 4.0.0-alpha.2
+        version: 4.0.0-alpha.2(@babel/parser@7.28.4)(change-case@5.4.4)(db0@0.3.2(better-sqlite3@12.2.0))(embla-carousel@8.6.0)(ioredis@5.7.0)(magicast@0.3.5)(typescript@5.9.2)(valibot@1.1.0(typescript@5.9.2))(vite@7.1.4(@types/node@24.3.3)(jiti@2.5.1)(lightningcss@1.30.1)(terser@5.44.0)(yaml@2.8.1))(vue-router@4.5.1(vue@3.5.21(typescript@5.9.2)))(vue@3.5.21(typescript@5.9.2))(zod@4.1.9)
       '@nuxtjs/google-fonts':
         specifier: ^3.2.0
         version: 3.2.0(magicast@0.3.5)
@@ -920,8 +920,8 @@ packages:
       vitest:
         optional: true
 
-  '@nuxt/ui@4.0.0-alpha.1':
-    resolution: {integrity: sha512-kjCtWrkDr79nAPR6aMz4ot1Je+K4vnGzSszjGaXBsZyBz56a2Z7NFfkiAwe5UzdHmdIBJJk/ser8Xzz2+TY1ug==}
+  '@nuxt/ui@4.0.0-alpha.2':
+    resolution: {integrity: sha512-ETYd3xVnNhaiwlUetpsVdLb9e2SrlKFYwagEpFTLZX8vLuo6ZMn14rUZjDJNkqrSZunTqaRvgzRBqwWQLr0ZSw==}
     hasBin: true
     peerDependencies:
       '@inertiajs/vue3': ^2.0.7
@@ -6888,7 +6888,7 @@ snapshots:
       consola: 3.4.2
       css-tree: 3.1.0
       defu: 6.1.4
-      esbuild: 0.25.9
+      esbuild: 0.25.10
       fontaine: 0.6.0
       h3: 1.15.4
       jiti: 2.5.1
@@ -7157,7 +7157,7 @@ snapshots:
       - magicast
       - typescript
 
-  '@nuxt/ui@4.0.0-alpha.1(@babel/parser@7.28.4)(change-case@5.4.4)(db0@0.3.2(better-sqlite3@12.2.0))(embla-carousel@8.6.0)(ioredis@5.7.0)(magicast@0.3.5)(typescript@5.9.2)(valibot@1.1.0(typescript@5.9.2))(vite@7.1.4(@types/node@24.3.3)(jiti@2.5.1)(lightningcss@1.30.1)(terser@5.44.0)(yaml@2.8.1))(vue-router@4.5.1(vue@3.5.21(typescript@5.9.2)))(vue@3.5.21(typescript@5.9.2))(zod@4.1.9)':
+  '@nuxt/ui@4.0.0-alpha.2(@babel/parser@7.28.4)(change-case@5.4.4)(db0@0.3.2(better-sqlite3@12.2.0))(embla-carousel@8.6.0)(ioredis@5.7.0)(magicast@0.3.5)(typescript@5.9.2)(valibot@1.1.0(typescript@5.9.2))(vite@7.1.4(@types/node@24.3.3)(jiti@2.5.1)(lightningcss@1.30.1)(terser@5.44.0)(yaml@2.8.1))(vue-router@4.5.1(vue@3.5.21(typescript@5.9.2)))(vue@3.5.21(typescript@5.9.2))(zod@4.1.9)':
     dependencies:
       '@ai-sdk/vue': 2.0.44(vue@3.5.21(typescript@5.9.2))(zod@4.1.9)
       '@iconify/vue': 5.0.0(vue@3.5.21(typescript@5.9.2))
@@ -8215,7 +8215,7 @@ snapshots:
 
   '@tailwindcss/oxide@4.1.13':
     dependencies:
-      detect-libc: 2.0.4
+      detect-libc: 2.1.0
       tar: 7.4.3
     optionalDependencies:
       '@tailwindcss/oxide-android-arm64': 4.1.13
