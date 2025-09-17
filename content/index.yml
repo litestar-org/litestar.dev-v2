@@ -30,7 +30,7 @@ hero:
         readme = "README.md"
         requires-python = ">=3.13"
         dependencies = [
-            "litestar[standard]>=3.0.0",
+            "litestar[standard]>=2.17.0",
         ]
         ```
         ::
@@ -80,7 +80,7 @@ hero:
         readme = "README.md"
         requires-python = ">=3.13"
         dependencies = [
-            "litestar[standard]>=3.0.0",
+            "litestar[standard]>=2.17.0",
         ]
         ```
         ::
@@ -114,7 +114,7 @@ hero:
         readme = "README.md"
         requires-python = ">=3.13"
         dependencies = [
-            "litestar[standard]>=3.0.0",
+            "litestar[standard]>=2.17.0",
         ]
         ```
         ::
@@ -159,53 +159,8 @@ hero:
         readme = "README.md"
         requires-python = ">=3.13"
         dependencies = [
-            "litestar[standard]>=3.0.0"
+            "litestar[standard]>=2.17.0"
         ]
-        ```
-        ::
-    - title: OpenAPI
-      icon: i-lucide-pc-case
-      content: |
-        ::code-tree{defaultValue="server/api/hello.ts" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
-        ```vue [app.vue]
-        <template>
-          <NuxtPage />
-        </template>
-        ```
-
-        ```json [package.json]
-        {
-          "name": "nuxt-data-fetching",
-          "private": true,
-          "type": "module",
-          "scripts": {
-            "dev": "nuxt dev",
-            "build": "nuxt build",
-            "generate": "nuxt generate",
-            "preview": "nuxt preview"
-          },
-          "dependencies": {
-            "nuxt": "latest"
-          }
-        }
-        ```
-
-        ```vue [pages/index.vue]
-        <script setup lang="ts">
-        const { data } = await useFetch('/api/hello')
-        </script>
-
-        <template>
-          <h1>{{ data.message }}</h1>
-        </template>
-        ```
-
-        ```ts [server/api/hello.ts]
-        export default defineEventHandler((event) => {
-          return {
-            message: 'Hello World'
-          }
-        })
         ```
         ::
 features:
