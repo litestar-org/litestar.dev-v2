@@ -32,4 +32,9 @@
 
 :root {
   --ui-container: 90rem;
+  --ui-primary: var(--ui-color-primary-500);
+}
+
+html {
+  scroll-behavior: smooth;
 }

@@ -26,7 +26,8 @@ describe('Maintainers logic', () => {
     ]
 
     // This tests the same logic that would be used in the About page
-    const maintainersCount = mockMaintainers?.filter(m => m.role === 'Maintainer').length ?? 0
+    const maintainersCount =
+      mockMaintainers?.filter((m) => m.role === 'Maintainer').length ?? 0
 
     expect(maintainersCount).toBe(2)
   })
