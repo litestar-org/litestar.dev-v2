@@ -60,31 +60,6 @@ const stats = [
     to: 'https://github.com/litestar-org/litestar/blob/main/LICENSE',
   },
 ]
-
-const contributingWaysWithUrls = computed(() => {
-  if (!page.value?.contributing.features) return []
-
-  const contributing = config.public.contributing as {
-    issuesUrl: string
-    discussionsUrl: string
-    pullRequestsUrl: string
-    codeUrl: string
-    documentationUrl: string
-  }
-
-  const urlMap = [
-    contributing.issuesUrl,
-    contributing.discussionsUrl,
-    contributing.pullRequestsUrl,
-    contributing.codeUrl,
-    contributing.documentationUrl,
-  ]
-
-  return page.value.contributing.features.map((feature, index) => ({
-    ...feature,
-    to: urlMap[index],
-  }))
-})
 </script>
 
 <template>
@@ -100,7 +75,7 @@ const contributingWaysWithUrls = computed(() => {
         v-for="stat in stats"
         :key="stat.label"
         :to="stat.to"
-        :target="stat.to?.startsWith('#') ? undefined : '_blank'"
+        target="_blank"
         class="text-center p-6 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer group"
       >
         <UIcon
@@ -152,7 +127,7 @@ const contributingWaysWithUrls = computed(() => {
     }"
   >
     <div class="max-w-4xl mx-auto">
-      <UTimeline :items="page?.history.timeline || []" :default-value="1" />
+      <UTimeline :items="page?.history.timeline" :default-value="1" />
     </div>
   </UPageSection>
 
@@ -232,7 +207,7 @@ const contributingWaysWithUrls = computed(() => {
   >
     <UPageGrid class="grid-cols-1 md:grid-cols-2">
       <UPageCard
-        v-for="(way, index) in contributingWaysWithUrls"
+        v-for="way in page?.contributing.features"
         :key="way.title"
         :icon="way.icon"
         :title="way.title"
