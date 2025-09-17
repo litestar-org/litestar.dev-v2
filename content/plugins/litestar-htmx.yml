@@ -1,12 +1,12 @@
-key: sqlspec
-name: SQLSpec
-description: A query mapper for Python
-pypi: sqlspec
-repo: litestar-org/sqlspec
-github: https://github.com/litestar-org/sqlspec
-website: https://github.com/litestar-org/sqlspec
+key: litestar-htmx
+name: Litestar HTMX
+description: HTMX Plugin for Litestar
+pypi: litestar-htmx
+repo: litestar-org/litestar-htmx
+github: https://github.com/litestar-org/litestar-htmx
+website: https://github.com/litestar-org/litestar-htmx
 documentation: https://docs.advanced-alchemy.litestar.dev
-category: Database
+category: UI
 type: official
 maintainers:
 - name: Cody Fincher
@@ -14,12 +14,12 @@ maintainers:
   avatar: https://https://avatars.githubusercontent.com/u/204685?v=4
 compatibility:
   litestar: '>=2.0.0'
-icon: _default_icon.svg
-stars: 30
-monthly_downloads: 4962
-latest_version: 0.24.1
-updated_at: '2025-09-11T17:33:38'
-created_at: '2024-10-30T00:48:46'
+icon: litestar-htmx.svg
+stars: 8
+monthly_downloads: 703443
+latest_version: 0.5.0
+updated_at: '2025-06-11T21:19:45'
+created_at: '2024-10-20T17:49:03'
 python_compatibility_raw: <4.0,>=3.9
 python_compatibility:
   raw: <4.0,>=3.9
