@@ -2,6 +2,8 @@
 const { footerLinks } = useFooterLinks()
 const config = useRuntimeConfig()
 const colorMode = useColorMode()
+
+const isDark = computed(() => colorMode.value === 'dark')
 </script>
 
 <template>
@@ -18,19 +20,14 @@ const colorMode = useColorMode()
         <UFooterColumns :columns="footerLinks">
           <template #left>
             <div class="flex items-center space-x-2 mb-4">
-              <ClientOnly>
-                <UIcon
-                  :name="
-                    colorMode.value === 'dark'
-                      ? 'i-custom-litestar-full-dark'
-                      : 'i-custom-litestar-full'
-                  "
-                  class="h-8 w-30"
-                />
-                <template #fallback>
-                  <UIcon name="i-custom-litestar-full" class="h-8 w-30" />
-                </template>
-              </ClientOnly>
+              <UIcon
+                :name="
+                  isDark
+                    ? 'i-custom-litestar-full-dark'
+                    : 'i-custom-litestar-full'
+                "
+                class="h-8 w-30"
+              />
             </div>
             <p class="text-muted text-sm max-w-md">
               A modern, fast Python ASGI framework for building APIs that scale.
