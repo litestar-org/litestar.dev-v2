@@ -1,4 +1,5 @@
 import { createSharedComposable } from '@vueuse/core'
+const config = useRuntimeConfig()
 
 function _useHeaderLinks() {
   const headerLinks = computed(() => {
@@ -6,7 +7,7 @@ function _useHeaderLinks() {
       {
         label: 'Documentation',
         icon: 'i-lucide-book-marked',
-        to: 'https://docs.litestar.dev/2/',
+        to: config.public.documentationUrl,
         target: '_blank',
         search: false,
       },
@@ -62,7 +63,7 @@ const footerLinks = [
     children: [
       {
         label: 'Documentation',
-        to: 'https://docs.litestar.dev',
+        to: config.public.documentationUrl,
         target: '_blank',
       },
       {
@@ -107,7 +108,7 @@ const footerLinks = [
       },
       {
         label: 'Sponsor us',
-        to: 'https://github.com/sponsors/litestar-org',
+        to: config.public.sponsorUrl,
         target: '_blank',
       },
     ],

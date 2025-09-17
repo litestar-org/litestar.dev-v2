@@ -20,9 +20,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   runtimeConfig: {
     public: {
+      documentationUrl: 'https://docs.litestar.dev/latest/',
       githubUrl: 'https://github.com/litestar-org/litestar',
       discordUrl: 'https://discord.gg/litestar',
       pypiUrl: 'https://pypi.org/project/litestar/',
+      sponsorUrl: 'https://github.com/sponsors/litestar-org',
       contributorsUrl:
         'https://github.com/litestar-org/litestar/graphs/contributors',
       issuesUrl: 'https://github.com/litestar-org/litestar/issues/new',
