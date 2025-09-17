@@ -42,6 +42,8 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
   ],
   ogImage: {
+    zeroRuntime: true,
+
     fonts: ['Inter:400', 'Inter:500', 'Inter:600', 'Inter:700'],
   },
   googleFonts: {
