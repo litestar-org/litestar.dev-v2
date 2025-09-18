@@ -167,47 +167,47 @@ features:
   title: Everything you need to build modern APIs
   description: Litestar provides all the tools you need out of the box, with minimal configuration required.
   features:
-    - icon: i-lucide-sparkles
+    - icon: i-lucide-badge-check
       title: Data Validation And Parsing
       description: Leverage the power of type hints to define how data should be validated, parsed and serialized.
       to: https://docs.litestar.dev/2/usage/dto/index.html
-    - icon: i-lucide-file-code-2
+    - icon: i-lucide-sparkles
       title: Open Ecosystem
       description: Define schemas and models for validation with standard types such as dataclasses, libraries like Pydantic, msgspec, attr, or integrate your own.
       to: https://docs.litestar.dev/2/usage/applications.html
-    - icon: i-lucide-milestone
+    - icon: i-lucide-book
       title: OpenAPI
       description: Automatically generated OpenAPI schemas help to document APIs and integrate with the frontend via TypeScript schema generation.
       to: https://docs.litestar.dev/2/usage/openapi/index.html
-    - icon: i-lucide-unplug
+    - icon: i-simple-icons-swagger
       title: Interactive API Documentation
       description: Interactively explore your APIs through Swagger, Redoc or Stoplight Elements, powered by OpenAPI.
       to: https://docs.litestar.dev/2/usage/openapi/ui_plugins.html
-    - icon: i-lucide-bug
+    - icon: i-lucide-boxes
       title: Middlewares
       description: Handle rate-limiting, CORS, CSRF, compression, logging and many more common tasks with Litestar's built-in middlewares.
       to: https://docs.litestar.dev/2/usage/middleware/builtin-middleware.html
-    - icon: i-lucide-flip-horizontal
+    - icon: i-lucide-store
       title: Data Stores
       description: Interfaces for various key/value stores that seamlessly integrate with your application and third party extensions.
       to: https://docs.litestar.dev/2/usage/stores.html
-    - icon: i-lucide-image
+    - icon: i-lucide-database
       title: ORM Integration
       description: First-class SQLAlchemy support let's you use your models for validation and serialization directly, reducing code duplication.
       to: https://docs.litestar.dev/2/usage/databases/sqlalchemy/index.html
-    - icon: i-lucide-file-search
+    - icon: i-lucide-syringe
       title: Dependency Injection
       description: Powerful dependency injection on all application layers, aides in code decoupling and reduces repetition.
       to: https://docs.litestar.dev/2/usage/dependency-injection.html
-    - icon: i-lucide-puzzle
+    - icon: i-lucide-database-zap
       title: Caching
       description: Response caching with minimal configuration and overhead to speed up response times.
       to: https://docs.litestar.dev/2/usage/caching.html
-    - icon: i-lucide-shield-check
+    - icon: i-simple-icons-socketdotio
       title: WebSockets
       description: Easy to use WebSockets integration, featuring high- and low-level APIs and support for automatic data validation and serialization.
       to: https://docs.litestar.dev/2/usage/websockets.html
-    - icon: i-simple-icons-typescript
+    - icon: i-lucide-shield-user
       title: Authentication And Authorization
       description: Session and JWT based authentication and utilities at your disposal to start building your authentication layer with ease.
       to: https://docs.litestar.dev/2/usage/security/index.html
@@ -216,9 +216,9 @@ features:
     label: Start reading docs
     to: https://docs.litestar.dev/
     icon: i-lucide-arrow-right
-scale:
-  title: Built to scale
-  description: Litestar leverages proven open source technologies to deliver exceptional performance and developer experience.
+development:
+  title: Focused on development experience
+  description: Litestar's opinionated design and modern architecture empower developers to build robust APIs quickly, with batteries included and powerful customization options.
   links:
     - label: Explore documentation
       to: https://docs.litestar.dev/
@@ -226,53 +226,203 @@ scale:
       color: neutral
       trailingIcon: i-lucide-arrow-right
   features:
-    - title: Fully featured
-      description: Everything that's needed to build modern APIs, from data serialization and validation to websockets, ORM integration, session management, authentication and more.
-      icon: i-lucide-layout-grid
-    - title: Fast
-      description: Litestar puts great emphasis on developer experience and performance. It's one of the fastest ASGI frameworks and developing with it is just as fast.
-      icon: i-lucide-rabbit
-    - title: (A)synchonous
-      description: Asynchronous at heart, but with synchronous execution not as a second class citizen. Synchronous applications run without performance penalties.
-      icon: i-lucide-settings-2
+    - title: Modern batteries included
+      description: Comprehensive optional features available out-of-the-box - authentication, validation, ORM integration, caching, middleware, and more. Use what you need, when you need it.
+      icon: i-lucide-battery-charging
+    - title: Strict & opinionated design
+      description: Thoughtful defaults and clear conventions guide you toward best practices, reducing decision fatigue and ensuring consistent, maintainable code.
+      icon: i-lucide-shield-check
+    - title: Hierarchical configuration
+      description: Layered configuration system allows easy modularization. Override settings at any level - application, controller, or route - for maximum flexibility.
+      icon: i-lucide-layers-3
+    - title: Powerful plugin system
+      description: Extend functionality seamlessly with official and community plugins. Build reusable components that integrate naturally with Litestar's architecture.
+      icon: i-lucide-puzzle
   code: |
-    ::code-group
+    ::code-tree{defaultValue="app/server/main.py"}
 
-    ```py [app.config.py]
-    export default defineAppConfig({
-      ui: {
-        button: {
-          slots: {
-            base: 'group font-bold',
-            trailingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200'
-          },
-          defaultVariants: {
-            color: 'neutral',
-            variant: 'subtle'
-          }
-        }
-      }
-    })
+    ```python [app/server/main.py]
+    from litestar import Litestar
+    from app.config.settings import get_settings
+    from app.domain.users.controller import UserController
+    from app.server.middleware import create_middleware
+    from app.db.connection import get_db_connection
+
+    def create_app() -> Litestar:
+        settings = get_settings()
+
+        return Litestar(
+            route_handlers=[UserController],
+            middleware=create_middleware(settings),
+            on_startup=[get_db_connection().connect],
+            debug=settings.debug
+        )
+
+    app = create_app()
     ```
 
-    ```vue [Collapsible.vue]
-    <template>
-      <UCollapsible>
-        <UButton
-          label="Open"
-          color="neutral"
-          variant="subtle"
-          trailing-icon="i-lucide-chevron-down"
-          :ui="{
-            trailingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200'
-          }"
-            class="group font-bold"
-          />
-      </UCollapsible>
-    </template>
+    ```python [app/config/settings.py]
+    from pydantic import BaseSettings
+    from functools import lru_cache
+
+    class Settings(BaseSettings):
+        debug: bool = False
+        database_url: str = "sqlite:///./app.db"
+        secret_key: str = "your-secret-key"
+        cors_origins: list[str] = ["*"]
+
+        class Config:
+            env_file = ".env"
+
+    @lru_cache()
+    def get_settings() -> Settings:
+        return Settings()
+    ```
+
+    ```python [app/domain/users/controller.py]
+    from litestar import Controller, get, post
+    from litestar.dto import DTOConfig
+    from app.domain.users.service import UserService
+    from app.domain.users.schemas import UserResponse, UserCreate
+
+    class UserController(Controller):
+        path = "/users"
+
+        def __init__(self, user_service: UserService) -> None:
+            self.user_service = user_service
+
+        @get("/")
+        async def list_users(self) -> list[UserResponse]:
+            return await self.user_service.get_all()
+
+        @post("/")
+        async def create_user(self, data: UserCreate) -> UserResponse:
+            return await self.user_service.create(data)
+    ```
+
+    ```python [app/domain/users/models.py]
+    from sqlalchemy import Column, Integer, String, DateTime
+    from sqlalchemy.ext.declarative import declarative_base
+    from datetime import datetime
+
+    Base = declarative_base()
+
+    class User(Base):
+        __tablename__ = "users"
+
+        id = Column(Integer, primary_key=True)
+        email = Column(String(255), unique=True, nullable=False)
+        name = Column(String(100), nullable=False)
+        created_at = Column(DateTime, default=datetime.utcnow)
+    ```
+
+    ```python [app/db/connection.py]
+    from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+    from sqlalchemy.orm import sessionmaker
+    from app.config.settings import get_settings
+
+    class DatabaseConnection:
+        def __init__(self):
+            settings = get_settings()
+            self.engine = create_async_engine(settings.database_url)
+            self.session_factory = sessionmaker(
+                self.engine, class_=AsyncSession
+            )
+
+    def get_db_connection() -> DatabaseConnection:
+        return DatabaseConnection()
+    ```
+
+    ```python [app/cli/commands.py]
+    import typer
+    from app.db.migrations import run_migrations
+    from app.server.main import create_app
+
+    app = typer.Typer()
+
+    @app.command()
+    def migrate():
+        """Run database migrations"""
+        run_migrations()
+        typer.echo("Migrations completed!")
+
+    @app.command()
+    def serve():
+        """Start the development server"""
+        import uvicorn
+        litestar_app = create_app()
+        uvicorn.run(litestar_app, host="0.0.0.0", port=8000)
+
+    if __name__ == "__main__":
+        app()
+    ```
+
+    ```python [app/lib/utils.py]
+    import hashlib
+    from datetime import datetime, timezone
+    from typing import Any
+
+    def hash_password(password: str) -> str:
+        """Hash a password using SHA-256"""
+        return hashlib.sha256(password.encode()).hexdigest()
+
+    def utc_now() -> datetime:
+        """Get current UTC datetime"""
+        return datetime.now(timezone.utc)
+
+    def serialize_datetime(dt: datetime) -> str:
+        """Serialize datetime to ISO format"""
+        return dt.isoformat()
+    ```
+
+    ```toml [pyproject.toml]
+    [project]
+    name = "litestar-app"
+    version = "0.1.0"
+    description = "A modern Litestar application"
+    readme = "README.md"
+    requires-python = ">=3.8"
+    dependencies = [
+        "litestar[standard]>=2.0.0",
+        "sqlalchemy[asyncio]>=2.0.0",
+        "pydantic>=2.0.0",
+        "typer>=0.9.0",
+        "uvicorn[standard]>=0.23.0",
+    ]
+
+    [project.optional-dependencies]
+    dev = [
+        "pytest>=7.4.0",
+        "pytest-asyncio>=0.21.0",
+        "black>=23.0.0",
+        "ruff>=0.0.280",
+        "mypy>=1.5.0",
+    ]
+
+    [project.scripts]
+    app = "app.cli.commands:app"
+
+    [build-system]
+    requires = ["hatchling"]
+    build-backend = "hatchling.build"
+
+    [tool.ruff]
+    target-version = "py38"
+    line-length = 88
+    select = ["E", "F", "I", "UP"]
+
+    [tool.black]
+    line-length = 88
+    target-version = ["py38"]
+
+    [tool.mypy]
+    python_version = "3.8"
+    strict = true
     ```
 
     ::
+
+
 templates:
   title: Use starter and templates
   description: 'Kickstart your Litestar project with pre-built templates featuring common patterns, integrations, and best practices.'

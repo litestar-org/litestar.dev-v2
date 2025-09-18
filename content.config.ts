@@ -214,7 +214,7 @@ export default defineContentConfig({
           companies: z.array(DualModeImage),
         }),
         features: PageSection,
-        scale: PageSection.extend({
+        development: PageSection.extend({
           code: z.string(),
         }),
         templates: PageSection,

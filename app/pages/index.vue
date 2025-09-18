@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { link } from '#build/ui'
+import { LazyMDC } from '#components'
 import type { TabsItem } from '@nuxt/ui'
 
 definePageMeta({
@@ -181,6 +182,51 @@ defineOgImageComponent('OgImageMain', {})
     <USeparator />
 
     <UPageSection
+      :title="page.development.title"
+      :features="page.development.features"
+      :links="page.development.links"
+      orientation="horizontal"
+      :ui="{
+        container: 'flex flex-col lg:grid py-16 sm:py-24 lg:py-32 gap-8 sm:gap-16 lg:grid-cols-[5fr_7fr] lg:items-center'
+      }"
+    >
+      <UPageCard
+        title="Domain driven design"
+        class="overflow-auto lg:absolute [@media(min-width:2400px)]:relative lg:-mt-16 [@media(min-width:2400px)]:mt-8 right-0 [@media(min-width:2400px)]:right-auto w-screen lg:w-[calc(50%-2rem)] [@media(min-width:2400px)]:w-full max-w-[800px] [@media(min-width:2400px)]:mx-auto rounded-none lg:rounded-l-[calc(var(--ui-radius)*4)] [@media(min-width:2400px)]:rounded-2xl -mx-4 sm:-mx-6 lg:mx-0"
+        variant="subtle"
+        :ui="{
+          container: 'sm:pt-4.5 lg:pr-0 [@media(min-width:2400px)]:px-6 w-full',
+        }"
+      >
+        <LazyMDC
+          :value="page.development.code" 
+        />
+      </UPageCard>
+      <!-- <template #description>
+        <MDC
+          :value="page.development.description"
+          cache-key="index-component-customization-description"
+        />
+      </template>
+
+      <div class="grid grid-cols-2 gap-8">
+        <div
+          v-for="feature in page.development.features"
+          :key="feature.title"
+          class="text-center p-6"
+        >
+          <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <UIcon :name="feature.icon" class="text-primary text-2xl" />
+          </div>
+          <h3 class="font-semibold text-lg mb-3">{{ feature.title }}</h3>
+          <p class="text-sm text-muted-foreground leading-relaxed">{{ feature.description }}</p>
+        </div>
+      </div> -->
+    </UPageSection>
+
+    <USeparator />
+
+    <UPageSection
       :title="page?.features.title"
       :description="page?.features.description"
       :ui="{
@@ -228,27 +274,6 @@ defineOgImageComponent('OgImageMain', {})
           </div>
         </Motion>
       </template>
-    </UPageSection>
-
-    <USeparator />
-
-    <UPageSection
-      :title="page.scale.title"
-      :features="page.scale.features"
-      :links="page.scale.links"
-      orientation="horizontal"
-    >
-      <template #description>
-        <MDC
-          :value="page.scale.description"
-          cache-key="index-component-customization-description"
-        />
-      </template>
-
-      <MDC
-        :value="page.scale.code"
-        cache-key="index-component-customization-code"
-      />
     </UPageSection>
 
     <USeparator />
