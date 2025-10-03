@@ -1,4 +1,5 @@
 export * from './blog'
 export * from './filters'
 export * from './plugins'
+export * from './sponsors'
 export * from './stats'
