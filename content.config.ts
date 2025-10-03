@@ -65,6 +65,12 @@ const BaseSection = z.object({
   description: z.string(),
 })
 
+const Sponsor = z.object({
+  title: z.string(),
+  url: z.string(),
+  image: Image,
+})
+
 const Author = z.object({
   name: z.string(),
   description: z.string().optional(),
@@ -226,6 +232,9 @@ export default defineContentConfig({
           discord: z.string(),
           cta: Button,
         }),
+        sponsors: PageSection.extend({
+          cta: Button
+        })
       }),
     }),
     about: defineCollection({
@@ -316,6 +325,11 @@ export default defineContentConfig({
       type: 'page',
       source: 'plugins/*.yml',
       schema: Plugin,
+    }),
+    sponsors: defineCollection({
+      type: 'page',
+      source: 'sponsors/*.yml',
+      schema: Sponsor,
     }),
     starters: defineCollection({
       type: 'data',

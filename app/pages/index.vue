@@ -2,6 +2,7 @@
 import { link } from '#build/ui'
 import { LazyMDC } from '#components'
 import type { TabsItem } from '@nuxt/ui'
+import { defaultJavaScriptRegexConstructor } from 'shiki'
 
 definePageMeta({
   heroBackground: '-z-10',
@@ -12,11 +13,13 @@ const [
   { data: starters },
   { data: templates },
   { data: plugins },
+  { data: sponsors }
 ] = await Promise.all([
   useAsyncData('index', () => queryCollection('index').first()),
   useAsyncData('starters', () => queryCollection('starters').all()),
   useAsyncData('templates', () => queryCollection('templates').all()),
   useAsyncData('plugins', () => queryCollection('plugins').all()),
+  useAsyncData('sponsors', () => queryCollection('sponsors').all()),
 ])
 
 const { packageManagers, selectedPackageManager } = usePackageManager()
@@ -391,5 +394,9 @@ defineOgImageComponent('OgImageMain', {})
     <USeparator />
 
     <StatsSection :stats="stats" :stats-data="page.stats" />
+
+    <USeparator />
+
+    <SponsorSection :sponsors="sponsors" :sponsors-data="page.sponsors"/>
   </div>
 </template>

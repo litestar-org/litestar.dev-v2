@@ -471,3 +471,12 @@ stats:
     variant: outline
     icon: i-simple-icons-github
     trailing: true
+sponsors:
+  title: Sponsors
+  description: Litestar is made possible by contributors and sponsor, it will remain free and open source under the MIT License.
+  links:
+    - label: Become a sponsor
+      to: 'https://opencollective.com/litestar'
+      color: neutral
+      trailingIcon: i-lucide-heart
+      trailing: true
