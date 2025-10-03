@@ -1,8 +1,8 @@
 export interface Sponsor {
-  title: string,
-  url: string,
+  title: string
+  url: string
   image: {
-    src: string,
+    src: string
     alt: string
   }
 }

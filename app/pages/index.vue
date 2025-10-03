@@ -15,7 +15,7 @@ const [
   { data: starters },
   { data: templates },
   { data: plugins },
-  { data: sponsors }
+  { data: sponsors },
 ] = await Promise.all([
   useAsyncData('index', () => queryCollection('index').first()),
   useAsyncData('starters', () => queryCollection('starters').all()),
@@ -527,6 +527,6 @@ defineOgImageComponent('OgImageMain', {})
 
     <USeparator />
 
-    <SponsorSection :sponsors="sponsors" :sponsors-data="page.sponsors"/>
+    <SponsorSection :sponsors="sponsors" :sponsors-data="page.sponsors" />
   </div>
 </template>
