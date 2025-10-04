@@ -9,12 +9,7 @@
     }"
   >
     <div class="flex flex-col items-center">
-      <!-- <template v-for="({ tier, sponsors }) of sponsorGroups" :key="tier"> -->
       <div class="w-full mb-24">
-        <!-- <UBadge color="neutral" variant="subtle" class="capitalize mb-2">
-              {{ tier }} sponsors
-            </UBadge> -->
-
         <div class="w-full border border-default rounded-lg">
           <table class="w-full">
             <tbody>
@@ -69,7 +64,6 @@
           </table>
         </div>
       </div>
-      <!-- </template> -->
     </div>
   </UPageSection>
 </template>

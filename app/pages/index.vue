@@ -334,27 +334,6 @@ defineOgImageComponent('OgImageMain', {})
           <CustomEdge v-bind="edgeProps" />
         </template>
       </VueFlow>
-
-      <!-- <template #description>
-        <MDC
-          :value="page.development.description"
-          cache-key="index-component-customization-description"
-        />
-      </template>
-
-      <div class="grid grid-cols-2 gap-8">
-        <div
-          v-for="feature in page.development.features"
-          :key="feature.title"
-          class="text-center p-6"
-        >
-          <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <UIcon :name="feature.icon" class="text-primary text-2xl" />
-          </div>
-          <h3 class="font-semibold text-lg mb-3">{{ feature.title }}</h3>
-          <p class="text-sm text-muted-foreground leading-relaxed">{{ feature.description }}</p>
-        </div>
-      </div> -->
     </UPageSection>
 
     <USeparator />
