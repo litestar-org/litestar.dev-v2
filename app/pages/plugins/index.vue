@@ -108,7 +108,7 @@ watch(filteredPlugins, () => {
 })
 
 const copyAllInstallCommands = () => {
-  const pluginNames = pluginsToAdd.value.map((plugin) => plugin.name).join(' ')
+  const pluginNames = pluginsToAdd.value.map((plugin) => plugin.pypi).join(' ')
   const command = `${selectedPackageManager.value.command} ${pluginNames}`
   copy(command, {
     title: 'Install command copied to clipboard:',
@@ -298,9 +298,9 @@ initializePlugins()
       <UPageBody>
         <div class="flex items-center gap-2 mb-4 text-muted">
           <UIcon name="i-lucide-info" class="size-4" />
-          <span class="text-xs"
-            >Shift+click to select plugins for bulk installation</span
-          >
+          <span class="text-xs">
+            Shift+click to select plugins for bulk installation
+          </span>
         </div>
 
         <UPageGrid

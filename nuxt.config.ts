@@ -63,7 +63,12 @@ export default defineNuxtConfig({
     pageTransition: false,
     layoutTransition: false,
   },
-  css: ['~/assets/css/main.css'],
+  css: [
+    '~/assets/css/main.css',
+    '@vue-flow/core/dist/style.css',
+    '@vue-flow/core/dist/theme-default.css',
+    '@vue-flow/controls/dist/style.css',
+  ],
   content: {
     experimental: { sqliteConnector: 'better-sqlite3' },
     build: {
