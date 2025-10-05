@@ -13,7 +13,7 @@ const [
   { data: starters },
   { data: templates },
   { data: plugins },
-  { data: sponsors }
+  { data: sponsors },
 ] = await Promise.all([
   useAsyncData('index', () => queryCollection('index').first()),
   useAsyncData('starters', () => queryCollection('starters').all()),
@@ -190,7 +190,8 @@ defineOgImageComponent('OgImageMain', {})
       :links="page.development.links"
       orientation="horizontal"
       :ui="{
-        container: 'flex flex-col lg:grid py-16 sm:py-24 lg:py-32 gap-8 sm:gap-16 lg:grid-cols-[5fr_7fr] lg:items-center'
+        container:
+          'flex flex-col lg:grid py-16 sm:py-24 lg:py-32 gap-8 sm:gap-16 lg:grid-cols-[5fr_7fr] lg:items-center',
       }"
     >
       <UPageCard
@@ -201,9 +202,7 @@ defineOgImageComponent('OgImageMain', {})
           container: 'sm:pt-4.5 lg:pr-0 [@media(min-width:2400px)]:px-6 w-full',
         }"
       >
-        <LazyMDC
-          :value="page.development.code" 
-        />
+        <LazyMDC :value="page.development.code" />
       </UPageCard>
       <!-- <template #description>
         <MDC
@@ -397,6 +396,6 @@ defineOgImageComponent('OgImageMain', {})
 
     <USeparator />
 
-    <SponsorSection :sponsors="sponsors" :sponsors-data="page.sponsors"/>
+    <SponsorSection :sponsors="sponsors" :sponsors-data="page.sponsors" />
   </div>
 </template>

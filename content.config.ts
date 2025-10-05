@@ -233,8 +233,8 @@ export default defineContentConfig({
           cta: Button,
         }),
         sponsors: PageSection.extend({
-          cta: Button
-        })
+          cta: Button,
+        }),
       }),
     }),
     about: defineCollection({
