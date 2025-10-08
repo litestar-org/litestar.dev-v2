@@ -108,7 +108,7 @@ watch(filteredPlugins, () => {
 })
 
 const copyAllInstallCommands = () => {
-  const pluginNames = pluginsToAdd.value.map((plugin) => plugin.name).join(' ')
+  const pluginNames = pluginsToAdd.value.map((plugin) => plugin.pypi).join(' ')
   const command = `${selectedPackageManager.value.command} ${pluginNames}`
   copy(command, {
     title: 'Install command copied to clipboard:',
