@@ -83,14 +83,14 @@ const footerLinks = [
         label: 'Plugins',
         to: '/plugins',
       },
-      {
-        label: 'Templates',
-        to: '/templates',
-      },
-      {
-        label: 'Deploy',
-        to: '/deploy',
-      },
+      // {
+      //   label: 'Templates',
+      //   to: '/templates',
+      // },
+      // {
+      //   label: 'Deploy',
+      //   to: '/deploy',
+      // },
     ],
   },
   {

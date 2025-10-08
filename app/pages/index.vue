@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { link } from '#build/ui'
+// import { link } from '#build/ui'
 import { LazyMDC } from '#components'
 import type { TabsItem } from '@nuxt/ui'
-import { defaultJavaScriptRegexConstructor } from 'shiki'
+// import { defaultJavaScriptRegexConstructor } from 'shiki'
 
 definePageMeta({
   heroBackground: '-z-10',
@@ -175,7 +175,7 @@ defineOgImageComponent('OgImageMain', {})
             <LazyMDC
               :value="item.content"
               :cache-key="`index-hero-tab-${index}`"
-              hydrate-on-idle
+              
             />
           </template>
         </UTabs>
@@ -318,7 +318,7 @@ defineOgImageComponent('OgImageMain', {})
       </UCarousel>
     </UPageSection>
 
-    <USeparator />
+    <!-- <USeparator />
 
     <UPageSection
       :title="page.templates.title"
@@ -341,7 +341,6 @@ defineOgImageComponent('OgImageMain', {})
           }"
         >
           <template #starter="{ item }">
-            <!-- Starter Templates Carousel -->
             <UCarousel
               v-slot="{ item }"
               loop
@@ -360,7 +359,6 @@ defineOgImageComponent('OgImageMain', {})
             </UCarousel>
           </template>
           <template #templates="{ item }">
-            <!-- Full Templates Carousel -->
             <UCarousel
               v-slot="{ item }"
               loop
@@ -380,7 +378,7 @@ defineOgImageComponent('OgImageMain', {})
           </template>
         </UTabs>
       </div>
-    </UPageSection>
+    </UPageSection> -->
 
     <USeparator />
 
