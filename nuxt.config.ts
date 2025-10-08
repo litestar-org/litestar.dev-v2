@@ -48,6 +48,11 @@ export default defineNuxtConfig({
     'motion-v/nuxt',
     '@nuxtjs/google-fonts',
   ],
+  $development: {
+    site: {
+      url: 'http://localhost:3000'
+    }
+  },
   ogImage: {
     zeroRuntime: true,
 
@@ -85,7 +90,7 @@ export default defineNuxtConfig({
   mdc: {
     highlight: {
       noApiRoute: false,
-      langs: ['js', 'python', 'toml', 'shell'],
+      // langs: ['js', 'python', 'toml', 'shell', 'py'],
     },
   },
   hooks: {
