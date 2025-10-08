@@ -89,8 +89,7 @@ export default defineNuxtConfig({
   },
   mdc: {
     highlight: {
-      noApiRoute: false,
-      // langs: ['js', 'python', 'toml', 'shell', 'py'],
+      langs: ['sql', 'diff', 'ini', 'python', 'toml', 'shell', 'js', 'typescript', 'vue'],
     },
   },
   hooks: {

@@ -175,7 +175,7 @@ defineOgImageComponent('OgImageMain', {})
             <LazyMDC
               :value="item.content"
               :cache-key="`index-hero-tab-${index}`"
-              
+              hydrate-on-idle
             />
           </template>
         </UTabs>
@@ -202,7 +202,7 @@ defineOgImageComponent('OgImageMain', {})
           container: 'sm:pt-4.5 lg:pr-0 [@media(min-width:2400px)]:px-6 w-full',
         }"
       >
-        <LazyMDC :value="page.development.code" />
+        <LazyMDC :value="page.development.code" hydrate-on-visible />
       </UPageCard>
       <!-- <template #description>
         <MDC
