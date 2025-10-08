@@ -63,9 +63,7 @@ export default defineNuxtConfig({
     pageTransition: false,
     layoutTransition: false,
   },
-  css: [
-    '~/assets/css/main.css',
-  ],
+  css: ['~/assets/css/main.css'],
   content: {
     experimental: { sqliteConnector: 'better-sqlite3' },
     build: {
