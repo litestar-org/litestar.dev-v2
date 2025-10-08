@@ -1,10 +1,7 @@
 <script lang="ts" setup>
-import { link } from '#build/ui'
 import { LazyMDC } from '#components'
 import type { TabsItem } from '@nuxt/ui'
-import { VueFlow, useVueFlow, type Node, type Edge } from '@vue-flow/core'
-import { Controls } from '@vue-flow/controls'
-import { defaultJavaScriptRegexConstructor } from 'shiki'
+// import { defaultJavaScriptRegexConstructor } from 'shiki'
 
 definePageMeta({
   heroBackground: '-z-10',
@@ -25,61 +22,6 @@ const [
 ])
 
 const { packageManagers, selectedPackageManager } = usePackageManager()
-const { onConnect, addEdges } = useVueFlow()
-
-const nodes = ref<Node[]>([
-  {
-    id: '1',
-    type: 'custom',
-    position: { x: 250, y: 50 },
-    data: {
-      title: 'API Request',
-      subtitle: 'FastAPI-compatible routing',
-      icon: 'i-lucide-globe',
-    },
-  },
-  {
-    id: '2',
-    type: 'custom',
-    position: { x: 50, y: 200 },
-    data: {
-      title: 'Dependency Injection',
-      subtitle: 'Automatic resolution',
-      icon: 'i-lucide-arrow-down-circle',
-    },
-  },
-  {
-    id: '3',
-    type: 'custom',
-    position: { x: 450, y: 200 },
-    data: {
-      title: 'Type Safety',
-      subtitle: 'Pydantic validation',
-      icon: 'i-lucide-shield-check',
-    },
-  },
-  {
-    id: '4',
-    type: 'custom',
-    position: { x: 250, y: 350 },
-    data: {
-      title: 'Response',
-      subtitle: 'Auto documentation',
-      icon: 'i-lucide-file-json',
-    },
-  },
-])
-
-const edges = ref<Edge[]>([
-  { id: 'e1-2', source: '1', target: '2', type: 'custom', animated: true },
-  { id: 'e1-3', source: '1', target: '3', type: 'custom', animated: true },
-  { id: 'e2-4', source: '2', target: '4', type: 'custom', animated: true },
-  { id: 'e3-4', source: '3', target: '4', type: 'custom', animated: true },
-])
-
-onConnect((params) => {
-  addEdges([params])
-})
 
 const installCommands = computed<TabsItem[]>(() =>
   packageManagers.map((pm) => ({
@@ -124,54 +66,6 @@ useSeoMeta({
 
 defineOgImageComponent('OgImageMain', {})
 </script>
-
-<style scoped>
-.vue-flow-litestar {
-  background: linear-gradient(
-    180deg,
-    var(--ui-bg-elevated) 0%,
-    var(--ui-bg) 100%
-  );
-  border-radius: 0.5rem;
-}
-
-.vue-flow-litestar :deep(.vue-flow__minimap) {
-  border-radius: 0.5rem;
-  overflow: hidden;
-}
-
-.vue-flow-litestar :deep(.vue-flow__controls) {
-  border-radius: 0.5rem;
-  overflow: hidden;
-}
-
-.vue-flow-litestar :deep(.vue-flow__controls button) {
-  background: var(--ui-bg);
-  border: 1px solid var(--ui-border);
-  color: var(--ui-text);
-}
-
-.vue-flow-litestar :deep(.vue-flow__controls button:hover) {
-  background: var(--ui-bg-elevated);
-  border-color: var(--ui-border-accented);
-}
-
-.vue-flow-litestar :deep(.vue-flow__edge) {
-  stroke: rgb(59 130 246);
-  stroke-width: 2px;
-}
-
-.vue-flow-litestar :deep(.vue-flow__edge.animated) {
-  animation: dashdraw 0.5s linear infinite;
-  stroke-dasharray: 5;
-}
-
-@keyframes dashdraw {
-  to {
-    stroke-dashoffset: -10;
-  }
-}
-</style>
 
 <template>
   <div v-if="page">
@@ -299,7 +193,7 @@ defineOgImageComponent('OgImageMain', {})
           'flex flex-col lg:grid py-16 sm:py-24 lg:py-32 gap-8 sm:gap-16 lg:grid-cols-[5fr_7fr] lg:items-center',
       }"
     >
-      <VueFlow
+      <!-- <VueFlow
         v-model:nodes="nodes"
         v-model:edges="edges"
         fit-view-on-init
@@ -333,7 +227,7 @@ defineOgImageComponent('OgImageMain', {})
         <template #edge-custom="edgeProps">
           <CustomEdge v-bind="edgeProps" />
         </template>
-      </VueFlow>
+      </VueFlow> -->
     </UPageSection>
 
     <USeparator />
