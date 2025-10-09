@@ -1,5 +1,13 @@
+@import 'https://cdn.jsdelivr.net/npm/@vue-flow/core@1.46.4/dist/style.css';
+@import 'https://cdn.jsdelivr.net/npm/@vue-flow/core@1.46.4/dist/theme-default.css';
+/* import the necessary styles for Vue Flow to work */
+@import '@vue-flow/core/dist/style.css';
+
+/* import the default theme, this is optional but generally recommended */
+@import '@vue-flow/core/dist/theme-default.css';
 @import 'tailwindcss';
 @import '@nuxt/ui';
+
 /* @import "@nuxt/ui-pro"; */
 
 @theme static {
