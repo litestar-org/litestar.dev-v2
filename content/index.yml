@@ -88,29 +88,61 @@ hero:
       icon: i-lucide-unplug
       content: |
         ::code-tree{defaultValue="main.py" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
-        ```python [main.py]
-        import uvicorn
-        from litestar import Litestar, websocket
-        from litestar.connection import WebSocket
+        ```python [main_ws_listener.py]
+        import dataclasses
+        import datetime
 
-        @websocket("/")
-        async def echo_socket(socket: WebSocket) -> None:
-            await socket.accept()
+        from litestar import Litestar, websocket_listener
+
+        @dataclasses.dataclass()
+        class Message:
+            data: dict[str, str]
+            timestamp: datetime.datetime
+
+        @websocket_listener("/echo")
+        async def echo_handler(data: dict[str, str]) -> Message:
+            """
+            Accept WebSocket connections on '/echo', and then for 
+            every incoming message:
+            - Parse its content as JSON
+            - Call 'echo_handler', passing the data to the 'data' parameter
+            - Serialize the returned 'Message' dataclass to JSON
+            - Send a WebSocket message back
+            """
+            return Message(data=data, timestamp=datetime.now())
+
+        app = Litestar([handler])
+        ```
+
+        ```python [main_ws_stream.py]
+        import asyncio
+        import time
+        from collections.abc import AsyncGenerator
+        import dataclasses
+        from litestar import Litestar, websocket_stream
+
+        @dataclass.dataclass()
+        class Ping:
+            timestamp: datetime.datetime
+
+        @websocket_stream("/ping")
+        async def ping() -> AsyncGenerator[Ping, None]:
+            """
+            Accept WebSocket connections on '/ping' an continue to
+            send a 'Ping' message to the client
+            """
             while True:
-                data = await socket.receive_text()
-                await socket.send_text(f"Your message: {data}")
+                yield Ping(timestamp=datetime.datetime.now())
+                await asyncio.sleep(0.5)
 
-        app = Litestar(route_handlers=[echo_socket])
-
-        if __name__ == "__main__":
-            uvicorn.run(app)
+        app = Litestar([ping])
         ```
 
         ```toml [pyproject.toml]
         [project]
         name = "litestar-websockets-echo"
         version = "0.1.0"
-        description = "A Litestar websockets echo example"
+        description = "A Litestar websockets stream and listener example"
         readme = "README.md"
         requires-python = ">=3.13"
         dependencies = [
