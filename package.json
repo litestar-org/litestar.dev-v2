@@ -52,7 +52,7 @@
     "@prettier/plugin-oxc": "^0.0.4",
     "@shikijs/transformers": "^3.13.0",
     "@vue/test-utils": "^2.4.6",
-    "happy-dom": "^19.0.2",
+    "happy-dom": "^20.0.0",
     "husky": "^9.1.7",
     "nuxt-content-twoslash": "^0.1.2",
     "oxlint": "^1.20.0",
