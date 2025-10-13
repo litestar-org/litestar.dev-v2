@@ -50,8 +50,8 @@ export default defineNuxtConfig({
   ],
   $development: {
     site: {
-      url: 'http://localhost:3000'
-    }
+      url: 'http://localhost:3000',
+    },
   },
   ogImage: {
     zeroRuntime: true,
@@ -89,7 +89,17 @@ export default defineNuxtConfig({
   },
   mdc: {
     highlight: {
-      langs: ['sql', 'diff', 'ini', 'python', 'toml', 'shell', 'js', 'typescript', 'vue'],
+      langs: [
+        'sql',
+        'diff',
+        'ini',
+        'python',
+        'toml',
+        'shell',
+        'js',
+        'typescript',
+        'vue',
+      ],
     },
   },
   hooks: {

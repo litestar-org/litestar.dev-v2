@@ -9,7 +9,12 @@ defineProps<{
 
 <template>
   <div class="container-node">
-    <div class="container-label" :class="{ 'label-right': data.labelPosition === 'right' }">{{ data.label }}</div>
+    <div
+      class="container-label"
+      :class="{ 'label-right': data.labelPosition === 'right' }"
+    >
+      {{ data.label }}
+    </div>
   </div>
 </template>
 
@@ -27,6 +32,10 @@ defineProps<{
   font-size: 13px;
   color: #000000;
   font-weight: 500;
+}
+
+.dark .container-label {
+  color: #f3f4f6;
 }
 
 .container-label.label-right {

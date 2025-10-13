@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Position } from '@vue-flow/core'
+import type { Position } from '@vue-flow/core'
 import { NodeToolbar } from '@vue-flow/node-toolbar'
 
 defineProps<{
@@ -33,5 +33,12 @@ defineProps<{
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   line-height: 1.6;
   border: 1px solid #d1d5db;
+}
+
+.dark .toolbar-content {
+  background: #1f2937;
+  color: #f3f4f6;
+  border-color: #374151;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
 }
 </style>

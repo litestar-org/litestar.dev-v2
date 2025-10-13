@@ -8,7 +8,10 @@ defineProps<{
 </script>
 
 <template>
-  <div class="config-node" :style="{ backgroundColor: data.backgroundColor || '#DBEAFE' }">
+  <div
+    class="config-node"
+    :style="{ backgroundColor: data.backgroundColor || '#DBEAFE' }"
+  >
     {{ data.label }}
   </div>
 </template>
@@ -26,5 +29,11 @@ defineProps<{
   font-size: 14px;
   font-weight: 500;
   text-align: center;
+  color: #000000;
+}
+
+.dark .config-node {
+  border-color: #374151;
+  color: #f3f4f6;
 }
 </style>

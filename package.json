@@ -56,7 +56,7 @@
     "happy-dom": "^18.0.1",
     "husky": "^9.1.7",
     "nuxt-content-twoslash": "^0.1.2",
-    "oxlint": "^1.21.0",
+    "oxlint": "^1.23.0",
     "prettier": "^3.6.2",
     "shiki": "^3.13.0",
     "twoslash": "^0.3.4",
