@@ -12,7 +12,7 @@ export default defineNuxtConfig({
       crawlLinks: true,
       // failOnError: false,
       routes: ['/robots.txt'],
-      ignore: [(route) => route.startsWith('/plugins')],
+      ignore: [(route) => route.startsWith('/litestar.dev-v2/plugins')],
       autoSubfolderIndex: false,
     },
   },
@@ -64,6 +64,7 @@ export default defineNuxtConfig({
     },
   },
   app: {
+    baseURL: '/litestar.dev-v2/',
     pageTransition: false,
     layoutTransition: false,
   },
