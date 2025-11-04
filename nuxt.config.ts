@@ -64,7 +64,6 @@ export default defineNuxtConfig({
     },
   },
   app: {
-    baseURL: '/',
     pageTransition: false,
     layoutTransition: false,
   },
