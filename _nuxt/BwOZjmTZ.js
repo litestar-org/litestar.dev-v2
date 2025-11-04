@@ -1,0 +1,1 @@
+import{h as e,k as t}from"#entry";const n=()=>{let{copy:n,copied:r}=t(),i=e();return{copy:(e,t)=>{n(e),t&&i.add(t)},copied:r}};export{n as t};

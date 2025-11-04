@@ -1,0 +1,1 @@
+const{format:e}=Intl.NumberFormat(`en-GB`,{notation:`compact`,maximumFractionDigits:1}),t=function(e=``){return new RegExp(e.replace(/[-[\]{}()*+?.,\\^$|#\s]/g,`\\$&`),`i`)},n=(e,t)=>new Date(t).toLocaleDateString(e,{year:`numeric`,month:`long`,day:`numeric`});export{e as n,t as r,n as t};

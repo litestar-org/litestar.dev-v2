@@ -1,0 +1,1 @@
+import{cr as e,pn as t,wt as n}from"#entry";var r=0;function i(i,a=`reka`){if(i)return i;if(`useId`in t)return`${a}-${e?.()}`;let o=n({useId:void 0});return o.useId?`${a}-${o.useId()}`:`${a}-${++r}`}export{i as t};

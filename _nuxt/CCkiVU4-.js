@@ -1,0 +1,1 @@
+import{Cn as e,Dn as t,Fr as n,Wt as r,er as i,m as a,rr as o}from"#entry";var s={base:``},c={__name:`ProseEm`,props:{class:{type:String,required:!1}},setup(c){let l=c,u=r(),d=e(()=>a({extend:a(s),...u.ui?.prose?.em||{}}));return(e,r)=>(i(),t(`em`,{class:n(d.value({class:l.class}))},[o(e.$slots,`default`)],2))}};export{c as default};

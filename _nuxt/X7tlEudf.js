@@ -1,0 +1,1 @@
+const e=e=>{};export{e as t};

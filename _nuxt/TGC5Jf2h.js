@@ -1,0 +1,1 @@
+import{Kt as e}from"#entry";const t=()=>e(`color-mode`).value;export{t};

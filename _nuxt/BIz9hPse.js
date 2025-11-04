@@ -1,0 +1,1 @@
+import{Dr as e}from"#entry";var t={stars:7362,monthly_downloads:802398,contributors:120,discord:3e3,version:`2.17.0`};const n=()=>({stats:e(t)});export{n as t};

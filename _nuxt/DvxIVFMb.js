@@ -1,0 +1,1 @@
+import{Cn as e,Dn as t,Fr as n,Wt as r,er as i,m as a}from"#entry";var o={base:`border-t border-default my-12`},s={__name:`ProseHr`,props:{class:{type:null,required:!1}},setup(s){let c=s,l=r(),u=e(()=>a({extend:a(o),...l.ui?.prose?.hr||{}}));return(e,r)=>(i(),t(`hr`,{class:n(u.value({class:c.class}))},null,2))}};export{s as default};
