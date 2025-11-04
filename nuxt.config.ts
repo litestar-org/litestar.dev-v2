@@ -64,6 +64,7 @@ export default defineNuxtConfig({
     },
   },
   app: {
+    baseURL: '/litestar.dev-v2/',
     pageTransition: false,
     layoutTransition: false,
   },
