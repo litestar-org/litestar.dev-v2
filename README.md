@@ -1,3 +1,5 @@
+<a href="https://litestar.dev"><img width="1200" alt="Litestar Website" src="./public/website.png"></a>
+
 # litestar.dev
 
 Welcome to the Litestar website repository available on [litestar.dev](https://litestar.dev).
@@ -23,18 +25,9 @@ pnpm dev
 
 To add a new Litestar plugin, create a pull request on the [litestar-org/plugins](https://github.com/litestar-org/plugins) repository.
 
-## Production
-
-As the website is hosted on GitHub Pages, you will need to generate it as a static site:
-
-```bash
-pnpm generate
-```
-
 ## Deployment
 
 The site is automatically deployed to GitHub Pages via GitHub Actions when changes are pushed to the `main` branch.
-
 
 ```bash
 pnpm generate
