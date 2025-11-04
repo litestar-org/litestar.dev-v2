@@ -1,75 +1,49 @@
-# Nuxt Minimal Starter
+# litestar.dev
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Welcome to the Litestar website repository available on [litestar.dev](https://litestar.dev).
 
 ## Setup
 
-Make sure to install dependencies:
+Make sure to enable corepack and install the dependencies:
 
 ```bash
-# npm
-npm install
-
-# pnpm
+corepack enable
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+## Development
 
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
 pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
+
+## Add a Litestar Plugin
+
+To add a new Litestar plugin, create a pull request on the [litestar-org/plugins](https://github.com/litestar-org/plugins) repository.
 
 ## Production
 
-Build the application for production:
+As the website is hosted on GitHub Pages, you will need to generate it as a static site:
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+pnpm generate
 ```
 
-Locally preview production build:
+## Deployment
+
+The site is automatically deployed to GitHub Pages via GitHub Actions when changes are pushed to the `main` branch.
+
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+pnpm generate
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Testing
+
+TODO
+
+## License
+
+[MIT License](./LICENSE)
