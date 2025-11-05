@@ -28,10 +28,7 @@ const GITHUB_OWNER = 'litestar-org'
 const GITHUB_REPO = 'litestar'
 const GITHUB_API_BASE = 'https://api.github.com'
 const DISCORD_INVITE_CODE = 'litestar'
-const STATS_FILE_PATH = resolve(
-  import.meta.dirname,
-  '../app/data/stats.json',
-)
+const STATS_FILE_PATH = resolve(import.meta.dirname, '../app/data/stats.json')
 
 async function fetchGitHubData<T>(endpoint: string): Promise<T> {
   const url = `${GITHUB_API_BASE}${endpoint}`
@@ -113,9 +110,7 @@ async function getPyPIDownloads(): Promise<number> {
     )
 
     if (!response.ok) {
-      console.warn(
-        'Failed to fetch PyPI downloads, keeping existing value',
-      )
+      console.warn('Failed to fetch PyPI downloads, keeping existing value')
       return 0
     }
 
