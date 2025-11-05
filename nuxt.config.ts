@@ -48,6 +48,9 @@ export default defineNuxtConfig({
     'motion-v/nuxt',
     '@nuxtjs/google-fonts',
   ],
+  site: {
+    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://litestar-org.github.io',
+  },
   $development: {
     site: {
       url: 'http://localhost:3000',

@@ -19,8 +19,21 @@ export const useBlogImages = () => {
    * Get the generated OG image URL for a blog post path
    */
   const getOgImageUrl = (path: string): string => {
-    // Convert path like '/blog/2.og-image-test' to 'blog/og-image-test'
-    return `http://localhost:3000/__og-image__/static${path}/og.png`
+    const config = useRuntimeConfig()
+    const siteConfig = useSiteConfig()
+
+    // Get the base URL from site config or construct it
+    const baseUrl = siteConfig.url || 'http://localhost:3000'
+
+    // Get the app base URL (e.g., '/litestar.dev-v2/')
+    const appBase = config.app.baseURL || '/'
+
+    // Construct the full URL
+    // Remove trailing slash from baseUrl and leading slash from appBase if needed
+    const cleanBaseUrl = baseUrl.replace(/\/$/, '')
+    const cleanAppBase = appBase === '/' ? '' : appBase.replace(/\/$/, '')
+
+    return `${cleanBaseUrl}${cleanAppBase}/__og-image__/static${path}/og.png`
   }
 
   /**
