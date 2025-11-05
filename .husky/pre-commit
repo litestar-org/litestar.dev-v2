@@ -1,1 +1,10 @@
-npm run lint
+# Load nvm and use the correct Node version
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Use Node version from .nvmrc if available
+if [ -f .nvmrc ]; then
+  nvm use
+fi
+
+pnpm run lint
