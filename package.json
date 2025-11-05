@@ -13,7 +13,8 @@
     "prepare": "husky",
     "test-unit": "npx vitest --project unit",
     "test-nuxt": "npx vitest --project nuxt",
-    "test-all": "npx vitest"
+    "test-all": "npx vitest",
+    "update-stats": "npx tsx scripts/update-stats.ts"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.69",
