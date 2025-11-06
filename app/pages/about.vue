@@ -45,7 +45,7 @@ const stats = [
     label: 'Contributors',
     value: data.value?.contributors ?? '',
     icon: 'i-lucide-users',
-    to: config.public.discordUrl,
+    to: config.public.contributorsUrl,
   },
   {
     label: 'Version',
@@ -75,7 +75,7 @@ const stats = [
         v-for="stat in stats"
         :key="stat.label"
         :to="stat.to"
-        :target="stat.to?.startsWith('#') ? undefined : '_blank'"
+        target="_blank"
         class="text-center p-6 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer group"
       >
         <UIcon
