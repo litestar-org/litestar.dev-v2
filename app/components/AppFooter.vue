@@ -1,9 +1,6 @@
 <script setup lang="ts">
 const { footerLinks } = useFooterLinks()
 const config = useRuntimeConfig()
-const colorMode = useColorMode()
-
-const isDark = computed(() => colorMode.value === 'dark')
 </script>
 
 <template>
@@ -21,12 +18,12 @@ const isDark = computed(() => colorMode.value === 'dark')
           <template #left>
             <div class="flex items-center space-x-2 mb-4">
               <UIcon
-                :name="
-                  isDark
-                    ? 'i-custom-litestar-full-dark'
-                    : 'i-custom-litestar-full'
-                "
-                class="h-8 w-30"
+                name="i-custom-litestar-full"
+                class="h-8 w-30 dark:hidden"
+              />
+              <UIcon
+                name="i-custom-litestar-full-dark"
+                class="h-8 w-30 hidden dark:block"
               />
             </div>
             <p class="text-muted text-sm max-w-md">
