@@ -478,9 +478,9 @@ templates:
     - title: Customizable & extensible
       description: Everything remain easily customizable and extensible.
       icon: i-lucide-palette
-modules:
-  title: Extend Litestar with modules
-  description: Litestar has a rich module ecosystem, with both official and community-driven modules. This accelerates development by providing ready-to-use solutions for common needs.
+plugins:
+  title: Extend Litestar with plugins
+  description: Litestar has a rich module ecosystem, with both official and community-driven plugins. This accelerates development by providing ready-to-use solutions for common needs.
   links:
     - label: Explore all plugins
       to: /plugins

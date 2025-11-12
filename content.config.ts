@@ -224,7 +224,7 @@ export default defineContentConfig({
           code: z.string(),
         }),
         templates: PageSection,
-        modules: PageSection,
+        plugins: PageSection,
         deploy: PageSection,
         stats: PageSection.extend({
           community: BaseSection,
@@ -275,22 +275,6 @@ export default defineContentConfig({
         category: z.enum(['Release', 'Tutorial', 'Announcement', 'Article']),
         tags: z.array(z.string()),
       }),
-    }),
-    landing: defineCollection({
-      type: 'page',
-      source: [
-        { include: 'index.md' },
-        { include: 'blog.yml' },
-        { include: 'modules.yml' },
-        { include: 'deploy.yml' },
-        { include: 'template.yml' },
-        { include: 'video-courses.yml' },
-        { include: 'enterprise/sponsors.yml' },
-        { include: 'enterprise/agencies.yml' },
-        { include: 'newsletter.yml' },
-        { include: 'enterprise/jobs.yml' },
-      ],
-      schema: PageHero,
     }),
     deploy: defineCollection({
       type: 'page',

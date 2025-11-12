@@ -251,7 +251,6 @@ let configs
 export function getMdcConfigs() {
   if (!configs) {
     configs = Promise.all([
-      // import('/Users/far/projects/nuxt/nuxt.com/node_modules/.pnpm/nuxt-content-twoslash@0.1.2_@nuxtjs+mdc@0.16.1_magicast@0.3.5__magicast@0.3.5/node_modules/nuxt-content-twoslash/dist/runtime/mdc.config').then(m => m.default)
     ])
   }
   return configs

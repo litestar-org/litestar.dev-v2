@@ -253,15 +253,15 @@ defineOgImageComponent('OgImageMain', {})
     <USeparator />
 
     <UPageSection
-      :description="page.modules.description"
-      :links="page.modules.links"
+      :description="page.plugins.description"
+      :links="page.plugins.links"
       :ui="{
         root: 'bg-gradient-to-b from-muted dark:from-muted/40 to-default',
       }"
     >
       <template #title>
         <LazyMDC
-          :value="page.modules.title"
+          :value="page.plugins.title"
           unwrap="p"
           cache-key="index-plugins-title"
           hydrate-never

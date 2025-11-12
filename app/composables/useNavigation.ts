@@ -187,9 +187,9 @@ const _useNavigation = () => {
       items: [],
     }
 
-    const modulesGroup: SearchGroup = {
-      id: 'modules-search',
-      label: 'Modules',
+    const pluginsGroup: SearchGroup = {
+      id: 'plugins-search',
+      label: 'Plugins',
       items: [],
     }
 
@@ -199,7 +199,7 @@ const _useNavigation = () => {
       items: [],
     }
 
-    const groups = [aiGroup, modulesGroup, hostingGroup]
+    const groups = [aiGroup, pluginsGroup, hostingGroup]
 
     if (!searchTerm.value) {
       return groups
