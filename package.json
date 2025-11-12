@@ -5,6 +5,7 @@
   "scripts": {
     "build": "NODE_OPTIONS='--max-old-space-size=8192' nuxt build",
     "generate": "NODE_OPTIONS='--max-old-space-size=8192' nuxt generate",
+    "generate-github": "NODE_OPTIONS='--max-old-space-size=8192' nuxt generate --preset github_pages",
     "generate-verbose": "NODE_OPTIONS='--max-old-space-size=8192' nuxt generate --logLevel=verbose",
     "dev": "nuxt dev",
     "preview": "nuxt preview",

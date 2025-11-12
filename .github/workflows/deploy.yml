@@ -12,31 +12,74 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Download latest plugin data
+      - name: Restore plugin release commit cache
+        id: cache-commit
+        uses: actions/cache/restore@v4
+        with:
+          path: .plugin-release-commit
+          key: plugin-release-commit-${{ github.sha }}
+          restore-keys: |
+            plugin-release-commit-
+
+      - name: Check and download plugin data
+        id: plugin-data
         run: |
-          echo "Downloading plugin data from latest release..."
-          curl -L -o plugins-data.zip \
-            https://github.com/litestar-org/plugins/releases/latest/download/plugins-and-readmes.zip
+          # Get the latest release commit SHA from the plugins repo
+          LATEST_COMMIT=$(curl -s https://api.github.com/repos/litestar-org/plugins/releases/latest | jq -r '.target_commitish')
+          echo "Latest release commit: $LATEST_COMMIT"
 
-          echo "Extracting plugin data..."
-          unzip -o plugins-data.zip
+          # Check if we have a cached commit
+          if [ -f .plugin-release-commit ]; then
+            CURRENT_COMMIT=$(cat .plugin-release-commit)
+            echo "Current cached commit: $CURRENT_COMMIT"
+          else
+            CURRENT_COMMIT=""
+            echo "No cached commit found"
+          fi
 
-          echo "Moving files to content directories..."
-          # Remove existing plugin files to ensure clean state
-          rm -rf content/plugins/*.yml content/readme/*.md
+          # Compare commits
+          if [ "$LATEST_COMMIT" = "$CURRENT_COMMIT" ] && [ -n "$CURRENT_COMMIT" ]; then
+            echo "Plugin data is up to date (commit: $LATEST_COMMIT)"
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "Plugin data needs update (current: $CURRENT_COMMIT, latest: $LATEST_COMMIT)"
+            echo "changed=true" >> $GITHUB_OUTPUT
 
-          # Move extracted files to content directories
-          mv plugins/*.yml content/plugins/
-          mv readmes/*.md content/readme/
+            echo "Downloading plugin data from latest release..."
+            curl -L -o plugins-data.zip \
+              https://github.com/litestar-org/plugins/releases/latest/download/plugins-and-readmes.zip
 
-          # Clean up
-          rm -rf plugins readmes plugins-data.zip
+            echo "Extracting plugin data..."
+            unzip -o plugins-data.zip
 
-          echo "Plugin data updated successfully"
-          echo "Plugin count: $(ls -1 content/plugins/*.yml 2>/dev/null | wc -l)"
-          echo "README count: $(ls -1 content/readme/*.md 2>/dev/null | wc -l)"
+            echo "Moving files to content directories..."
+            # Remove existing plugin files to ensure clean state
+            rm -rf content/plugins/*.yml content/readme/*.md
+
+            # Move extracted files to content directories
+            mv plugins/*.yml content/plugins/
+            mv readmes/*.md content/readme/
+
+            # Store the new commit for caching
+            echo "$LATEST_COMMIT" > .plugin-release-commit
+
+            # Clean up
+            rm -rf plugins readmes plugins-data.zip
+
+            echo "Plugin data updated successfully"
+            echo "Plugin count: $(ls -1 content/plugins/*.yml 2>/dev/null | wc -l)"
+            echo "README count: $(ls -1 content/readme/*.md 2>/dev/null | wc -l)"
+          fi
+
+      - name: Save plugin release commit cache
+        if: steps.plugin-data.outputs.changed == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .plugin-release-commit
+          key: plugin-release-commit-${{ github.sha }}
 
       - name: Commit and push plugin data
+        if: steps.plugin-data.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -75,7 +118,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Update stats
         run: pnpm run update-stats
-      - run: pnpm nuxt generate --preset github_pages
+      - run: pnpm run generate-github
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
