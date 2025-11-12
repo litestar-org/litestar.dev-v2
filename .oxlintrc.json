@@ -24,7 +24,7 @@
     "**/.netlify",
     "**/public",
     "**/content/plugins/",
-    "**/content/pluginsReadme/"
+    "**/content/readme/"
   ],
   "rules": {
     "for-direction": "error",

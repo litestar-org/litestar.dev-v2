@@ -157,11 +157,11 @@ config = MCPConfig()
 
 **Configuration Options:**
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `base_path` | `str` | `"/mcp"` | Base path for MCP API endpoints |
-| `include_in_schema` | `bool` | `False` | Whether to include MCP routes in OpenAPI schema |
-| `name` | `str \| None` | `None` | Override server name. If None, uses OpenAPI title |
+| Option              | Type          | Default  | Description                                       |
+| ------------------- | ------------- | -------- | ------------------------------------------------- |
+| `base_path`         | `str`         | `"/mcp"` | Base path for MCP API endpoints                   |
+| `include_in_schema` | `bool`        | `False`  | Whether to include MCP routes in OpenAPI schema   |
+| `name`              | `str \| None` | `None`   | Override server name. If None, uses OpenAPI title |
 
 ## Complete Example
 
