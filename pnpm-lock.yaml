@@ -15,16 +15,16 @@ importers:
         specifier: ^1.2.58
         version: 1.2.58
       '@nuxt/content':
-        specifier: 3.8.0
+        specifier: ^3.8.0
         version: 3.8.0(better-sqlite3@12.4.1)(magicast@0.5.1)(valibot@1.1.0(typescript@5.9.3))
       '@nuxt/image':
-        specifier: 2.0.0
+        specifier: ^2.0.0
         version: 2.0.0(db0@0.3.4(better-sqlite3@12.4.1))(ioredis@5.8.2)(magicast@0.5.1)
       '@nuxt/scripts':
-        specifier: 0.13.0
+        specifier: ^0.13.0
         version: 0.13.0(@unhead/vue@2.0.19(vue@3.5.24(typescript@5.9.3)))(db0@0.3.4(better-sqlite3@12.4.1))(ioredis@5.8.2)(magicast@0.5.1)(typescript@5.9.3)(vue@3.5.24(typescript@5.9.3))
       '@nuxt/ui':
-        specifier: 4.1.0
+        specifier: ^4.1.0
         version: 4.1.0(@babel/parser@7.28.5)(db0@0.3.4(better-sqlite3@12.4.1))(embla-carousel@8.6.0)(ioredis@5.8.2)(magicast@0.5.1)(typescript@5.9.3)(valibot@1.1.0(typescript@5.9.3))(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.1))(vue-router@4.6.3(vue@3.5.24(typescript@5.9.3)))(vue@3.5.24(typescript@5.9.3))(zod@4.1.12)
       '@nuxtjs/google-fonts':
         specifier: ^3.2.0
@@ -66,7 +66,7 @@ importers:
         specifier: ^1.7.4
         version: 1.7.4(@vueuse/core@14.0.0(vue@3.5.24(typescript@5.9.3)))(vue@3.5.24(typescript@5.9.3))
       nuxt:
-        specifier: 4.2.1
+        specifier: ^4.2.1
         version: 4.2.1(@parcel/watcher@2.5.1)(@types/node@24.10.1)(@vue/compiler-sfc@3.5.24)(better-sqlite3@12.4.1)(db0@0.3.4(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(oxlint@1.28.0)(rollup@4.53.2)(terser@5.44.1)(typescript@5.9.3)(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.1))(yaml@2.8.1)
       nuxt-og-image:
         specifier: ^5.1.12
@@ -100,7 +100,7 @@ importers:
         version: 4.1.12
     devDependencies:
       '@nuxt/test-utils':
-        specifier: 3.20.1
+        specifier: ^3.20.1
         version: 3.20.1(@vue/test-utils@2.4.6)(happy-dom@20.0.10)(magicast@0.5.1)(playwright-core@1.56.1)(typescript@5.9.3)(vitest@4.0.8(@types/debug@4.1.12)(@types/node@24.10.1)(happy-dom@20.0.10)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.1))
       '@prettier/plugin-oxc':
         specifier: ^0.0.4
