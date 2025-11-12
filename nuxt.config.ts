@@ -64,15 +64,13 @@ export default defineNuxtConfig({
     },
   },
   app: {
-    baseURL: '/',
+    baseURL: '/litestar.dev-v2/',
     pageTransition: false,
     layoutTransition: false,
   },
   css: ['~/assets/css/main.css'],
   experimental: {
     extractAsyncDataHandlers: true,
-    // payloadExtraction: true,
-    // renderJsonPayloads: true,
   },
   content: {
     build: {

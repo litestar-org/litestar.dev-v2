@@ -72,10 +72,10 @@ jobs:
         with:
           node-version: '22'
       # Pick your own package manager and build script
-      - run: npm install
+      - run: pnpm install --frozen-lockfile
       - name: Update stats
-        run: npm run update-stats
-      - run: npx nuxt generate --preset github_pages
+        run: pnpm run update-stats
+      - run: pnpm nuxt generate --preset github_pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
