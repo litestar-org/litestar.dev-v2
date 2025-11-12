@@ -40,7 +40,7 @@ TODO
 ## Inspiration
 
 > [!NOTE]  
-> This website was heavily inspired by the [Nuxt website](https://nuxt.com)
+> This website was inspired by the [Nuxt website](https://nuxt.com)
 
 ## License
 
