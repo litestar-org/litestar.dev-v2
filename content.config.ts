@@ -317,9 +317,9 @@ export default defineContentConfig({
       source: 'maintainers/*',
       schema: Maintainer,
     }),
-    pluginsReadme: defineCollection({
-      type: 'page',
-      source: 'pluginsReadme/*.md',
+    readme: defineCollection({
+      type: 'data',
+      source: 'readme/*.md',
     }),
     plugins: defineCollection({
       type: 'page',

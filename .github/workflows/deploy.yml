@@ -23,24 +23,24 @@ jobs:
 
           echo "Moving files to content directories..."
           # Remove existing plugin files to ensure clean state
-          rm -rf content/plugins/*.yml content/pluginsReadme/*.md
+          rm -rf content/plugins/*.yml content/readme/*.md
 
           # Move extracted files to content directories
           mv plugins/*.yml content/plugins/
-          mv readmes/*.md content/pluginsReadme/
+          mv readmes/*.md content/readme/
 
           # Clean up
           rm -rf plugins readmes plugins-data.zip
 
           echo "Plugin data updated successfully"
           echo "Plugin count: $(ls -1 content/plugins/*.yml 2>/dev/null | wc -l)"
-          echo "README count: $(ls -1 content/pluginsReadme/*.md 2>/dev/null | wc -l)"
+          echo "README count: $(ls -1 content/readme/*.md 2>/dev/null | wc -l)"
 
       - name: Commit and push plugin data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add content/plugins/*.yml content/pluginsReadme/*.md
+          git add content/plugins/*.yml content/readme/*.md
 
           # Only commit if there are changes
           if git diff --staged --quiet; then

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import type { Plugin } from '~/types'
+// import type { Plugin } from '~/types'
 import { PluginProseA, PluginProseKbd, PluginProseImg } from '#components'
-import { parseMarkdown } from '@nuxtjs/mdc/runtime'
-import { color } from 'motion-v'
-import type { PluginsCollectionItem } from '@nuxt/content'
-import { routerKey } from 'vue-router'
-// import PluginProseA from '~/components/plugin/PluginProseA.vue'
+// import { parseMarkdown } from '@nuxtjs/mdc/runtime'
+// import { color } from 'motion-v'
+// import type { PluginsCollectionItem } from '@nuxt/content'
+// import { routerKey } from 'vue-router'
 // import { useAsyncData } from '#imports'
 
 definePageMeta({
@@ -13,13 +12,13 @@ definePageMeta({
 })
 const route = useRoute()
 
-const [{ data: plugin }, { data: pluginReadme }] = await Promise.all([
+const [{ data: plugin }, { data: readme }] = await Promise.all([
   useAsyncData(`plugin-${route.params.slug}`, () =>
     queryCollection('plugins').path(route.path).first(),
   ),
-  useAsyncData(`plugin-readme-${route.params.slug}`, () =>
-    queryCollection('pluginsReadme')
-      .path(`/pluginsreadme/${route.params.slug}`)
+  useAsyncData(`readme-${route.params.slug}`, () =>
+    queryCollection('readme')
+      .where('stem', '=', `readme/${route.params.slug}`)
       .first(),
   ),
 ])
@@ -31,53 +30,10 @@ if (!plugin.value) {
     fatal: true,
   })
 }
-// const { default: pluginsData } = await import('~/data/plugins.json')
-// const plugin = ref<PluginsCollectionItem | null>(pluginsData.find((p: PluginsCollectionItem) => p.key === route.params.slug) || null)
 
-// const { data: plg } = await useAsyncData(`plugin-${route.params.slug}`, () => {
-//   return queryCollection('plugins').path(`/plugins/${route.params.slug}`).first()
-// })
-
-// if (!plugin.value) {
-//   throw createError({ statusCode: 404, statusMessage: 'Plugin not found', fatal: true })
-// }
-// console.log(plugin.value)
-// Fetch README from GitHub
-
-// const { data } = await useFetch(`https://raw.githubusercontent.com/${plugin.value.repo}/main/README.md`)
-
-// console.log(data)
-
-// readme.value = data.value
-// const { data: readmeContent } = await useAsyncData('markdown', () => parseMarkdown(readme.value))
-// const { data: readmeContent } = await useAsyncData<any>(() => parseMarkdown(plg))
-const readmeContent2 = computed(() =>
-  pluginReadme.value ? pluginReadme.value : null,
+const readmeContent = computed(() =>
+  readme.value?.meta ? readme.value.meta : null,
 )
-
-// console.log(readmeContent)
-// if (plugin.value?.repo) {
-//   try {
-//     const readmeUrl = `https://raw.githubusercontent.com/${plugin.value.repo}/main/README.md`
-//     const readmeContent = await $fetch<string>(readmeUrl).catch(() =>
-//       $fetch<string>(`https://raw.githubusercontent.com/${plugin.value.repo}/main/README.md`)
-//     )
-
-//     if (readmeContent) {
-//       // Parse the markdown content using Nuxt Content
-//       const { $content } = useNuxtApp()
-//       // const parsed = await parseMarkdown(readmeContent)
-//       readme.value = parsed
-//       console.log(parsed)
-//     }
-//   } catch (error) {
-//     console.warn(`Could not fetch README for ${plugin.value.repo}:`, error)
-//     readme.value = null
-//   }
-// }
-// if (!plugin.value) {
-//   throw createError({ statusCode: 404, statusMessage: 'Module not found', fatal: true })
-// }
 
 const ownerName = computed(() => {
   const repo = plugin.value?.repo
@@ -146,11 +102,13 @@ const detailsLinks = computed(() => {
       label: `Updated ${publishedAgo.value}`,
       to: `https://github.com/${plugin.value.repo}`,
       icon: 'i-lucide-radio',
+      target: '_blank',
     },
     {
       label: `Created ${createdAgo.value}`,
       to: `https://github.com/${plugin.value.repo}`,
       icon: 'i-lucide-package',
+      target: '_blank',
     },
   ]
 
@@ -169,13 +127,19 @@ const detailsLinks = computed(() => {
   // }
 
   // Static Python versions moved to compatibility section below
-
   if (plugin.value.license) {
     details.push({
       label: 'MIT License',
       to: plugin.value.license,
       icon: 'i-lucide-scale',
       target: '_blank',
+    })
+  } else {
+    details.push({
+      label: 'No license specified',
+      icon: 'i-lucide-scale',
+      to: '#',
+      target: '_self',
     })
   }
 
@@ -295,7 +259,7 @@ defineOgImageComponent('OgImagePlugin', {
           >
             <UIcon name="i-lucide-tag" class="size-5 shrink-0" />
             <span class="text-sm font-medium"
-              >v{{ plugin.latest_version || plugin.stats?.version }}</span
+              >v{{ plugin.latest_version }}</span
             >
           </NuxtLink>
         </UTooltip>
@@ -315,9 +279,7 @@ defineOgImageComponent('OgImagePlugin', {
             class="flex items-center gap-1.5 hover:text-primary"
           >
             <UAvatar
-              provider="ipx"
-              :src="`https://ipx.nuxt.com/f_auto,s_20x20/gh_avatar/${maintainer.github}`"
-              :srcset="`https://ipx.nuxt.com/f_auto,s_40x40/gh_avatar/${maintainer.github} 2x`"
+              :src="`https://github.com/${maintainer.github}.png?size=40`"
               :alt="maintainer.github"
               size="xs"
             />
@@ -336,8 +298,8 @@ defineOgImageComponent('OgImagePlugin', {
     <UPage>
       <UPageBody>
         <ContentRenderer
-          v-if="readmeContent2?.body"
-          :value="readmeContent2"
+          v-if="readmeContent?.body"
+          :value="readmeContent"
           :components="{
             a: PluginProseA,
             img: PluginProseImg,

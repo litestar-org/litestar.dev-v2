@@ -8,13 +8,10 @@ export default defineNuxtConfig({
   ssr: true,
   nitro: {
     prerender: {
-      // concurrency: 1,
       crawlLinks: true,
-      // failOnError: false,
       routes: ['/robots.txt'],
-      ignore: [(route) => route.startsWith('/litestar.dev-v2/plugins')],
-      autoSubfolderIndex: false,
     },
+    logLevel: 5,
   },
   logLevel: 'verbose',
   compatibilityDate: '2025-07-15',
@@ -67,13 +64,17 @@ export default defineNuxtConfig({
     },
   },
   app: {
-    baseURL: '/litestar.dev-v2/',
+    baseURL: '/',
     pageTransition: false,
     layoutTransition: false,
   },
   css: ['~/assets/css/main.css'],
+  experimental: {
+    extractAsyncDataHandlers: true,
+    // payloadExtraction: true,
+    // renderJsonPayloads: true,
+  },
   content: {
-    experimental: { sqliteConnector: 'better-sqlite3' },
     build: {
       markdown: {
         remarkPlugins: {

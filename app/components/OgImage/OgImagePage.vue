@@ -12,7 +12,7 @@ defineProps<{
     <div class="absolute top-12 inset-x-0 h-[2px] bg-gray-700" />
     <div class="absolute bottom-12 inset-x-0 h-[2px] bg-gray-700" />
     <div class="mx-34 mt-12 h-100 flex flex-col justify-center">
-      <div class="flex justify-flex-start">
+      <div class="flex justify-start">
         <LitestarLogoDark />
       </div>
       <h1 class="text-5xl font-semibold mb-0 flex gap-1 text-white mt-20">

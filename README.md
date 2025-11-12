@@ -37,6 +37,11 @@ pnpm generate
 
 TODO
 
+## Inspiration
+
+> [!NOTE]  
+> This website was heavily inspired by the [Nuxt website](https://nuxt.com)
+
 ## License
 
 [MIT License](./LICENSE)
