@@ -422,57 +422,57 @@ AdbcConfig(connection_config={"driver_name": "adbc_driver_bigquery", "project_id
 
 ### Supported Drivers
 
-| Driver                                                                                                                       | Database   | Mode  | Status |
-| :--------------------------------------------------------------------------------------------------------------------------- | :--------- | :---- | :----- |
-| [`adbc`](https://arrow.apache.org/adbc/)                                                                                     | Postgres   | Sync  | ✅     |
-| [`adbc`](https://arrow.apache.org/adbc/)                                                                                     | SQLite     | Sync  | ✅     |
-| [`adbc`](https://arrow.apache.org/adbc/)                                                                                     | Snowflake  | Sync  | ✅     |
-| [`adbc`](https://arrow.apache.org/adbc/)                                                                                     | DuckDB     | Sync  | ✅     |
-| [`asyncpg`](https://magicstack.github.io/asyncpg/current/)                                                                   | PostgreSQL | Async | ✅     |
-| [`psycopg`](https://www.psycopg.org/)                                                                                        | PostgreSQL | Sync  | ✅     |
-| [`psycopg`](https://www.psycopg.org/)                                                                                        | PostgreSQL | Async | ✅     |
-| [`psqlpy`](https://psqlpy-python.github.io/)                                                                                 | PostgreSQL | Async | ✅     |
-| [`aiosqlite`](https://github.com/omnilib/aiosqlite)                                                                          | SQLite     | Async | ✅     |
-| `sqlite3`                                                                                                                    | SQLite     | Sync  | ✅     |
-| [`oracledb`](https://oracle.github.io/python-oracledb/)                                                                      | Oracle     | Async | ✅     |
-| [`oracledb`](https://oracle.github.io/python-oracledb/)                                                                      | Oracle     | Sync  | ✅     |
-| [`duckdb`](https://duckdb.org/)                                                                                              | DuckDB     | Sync  | ✅     |
-| [`bigquery`](https://googleapis.dev/python/bigquery/latest/index.html)                                                       | BigQuery   | Sync  | ✅     |
-| [`spanner`](https://googleapis.dev/python/spanner/latest/index.html)                                                         | Spanner    | Sync  | 🗓️     |
-| [`sqlserver`](https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/python-sql-driver-for-pyodbc?view=sql-server-ver16) | SQL Server | Sync  | 🗓️     |
-| [`mysql`](https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysql-connector-python.html)                    | MySQL      | Sync  | 🗓️     |
-| [`asyncmy`](https://github.com/long2ice/asyncmy)                                                                             | MySQL      | Async | ✅     |
-| [`snowflake`](https://docs.snowflake.com)                                                                                    | Snowflake  | Sync  | 🗓️     |
+| Driver                                                                                                       | Database   | Mode    | Status     |
+| :----------------------------------------------------------------------------------------------------------- | :--------- | :------ | :--------- |
+| [`adbc`](https://arrow.apache.org/adbc/)                                                                     | Postgres   | Sync    | ✅         |
+| [`adbc`](https://arrow.apache.org/adbc/)                                                                     | SQLite     | Sync    | ✅         |
+| [`adbc`](https://arrow.apache.org/adbc/)                                                                     | Snowflake  | Sync    | ✅         |
+| [`adbc`](https://arrow.apache.org/adbc/)                                                                     | DuckDB     | Sync    | ✅         |
+| [`asyncpg`](https://magicstack.github.io/asyncpg/current/)                                                    | PostgreSQL | Async   | ✅         |
+| [`psycopg`](https://www.psycopg.org/)                                                                         | PostgreSQL | Sync    | ✅         |
+| [`psycopg`](https://www.psycopg.org/)                                                                         | PostgreSQL | Async   | ✅         |
+| [`psqlpy`](https://psqlpy-python.github.io/)                                                                  | PostgreSQL | Async   | ✅        |
+| [`aiosqlite`](https://github.com/omnilib/aiosqlite)                                                           | SQLite     | Async   | ✅         |
+| `sqlite3`                                                                                                    | SQLite     | Sync    | ✅         |
+| [`oracledb`](https://oracle.github.io/python-oracledb/)                                                      | Oracle     | Async   | ✅         |
+| [`oracledb`](https://oracle.github.io/python-oracledb/)                                                      | Oracle     | Sync    | ✅         |
+| [`duckdb`](https://duckdb.org/)                                                                               | DuckDB     | Sync    | ✅         |
+| [`bigquery`](https://googleapis.dev/python/bigquery/latest/index.html)                                        | BigQuery   | Sync    | ✅ |
+| [`spanner`](https://googleapis.dev/python/spanner/latest/index.html)                                         | Spanner    | Sync    | 🗓️  |
+| [`sqlserver`](https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/python-sql-driver-for-pyodbc?view=sql-server-ver16) | SQL Server | Sync    | 🗓️  |
+| [`mysql`](https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysql-connector-python.html)     | MySQL      | Sync    | 🗓️  |
+| [`asyncmy`](https://github.com/long2ice/asyncmy)                                                           | MySQL      | Async   | ✅         |
+| [`snowflake`](https://docs.snowflake.com)                                                                    | Snowflake  | Sync    | 🗓️  |
 
 ## Project Structure
 
 - `sqlspec/`:
-  - `adapters/`: Database-specific drivers and configuration classes for all supported databases
-  - `extensions/`: Framework integrations and external library adapters
-    - `litestar/`: Litestar web framework integration with dependency injection ✅
-    - `aiosql/`: Integration with aiosql for SQL file loading ✅
-    - Future integrations: `fastapi/`, `flask/`, etc.
-  - `builder/`: Fluent SQL query builder with method chaining and type safety
-    - `mixins/`: Composable query building operations (WHERE, JOIN, ORDER BY, etc.)
-  - `core/`: Core query processing infrastructure
-    - `statement.py`: SQL statement wrapper with metadata and type information
-    - `parameters.py`: Parameter style conversion and validation
-    - `result.py`: Result set handling and type mapping
-    - `compiler.py`: SQL compilation and validation using SQLGlot
-    - `cache.py`: Statement caching for performance optimization
-  - `driver/`: Base driver system with sync/async support and transaction management
-    - `mixins/`: Shared driver capabilities (result processing, SQL translation)
-  - `migrations/`: Database migration system with CLI commands
-  - `storage/`: Unified data import/export operations with multiple backends
-    - `backends/`: Storage backend implementations (fsspec, obstore)
-  - `utils/`: Utility functions, type guards, and helper tools
-  - `base.py`: Main SQLSpec registry and configuration manager
-  - `loader.py`: SQL file loading system for `.sql` files
-  - `cli.py`: Command-line interface for migrations and database operations
-  - `config.py`: Base configuration classes and protocols
-  - `protocols.py`: Type protocols for runtime type checking
-  - `exceptions.py`: Custom exception hierarchy for SQLSpec
-  - `typing.py`: Type definitions, guards, and optional dependency facades
+    - `adapters/`: Database-specific drivers and configuration classes for all supported databases
+    - `extensions/`: Framework integrations and external library adapters
+        - `litestar/`: Litestar web framework integration with dependency injection ✅
+        - `aiosql/`: Integration with aiosql for SQL file loading ✅
+        - Future integrations: `fastapi/`, `flask/`, etc.
+    - `builder/`: Fluent SQL query builder with method chaining and type safety
+        - `mixins/`: Composable query building operations (WHERE, JOIN, ORDER BY, etc.)
+    - `core/`: Core query processing infrastructure
+        - `statement.py`: SQL statement wrapper with metadata and type information
+        - `parameters.py`: Parameter style conversion and validation
+        - `result.py`: Result set handling and type mapping
+        - `compiler.py`: SQL compilation and validation using SQLGlot
+        - `cache.py`: Statement caching for performance optimization
+    - `driver/`: Base driver system with sync/async support and transaction management
+        - `mixins/`: Shared driver capabilities (result processing, SQL translation)
+    - `migrations/`: Database migration system with CLI commands
+    - `storage/`: Unified data import/export operations with multiple backends
+        - `backends/`: Storage backend implementations (fsspec, obstore)
+    - `utils/`: Utility functions, type guards, and helper tools
+    - `base.py`: Main SQLSpec registry and configuration manager
+    - `loader.py`: SQL file loading system for `.sql` files
+    - `cli.py`: Command-line interface for migrations and database operations
+    - `config.py`: Base configuration classes and protocols
+    - `protocols.py`: Type protocols for runtime type checking
+    - `exceptions.py`: Custom exception hierarchy for SQLSpec
+    - `typing.py`: Type definitions, guards, and optional dependency facades
 
 ## Get Involved
 
