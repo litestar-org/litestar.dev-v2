@@ -5,10 +5,68 @@ on:
     branches:
       - main
 jobs:
-  build:
+  prepare-plugin-data:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v5
+
+      - name: Download latest plugin data
+        run: |
+          echo "Downloading plugin data from latest release..."
+          curl -L -o plugins-data.zip \
+            https://github.com/litestar-org/plugins/releases/latest/download/plugins-and-readmes.zip
+
+          echo "Extracting plugin data..."
+          unzip -o plugins-data.zip
+
+          echo "Moving files to content directories..."
+          # Remove existing plugin files to ensure clean state
+          rm -rf content/plugins/*.yml content/pluginsReadme/*.md
+
+          # Move extracted files to content directories
+          mv plugins/*.yml content/plugins/
+          mv readmes/*.md content/pluginsReadme/
+
+          # Clean up
+          rm -rf plugins readmes plugins-data.zip
+
+          echo "Plugin data updated successfully"
+          echo "Plugin count: $(ls -1 content/plugins/*.yml 2>/dev/null | wc -l)"
+          echo "README count: $(ls -1 content/pluginsReadme/*.md 2>/dev/null | wc -l)"
+
+      - name: Commit and push plugin data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add content/plugins/*.yml content/pluginsReadme/*.md
+
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No changes to plugin data"
+          else
+            git commit -m "chore: update plugin data from latest release [skip ci]"
+            git push
+            echo "Plugin data committed and pushed to main"
+          fi
+
+      - name: Upload workspace
+        uses: actions/upload-artifact@v4
+        with:
+          name: workspace-with-plugins
+          path: .
+
+  build:
+    needs: prepare-plugin-data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download workspace
+        uses: actions/download-artifact@v4
+        with:
+          name: workspace-with-plugins
+          path: .
+
       - run: corepack enable
       - uses: actions/setup-node@v6
         with:
