@@ -341,7 +341,7 @@ initializePlugins()
           <UButton
             label="Contribute on GitHub"
             color="neutral"
-            to="https://github.com/litestar-org/plugins"
+            to="https://github.com/litestar-org/plugin-registry"
             target="_blank"
             size="md"
             @click="$router.replace({ query: {} })"

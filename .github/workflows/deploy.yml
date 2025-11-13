@@ -24,8 +24,8 @@ jobs:
       - name: Check and download plugin data
         id: plugin-data
         run: |
-          # Get the latest release commit SHA from the plugins repo
-          LATEST_COMMIT=$(curl -s https://api.github.com/repos/litestar-org/plugins/releases/latest | jq -r '.target_commitish')
+          # Get the latest release commit SHA from the plugin-registry repo
+          LATEST_COMMIT=$(curl -s https://api.github.com/repos/litestar-org/plugin-registry/releases/latest | jq -r '.target_commitish')
           echo "Latest release commit: $LATEST_COMMIT"
 
           # Check if we have a cached commit
@@ -47,7 +47,7 @@ jobs:
 
             echo "Downloading plugin data from latest release..."
             curl -L -o plugins-data.zip \
-              https://github.com/litestar-org/plugins/releases/latest/download/plugins-and-readmes.zip
+              https://github.com/litestar-org/plugin-registry/releases/latest/download/plugins-and-readmes.zip
 
             echo "Extracting plugin data..."
             unzip -o plugins-data.zip

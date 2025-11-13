@@ -7,7 +7,7 @@ function pluginImage(icon: string = '') {
   if (/^https?:\/\//.test(icon)) return icon
   return 'https://fr.wikipedia.org/static/images/icons/wikipedia.png'
 
-  // return `https://raw.githubusercontent.com/litestar-org/plugins/main/icons/${icon}`
+  // return `https://raw.githubusercontent.com/litestar-org/plugin-registry/main/icons/${icon}`
 }
 
 withDefaults(

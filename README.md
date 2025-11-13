@@ -23,7 +23,7 @@ pnpm dev
 
 ## Add a Litestar Plugin
 
-To add a new Litestar plugin, create a pull request on the [litestar-org/plugins](https://github.com/litestar-org/plugins) repository.
+To add a new Litestar plugin, create a pull request on the [litestar-org/plugin-registry](https://github.com/litestar-org/plugin-registry) repository.
 
 ## Deployment
 
