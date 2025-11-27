@@ -4,7 +4,7 @@ const config = useRuntimeConfig()
 </script>
 
 <template>
-  <USeparator icon="i-custom-litestar" class="h-px" />
+  <USeparator icon="i-custom-litestar" class="h-px relative z-10" />
 
   <UFooter
     :ui="{
