@@ -102,7 +102,10 @@ const nodes = computed<Node[]>(() => [
     type: 'icon',
     data: {
       label: '⎇+',
-      tooltip: '<span style="color: #3b82f6;">Anonymize PII data</span>',
+      tooltip: `<strong>Application Layer Config:</strong>
+<strong>response_headers:</strong> {"X-App-Version": "1.0"}
+<strong>tags:</strong> ["public-api"]
+<strong>cache:</strong> 300`,
       toolbarPosition: Position.Right,
     },
     position: { x: 230, y: 155 },
@@ -138,7 +141,15 @@ const nodes = computed<Node[]>(() => [
     type: 'icon',
     data: {
       label: '⎇+',
-      tooltip: 'Router configuration',
+      tooltip: `<strong>Router/Controller Layer:</strong>
+<em>Inherits from Application:</em>
+<strong>response_headers:</strong> {"X-App-Version": "1.0"}
+<strong>tags:</strong> ["public-api"]
+<strong>cache:</strong> 300
+
+<em>Adds/Overrides:</em>
+<strong>tags:</strong> ["public-api", "users"] <em>(extended)</em>
+<strong>guards:</strong> [AuthGuard]`,
       toolbarPosition: Position.Right,
     },
     position: { x: 230, y: 335 },
@@ -188,7 +199,17 @@ const nodes = computed<Node[]>(() => [
     type: 'icon',
     data: {
       label: '⎇+',
-      tooltip: 'Handler configuration',
+      tooltip: `<strong>GET /users Handler:</strong>
+<em>Inherits from Router/Controller:</em>
+<strong>response_headers:</strong> {"X-App-Version": "1.0"}
+<strong>tags:</strong> ["public-api", "users"]
+<strong>cache:</strong> 300
+<strong>guards:</strong> [AuthGuard]
+
+<em>Adds/Overrides:</em>
+<strong>cache:</strong> 600 <em>(overridden)</em>
+<strong>summary:</strong> "List all users"
+<strong>response_description:</strong> "List of users"`,
       toolbarPosition: Position.Right,
     },
     position: { x: 80, y: 130 },
@@ -212,12 +233,18 @@ const nodes = computed<Node[]>(() => [
     type: 'icon',
     data: {
       label: '⎇+',
-      tooltip: `<strong>operation_id:</strong> ListUsers
-<strong>name:</strong> users:list
-<strong>summary:</strong> List Users
-<strong>description:</strong> Retrieve the users.
-<strong>path:</strong> /users
-<strong>cache:</strong> None`,
+      tooltip: `<strong>POST /users Handler:</strong>
+<em>Inherits from Router/Controller:</em>
+<strong>response_headers:</strong> {"X-App-Version": "1.0"}
+<strong>tags:</strong> ["public-api", "users"]
+<strong>cache:</strong> 300
+<strong>guards:</strong> [AuthGuard]
+
+<em>Adds/Overrides:</em>
+<strong>cache:</strong> None <em>(disabled)</em>
+<strong>guards:</strong> [AuthGuard, AdminGuard] <em>(extended)</em>
+<strong>summary:</strong> "Create a new user"
+<strong>status_code:</strong> 201`,
       toolbarPosition: Position.Right,
     },
     position: { x: 80, y: 130 },
@@ -343,10 +370,23 @@ const edges = computed<Edge[]>(() => {
 .vue-flow {
   flex: 1;
   background: #ffffff;
+  overflow: visible !important;
 }
 
 .dark .vue-flow {
   background: #0f172a;
+}
+
+:deep(.vue-flow__viewport) {
+  overflow: visible !important;
+}
+
+:deep(.vue-flow__transformationpane) {
+  overflow: visible !important;
+}
+
+:deep(.vue-flow__node-toolbar) {
+  z-index: 1000;
 }
 
 .vue-flow__node {

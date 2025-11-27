@@ -33,6 +33,10 @@ defineProps<{
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   line-height: 1.6;
   border: 1px solid #d1d5db;
+  max-width: 350px;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1000;
 }
 
 .dark .toolbar-content {
