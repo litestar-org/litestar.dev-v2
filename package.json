@@ -10,7 +10,7 @@
     "dev": "nuxt dev",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "oxlint . --fix && prettier --write . --log-level warn",
+    "lint": "oxlint . --fix",
     "prepare": "husky",
     "test-unit": "npx vitest --project unit",
     "test-nuxt": "npx vitest --project nuxt",

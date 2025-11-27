@@ -303,11 +303,17 @@ export default defineContentConfig({
     }),
     readme: defineCollection({
       type: 'data',
-      source: 'readme/*.md',
+      source: {
+        repository: 'https://github.com/litestar-org/plugin-registry',
+        include: 'readmes/*.md',
+      },
     }),
     plugins: defineCollection({
       type: 'page',
-      source: 'plugins/*.yml',
+      source: {
+        repository: 'https://github.com/litestar-org/plugin-registry',
+        include: 'plugins/*.yml',
+      },
       schema: Plugin,
     }),
     sponsors: defineCollection({

@@ -18,7 +18,7 @@ const [{ data: plugin }, { data: readme }] = await Promise.all([
   ),
   useAsyncData(`readme-${route.params.slug}`, () =>
     queryCollection('readme')
-      .where('stem', '=', `readme/${route.params.slug}`)
+      .where('stem', '=', `readmes/${route.params.slug}`)
       .first(),
   ),
 ])
