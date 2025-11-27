@@ -133,18 +133,6 @@ const Template = z.object({
   links: z.array(Button).optional(),
 })
 
-const ShowcaseItem = z.object({
-  name: z.string().optional(),
-  url: z.string().optional(),
-  hostname: z.string().optional(),
-  screenshotUrl: z.string().optional(),
-  screenshotOptions: z
-    .object({
-      delay: z.number(),
-    })
-    .optional(),
-})
-
 const Starter = z.object({
   title: z.string(),
   description: z.string(),
@@ -325,34 +313,6 @@ export default defineContentConfig({
       type: 'data',
       source: 'starters/*',
       schema: Starter,
-    }),
-    showcase: defineCollection({
-      type: 'data',
-      source: 'showcase.yml',
-      schema: BaseSection.extend({
-        head: z
-          .object({
-            title: z.string().optional(),
-            description: z.string().optional(),
-          })
-          .optional(),
-        websites: z.array(ShowcaseItem),
-      }),
-    }),
-    team: defineCollection({
-      type: 'page',
-      source: 'team.yml',
-      schema: PageHero.extend({
-        users: z.array(
-          z.object({
-            name: z.string(),
-            location: z.string(),
-            sponsor: z.string().url(),
-            avatar: Image,
-            links: z.array(Link),
-          }),
-        ),
-      }),
     }),
   },
 })
