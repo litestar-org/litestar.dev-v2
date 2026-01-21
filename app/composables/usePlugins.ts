@@ -21,6 +21,7 @@ const iconsMap = {
   Serialization: 'i-lucide-unplug',
   Security: 'i-lucide-shield',
   UI: 'i-lucide-layout',
+  Others: 'i-lucide-boxes',
 }
 
 export const pluginImage = function (icon: string = '', _size: number = 80) {
