@@ -1,5 +1,4 @@
 import { parseMarkdown } from '@nuxtjs/mdc/runtime'
-import rehypeHighlight from '@nuxtjs/mdc/runtime/highlighter/rehype-nuxt'
 import { createOnigurumaEngine } from 'shiki/engine/oniguruma'
 import { createJavaScriptRegexEngine } from 'shiki'
 
@@ -265,6 +264,7 @@ const highlighter = createShikiHighlighter({
 })
 
 export async function parseMdc(content) {
+  const { default: rehypeHighlight } = await import('@nuxtjs/mdc/runtime/highlighter/rehype-nuxt')
   return await parseMarkdown(content, {
     rehype: {
       plugins: {
