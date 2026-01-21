@@ -46,6 +46,12 @@ const ownerName = computed(() => {
   return `${owner}/${name}`
 })
 
+const { selectedPackageManager } = usePackageManager()
+
+const installCommand = computed(() =>
+  `${selectedPackageManager.value.command} ${plugin.value?.pypi || plugin.value?.key}`
+)
+
 const links = computed(() => {
   if (!plugin.value) return []
 
@@ -220,78 +226,87 @@ defineOgImageComponent('OgImagePlugin', {
         </div>
       </template>
 
-      <div class="flex flex-col lg:flex-row lg:items-center gap-3 mt-4">
-        <UTooltip text="Monthly PyPi Downloads">
-          <NuxtLink
-            class="flex items-center gap-1.5"
-            :to="`https://pypistats.org/packages/${plugin.pypi}`"
-            target="_blank"
-          >
-            <UIcon name="i-lucide-circle-arrow-down" class="size-5 shrink-0" />
-            <span class="text-sm font-medium"
-              >{{ formatNumber(plugin.monthly_downloads || 0) }} downloads</span
+      <div class="flex flex-col gap-4 mt-4">
+        <div class="flex flex-col lg:flex-row lg:items-center gap-3">
+          <UTooltip text="Monthly PyPi Downloads">
+            <NuxtLink
+              class="flex items-center gap-1.5"
+              :to="`https://pypistats.org/packages/${plugin.pypi}`"
+              target="_blank"
             >
-          </NuxtLink>
-        </UTooltip>
+              <UIcon name="i-lucide-circle-arrow-down" class="size-5 shrink-0" />
+              <span class="text-sm font-medium"
+                >{{ formatNumber(plugin.monthly_downloads || 0) }} downloads</span
+              >
+            </NuxtLink>
+          </UTooltip>
 
-        <span class="hidden lg:block text-muted">&bull;</span>
+          <span class="hidden lg:block text-muted">&bull;</span>
 
-        <UTooltip text="GitHub Stars">
-          <NuxtLink
-            class="flex items-center gap-1.5"
-            :to="`https://github.com/${plugin.repo}`"
-            target="_blank"
-          >
-            <UIcon name="i-lucide-star" class="size-5 shrink-0" />
-            <span class="text-sm font-medium"
-              >{{ formatNumber(plugin.stars || 0) }} stars</span
+          <UTooltip text="GitHub Stars">
+            <NuxtLink
+              class="flex items-center gap-1.5"
+              :to="`https://github.com/${plugin.repo}`"
+              target="_blank"
             >
-          </NuxtLink>
-        </UTooltip>
+              <UIcon name="i-lucide-star" class="size-5 shrink-0" />
+              <span class="text-sm font-medium"
+                >{{ formatNumber(plugin.stars || 0) }} stars</span
+              >
+            </NuxtLink>
+          </UTooltip>
 
-        <span class="hidden lg:block text-muted">&bull;</span>
+          <span class="hidden lg:block text-muted">&bull;</span>
 
-        <UTooltip text="Latest Version">
-          <NuxtLink
-            class="flex items-center gap-1.5"
-            :to="`${plugin.github}/releases`"
-            target="_blank"
-          >
-            <UIcon name="i-lucide-tag" class="size-5 shrink-0" />
-            <span class="text-sm font-medium"
-              >v{{ plugin.latest_version }}</span
+          <UTooltip text="Latest Version">
+            <NuxtLink
+              class="flex items-center gap-1.5"
+              :to="`${plugin.github}/releases`"
+              target="_blank"
             >
-          </NuxtLink>
-        </UTooltip>
+              <UIcon name="i-lucide-tag" class="size-5 shrink-0" />
+              <span class="text-sm font-medium"
+                >v{{ plugin.latest_version }}</span
+              >
+            </NuxtLink>
+          </UTooltip>
 
-        <div
-          class="mx-3 h-6 border-l border-gray-200 dark:border-gray-800 w-px hidden lg:block"
-        />
+          <div
+            class="mx-3 h-6 border-l border-gray-200 dark:border-gray-800 w-px hidden lg:block"
+          />
 
-        <div
-          v-for="(maintainer, index) in plugin.maintainers"
-          :key="maintainer.github"
-          class="flex items-center gap-3"
-        >
-          <NuxtLink
-            :to="`https://github.com/${maintainer.github}`"
-            target="_blank"
-            class="flex items-center gap-1.5 hover:text-primary"
+          <div
+            v-for="(maintainer, index) in plugin.maintainers"
+            :key="maintainer.github"
+            class="flex items-center gap-3"
           >
-            <UAvatar
-              :src="`https://github.com/${maintainer.github}.png?size=40`"
-              :alt="maintainer.github"
-              size="xs"
-            />
-            <span class="text-sm font-medium">{{ maintainer.github }}</span>
-          </NuxtLink>
+            <NuxtLink
+              :to="`https://github.com/${maintainer.github}`"
+              target="_blank"
+              class="flex items-center gap-1.5 hover:text-primary"
+            >
+              <UAvatar
+                :src="`https://github.com/${maintainer.github}.png?size=40`"
+                :alt="maintainer.github"
+                size="xs"
+              />
+              <span class="text-sm font-medium">{{ maintainer.github }}</span>
+            </NuxtLink>
 
-          <span
-            v-if="index < plugin.maintainers.length - 1"
-            class="hidden lg:block text-muted"
-            >&bull;</span
-          >
+            <span
+              v-if="index < plugin.maintainers.length - 1"
+              class="hidden lg:block text-muted"
+              >&bull;</span
+            >
+          </div>
         </div>
+
+        <UInputCopy
+          :value="installCommand"
+          :label="installCommand"
+          size="md"
+          class="lg:hidden"
+        />
       </div>
     </UPageHeader>
 
@@ -313,6 +328,17 @@ defineOgImageComponent('OgImagePlugin', {
         <UContentToc>
           <template #bottom>
             <div class="hidden lg:block space-y-6">
+              <div>
+                <div class="font-semibold text-sm mb-3">Install</div>
+                <UInputCopy
+                  :value="installCommand"
+                  :label="installCommand"
+                  size="sm"
+                />
+              </div>
+
+              <USeparator type="dashed" />
+
               <UPageLinks title="Links" :links="links" />
 
               <USeparator type="dashed" />
