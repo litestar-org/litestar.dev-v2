@@ -189,8 +189,10 @@ const bundledLangs = {
   ts: () => import('shiki/langs/ts.mjs'),
   tsx: () => import('shiki/langs/tsx.mjs'),
   jsx: () => import('shiki/langs/jsx.mjs'),
-  json: () => import('shiki/langs/json.mjs')
-
+  json: () => import('shiki/langs/json.mjs'),
+  python: () => import('shiki/langs/python.mjs'),
+  shell: () => import('shiki/langs/shell.mjs'),
+  toml: () => import('shiki/langs/toml.mjs'),
 }
 const bundledThemes = {
   'material-theme-lighter': () => import('shiki/themes/material-theme-lighter.mjs').then(r => r.default),
