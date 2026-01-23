@@ -82,9 +82,9 @@ const latestVersion = computed(() => {
     />
 
     <template #right>
-      <UTooltip text="Search" :kbds="['meta', 'K']">
+      <!-- <UTooltip text="Search" :kbds="['meta', 'K']">
         <UContentSearchButton />
-      </UTooltip>
+      </UTooltip> -->
 
       <USelectMenu
         v-model="selectedPackageManager"
