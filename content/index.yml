@@ -1,7 +1,7 @@
 hero:
   cta:
-    label: New Litestar website
-    to: /blog/new-website
+    label: New website & v3
+    to: /blog/new-website-and-v3
     icon: i-lucide-arrow-right
   tabs:
     - title: Minimal
