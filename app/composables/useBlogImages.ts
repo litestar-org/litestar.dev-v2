@@ -29,11 +29,10 @@ export const useBlogImages = () => {
       props: { blog: { title: article.title, category: article.category } },
     })
 
-    // Returns the baseURL-prefixed path. These are rendered with @nuxt/image's
-    // `none` provider (see blog/index.vue) so the URL is used as-is rather than
-    // run through IPX — the OG image is generated during prerender, so IPX has
-    // no source file to optimize when the listing page is built first.
-    return path
+    // getOgImagePath() yields the runtime /_og/d/ prefix when not prerendering
+    // (e.g. this composable re-running during client-side navigation), which
+    // 404s on the static deploy. Force the prerendered /_og/s/ path.
+    return toStaticOgPath(path)
   }
 
   /**
