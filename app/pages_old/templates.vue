@@ -34,7 +34,7 @@ useSeoMeta({
 })
 
 // Open Graph Image
-defineOgImageComponent('Page', {
+defineOgImage('Page', {
   title: title,
   description: description,
 })

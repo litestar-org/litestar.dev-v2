@@ -12,28 +12,28 @@ export const useBlogImages = () => {
     }
 
     // Otherwise, use the auto-generated OG image
-    return getOgImageUrl(article.path)
+    return getOgImageUrl(article)
   }
 
   /**
-   * Get the generated OG image URL for a blog post path
+   * Get the generated OG image URL for a blog post.
+   *
+   * v6 encodes the render options into the static file path, so this must use
+   * the same component + props that blog/[slug].vue passes to defineOgImage()
+   * ('Blog' with minimal { title, category }). getOgImagePath() is auto-imported
+   * by nuxt-og-image and joins the app baseURL for us.
    */
-  const getOgImageUrl = (path: string): string => {
-    const config = useRuntimeConfig()
-    const siteConfig = useSiteConfig()
+  const getOgImageUrl = (article: BlogArticle): string => {
+    const { path } = getOgImagePath(article.path, {
+      component: 'Blog',
+      props: { blog: { title: article.title, category: article.category } },
+    })
 
-    // Get the base URL from site config or construct it
-    const baseUrl = siteConfig.url || 'http://localhost:3000'
-
-    // Get the app base URL (e.g., '/litestar.dev-v2/')
-    const appBase = config.app.baseURL || '/'
-
-    // Construct the full URL
-    // Remove trailing slash from baseUrl and leading slash from appBase if needed
-    const cleanBaseUrl = baseUrl.replace(/\/$/, '')
-    const cleanAppBase = appBase === '/' ? '' : appBase.replace(/\/$/, '')
-
-    return `${cleanBaseUrl}${cleanAppBase}/__og-image__/static${path}/og.png`
+    // Returns the baseURL-prefixed path. These are rendered with @nuxt/image's
+    // `none` provider (see blog/index.vue) so the URL is used as-is rather than
+    // run through IPX — the OG image is generated during prerender, so IPX has
+    // no source file to optimize when the listing page is built first.
+    return path
   }
 
   /**
@@ -51,7 +51,7 @@ export const useBlogImages = () => {
     }
 
     // Use generated OG image as primary choice
-    return getOgImageUrl(article.path)
+    return getOgImageUrl(article)
   }
 
   /**

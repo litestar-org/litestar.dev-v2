@@ -1,8 +1,16 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   title: string
   description: string
 }>()
+
+// takumi (the v6 OG renderer) rejects Tailwind's `line-clamp` utility because it
+// compiles to `display: -webkit-box`; clamp the description length here instead.
+const clampedDescription = computed(() =>
+  props.description.length > 120
+    ? `${props.description.slice(0, 119).trimEnd()}…`
+    : props.description,
+)
 </script>
 
 <template>
@@ -18,8 +26,8 @@ defineProps<{
       <h1 class="text-5xl font-semibold mb-0 flex gap-1 text-white mt-20">
         <span>{{ title }}</span>
       </h1>
-      <p class="text-3xl text-gray-400 line-clamp-2">
-        {{ description }}
+      <p class="text-3xl text-gray-400">
+        {{ clampedDescription }}
       </p>
     </div>
   </div>

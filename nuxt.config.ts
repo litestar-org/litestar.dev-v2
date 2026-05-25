@@ -41,6 +41,7 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@vueuse/nuxt',
     '@nuxtjs/mdc',
+    '@nuxt/fonts',
     'nuxt-og-image',
     'motion-v/nuxt',
     '@nuxtjs/google-fonts',
@@ -55,8 +56,19 @@ export default defineNuxtConfig({
   },
   ogImage: {
     zeroRuntime: true,
-
-    fonts: ['Inter:400', 'Inter:500', 'Inter:600', 'Inter:700'],
+  },
+  // OG images source their fonts from @nuxt/fonts in v6 (the old
+  // `ogImage.fonts` option was removed). `global: true` is required so the
+  // @font-face is globally emitted — OG images can't read Tailwind v4 @theme.
+  fonts: {
+    families: [
+      {
+        name: 'Inter',
+        provider: 'google',
+        weights: [400, 500, 600, 700],
+        global: true,
+      },
+    ],
   },
   googleFonts: {
     families: {

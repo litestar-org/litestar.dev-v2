@@ -18,7 +18,7 @@ useSeoMeta({
   ogTitle: page.title,
 })
 
-defineOgImageComponent('Page', {
+defineOgImage('Page', {
   title: page.title,
   description: page.description,
 })
@@ -51,12 +51,6 @@ await fetchList()
             :to="article.path"
             :title="article.title"
             :description="article.description"
-            :image="{
-              src: article.image,
-              width: index === 0 ? 672 : 437,
-              height: index === 0 ? 378 : 246,
-              alt: `${article.title} image`,
-            }"
             :date="formatDateByLocale('en', article.date)"
             :authors="
               article.authors.map((author) => ({
@@ -72,7 +66,31 @@ await fetchList()
             :variant="index === 0 ? 'outline' : 'subtle'"
             :orientation="index === 0 ? 'horizontal' : 'vertical'"
             :class="[index === 0 && 'col-span-full']"
-          />
+          >
+            <template #header="{ ui }">
+              <!--
+                Generated OG images are produced during prerender, so IPX has no
+                source file to optimize when this listing builds first — reference
+                them directly. Real frontmatter images keep <NuxtImg> optimization.
+              -->
+              <NuxtImg
+                v-if="!article.image?.includes('/_og/')"
+                :src="article.image"
+                :alt="`${article.title} image`"
+                :width="index === 0 ? 672 : 437"
+                :height="index === 0 ? 378 : 246"
+                :class="ui.image()"
+              />
+              <img
+                v-else
+                :src="article.image"
+                :alt="`${article.title} image`"
+                :width="index === 0 ? 672 : 437"
+                :height="index === 0 ? 378 : 246"
+                :class="ui.image()"
+              >
+            </template>
+          </UBlogPost>
         </UBlogPosts>
       </UContainer>
     </UPageBody>

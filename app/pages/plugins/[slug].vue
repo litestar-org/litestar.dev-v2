@@ -179,7 +179,7 @@ useSeoMeta({
   ogTitle: computed(() => `${title.value} · Litestar Plugins`),
 })
 
-defineOgImageComponent('OgImagePlugin', {
+defineOgImage('OgImagePlugin', {
   plugin: plugin.value,
   headline: 'Litestar Plugin',
   title: title.value,

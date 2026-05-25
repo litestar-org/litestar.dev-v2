@@ -10,7 +10,7 @@ function pluginImage(icon: string = '') {
   // return `https://raw.githubusercontent.com/litestar-org/plugin-registry/main/icons/${icon}`
 }
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     plugin: Plugin
     title: string
@@ -20,6 +20,14 @@ withDefaults(
   {
     type: 'Third-Party',
   },
+)
+
+// takumi (the v6 OG renderer) rejects Tailwind's `line-clamp` utility because it
+// compiles to `display: -webkit-box`; clamp the description length here instead.
+const clampedDescription = computed(() =>
+  props.description.length > 120
+    ? `${props.description.slice(0, 119).trimEnd()}…`
+    : props.description,
 )
 </script>
 
@@ -43,8 +51,8 @@ withDefaults(
       <h1 class="text-5xl font-semibold mb-0 flex gap-1 text-white">
         <span>{{ title }}</span>
       </h1>
-      <p class="text-3xl text-gray-400 line-clamp-2">
-        {{ description }}
+      <p class="text-3xl text-gray-400">
+        {{ clampedDescription }}
       </p>
     </div>
     <div

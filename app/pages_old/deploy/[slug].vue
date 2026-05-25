@@ -36,7 +36,7 @@ useSeoMeta({
   ogTitle: `Deploy Litestar to ${title}`,
 })
 
-defineOgImageComponent('Docs', {
+defineOgImage('Docs', {
   headline: 'Deploy To',
   title,
   description,
