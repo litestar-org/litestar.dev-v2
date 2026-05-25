@@ -4,6 +4,11 @@ import type { Node, Edge } from '@vue-flow/core'
 import { VueFlow, MarkerType, Position } from '@vue-flow/core'
 import { Background } from '@vue-flow/background'
 import { NodeToolbar } from '@vue-flow/node-toolbar'
+// Vue Flow's CSS is only needed where the diagram renders. Importing it here
+// (instead of globally in main.css) keeps its self-referential --vf-node-color
+// out of the global stylesheet that nuxt-og-image's renderer scans.
+import '@vue-flow/core/dist/style.css'
+import '@vue-flow/core/dist/theme-default.css'
 import ContainerNode from './nodes/ContainerNode.vue'
 import ToolbarNode from './nodes/ToolbarNode.vue'
 import ConfigNode from './nodes/ConfigNode.vue'
