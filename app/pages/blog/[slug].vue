@@ -39,10 +39,13 @@ useSeoMeta({
 })
 
 if (article.value.image) {
-  defineOgImage({ url: article.value.image })
+  useSeoMeta({ ogImage: article.value.image })
 } else {
-  defineOgImageComponent('Blog', {
-    blog: article.value,
+  // Minimal props: the Blog template only renders title + category. Keeping
+  // the options small keeps the generated URL under v6's 200-char path limit
+  // so it stays deterministic and matches the thumbnail built in useBlogImages.
+  defineOgImage('Blog', {
+    blog: { title: article.value.title, category: article.value.category },
   })
 }
 

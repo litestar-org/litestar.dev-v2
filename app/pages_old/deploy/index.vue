@@ -27,7 +27,7 @@ useSeoMeta({
   ogTitle: title,
 })
 
-defineOgImageComponent('Page', {
+defineOgImage('Page', {
   title: title,
   description,
 })

@@ -66,7 +66,7 @@ useSeoMeta({
   ogTitle: title,
 })
 
-defineOgImageComponent('OgImageMain', {})
+defineOgImage('OgImageMain', {})
 </script>
 
 <template>
