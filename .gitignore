@@ -5,3 +5,5 @@ tmp/
 .output/
 .unlighthouse/
 dist/
+.claude/
+.vscode/
