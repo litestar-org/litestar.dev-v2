@@ -1,6 +1,11 @@
 <script setup lang="ts">
 // import type { Plugin } from '~/types'
-import { PluginProseA, PluginProseKbd, PluginProseImg } from '#components'
+import {
+  PluginProseA,
+  PluginProseKbd,
+  PluginProseImg,
+  PluginProsePicture,
+} from '#components'
 // import { parseMarkdown } from '@nuxtjs/mdc/runtime'
 // import { color } from 'motion-v'
 // import type { PluginsCollectionItem } from '@nuxt/content'
@@ -319,6 +324,7 @@ defineOgImage('OgImagePlugin', {
             a: PluginProseA,
             img: PluginProseImg,
             kbd: PluginProseKbd,
+            picture: PluginProsePicture,
           }"
           class="first:[&_picture]:block first:[&_picture]:mb-4"
         />
