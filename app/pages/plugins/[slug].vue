@@ -349,7 +349,7 @@ defineOgImage('OgImagePlugin', {
               <UInputCopy
                 :value="installCommand"
                 :label="installCommand"
-                size="sm"
+                size="md"
               />
             </div>
           </template>
