@@ -315,7 +315,13 @@ defineOgImage('OgImagePlugin', {
       </div>
     </UPageHeader>
 
-    <UPage>
+    <UPage
+      :ui="{
+        root: 'lg:grid-cols-12',
+        center: 'lg:col-span-9',
+        right: 'lg:col-span-3',
+      }"
+    >
       <UPageBody>
         <ContentRenderer
           v-if="readmeContent?.body"
@@ -330,8 +336,12 @@ defineOgImage('OgImagePlugin', {
         />
       </UPageBody>
 
-      <template #right>
-        <UContentToc>
+      <template v-if="readmeContent?.body?.toc?.links?.length" #right>
+        <UContentToc
+          :links="readmeContent?.body?.toc?.links"
+          title="Table of Contents"
+          highlight
+        >
           <template #bottom>
             <div class="hidden lg:block space-y-6">
               <div>
