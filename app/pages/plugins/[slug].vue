@@ -374,9 +374,7 @@ defineOgImage('OgImagePlugin', {
                 :links="compatibilityLinks"
               />
 
-              <USeparator type="dashed" />
-
-              <SocialLinks />
+              <ContentTocBottom />
             </div>
           </template>
         </UContentToc>

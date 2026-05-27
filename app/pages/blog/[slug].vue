@@ -208,8 +208,7 @@ const links = [
             <template #bottom>
               <div class="hidden lg:block space-y-6">
                 <UPageLinks title="Links" aria-label="Links" :links="links" />
-                <USeparator type="dashed" />
-                <SocialLinks />
+                <ContentTocBottom />
               </div>
             </template>
           </UContentToc>
