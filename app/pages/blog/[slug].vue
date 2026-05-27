@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { kebabCase } from 'scule'
+import { withoutBase } from 'ufo'
 
 definePageMeta({
   heroBackground: 'opacity-30 -z-10',
@@ -48,6 +49,30 @@ if (article.value.image) {
     blog: { title: article.value.title, category: article.value.category },
   })
 }
+
+// Article image. Schema-org resolves a root-relative path by prepending the app
+// baseURL exactly once (verified with the logo). The generated og-image path
+// already includes the baseURL, so strip it first — otherwise the JSON-LD image
+// doubles to /litestar.dev-v2/litestar.dev-v2/… under the GitHub Pages subpath.
+const { getOgImageUrl } = useBlogImages()
+const articleImage = article.value.image
+  ? article.value.image
+  : withoutBase(getOgImageUrl(article.value), config.app.baseURL)
+
+// BlogPosting JSON-LD derived from the post frontmatter. Authors map to Person nodes.
+useSchemaOrg([
+  defineArticle({
+    '@type': 'BlogPosting',
+    headline: title,
+    description,
+    datePublished: article.value.date,
+    image: articleImage,
+    author: article.value.authors?.map((author) => ({
+      '@type': 'Person',
+      name: author.name,
+    })),
+  }),
+])
 
 function formatSocialIntentQueryText(handle: string | undefined): string {
   const credit = handle ? ` by @${handle}` : ''
