@@ -36,7 +36,11 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Update stats
         run: pnpm run update-stats
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: pnpm run generate-github
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
