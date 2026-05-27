@@ -14,7 +14,10 @@ const clampedDescription = computed(() =>
 </script>
 
 <template>
-  <div class="bg-gray-900 w-full h-full flex flex-col" style="font-family: 'Inter'">
+  <div
+    class="bg-gray-900 w-full h-full flex flex-col"
+    style="font-family: 'Inter'"
+  >
     <div class="absolute top-0 bottom-0 left-26 w-[2px] bg-gray-700" />
     <div class="absolute top-0 bottom-0 right-26 w-[2px] bg-gray-700" />
     <div class="absolute top-12 inset-x-0 h-[2px] bg-gray-700" />

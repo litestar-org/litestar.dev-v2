@@ -28,5 +28,9 @@ const communityLinks = [
 
 <template>
   <USeparator type="dashed" />
-  <UPageLinks title="Community" aria-label="Community" :links="communityLinks" />
+  <UPageLinks
+    title="Community"
+    aria-label="Community"
+    :links="communityLinks"
+  />
 </template>

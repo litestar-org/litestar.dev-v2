@@ -1,0 +1,19 @@
+# Git hooks run by prek (https://prek.j178.dev), a fast drop-in pre-commit
+# replacement. The package.json "prepare" script runs `prek install` on
+# `pnpm install`, wiring these into .git/hooks. Run hooks manually with
+# `pnpm exec prek run --all-files`.
+repos:
+  - repo: local
+    hooks:
+      - id: oxfmt
+        name: oxfmt (format)
+        entry: pnpm exec oxfmt
+        language: system
+        files: \.(vue|ts|tsx|js|jsx|mjs|cjs|json|jsonc|css|scss|less|md|mdx|ya?ml)$
+        exclude: (^pnpm-lock\.yaml$|^dist/|^\.nitro/)
+      - id: oxlint
+        name: oxlint (--fix)
+        entry: pnpm exec oxlint --fix
+        language: system
+        files: \.(vue|ts|tsx|js|jsx|mjs|cjs)$
+        pass_filenames: false

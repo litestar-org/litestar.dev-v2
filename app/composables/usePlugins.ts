@@ -29,7 +29,6 @@ export const pluginImage = function (icon: string = '', _size: number = 80) {
 
   if (/^https?:\/\//.test(icon)) return icon
   return `https://raw.githubusercontent.com/litestar-org/plugin-registry/main/icons/${icon}`
-
 }
 
 export const pluginIcon = function (category: string) {

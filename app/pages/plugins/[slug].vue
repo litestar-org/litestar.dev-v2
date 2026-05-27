@@ -53,8 +53,9 @@ const ownerName = computed(() => {
 
 const { selectedPackageManager } = usePackageManager()
 
-const installCommand = computed(() =>
-  `${selectedPackageManager.value.command} ${plugin.value?.pypi || plugin.value?.key}`
+const installCommand = computed(
+  () =>
+    `${selectedPackageManager.value.command} ${plugin.value?.pypi || plugin.value?.key}`,
 )
 
 const links = computed(() => {
@@ -239,9 +240,15 @@ defineOgImage('OgImagePlugin', {
               :to="`https://pypistats.org/packages/${plugin.pypi}`"
               target="_blank"
             >
-              <UIcon name="i-lucide-circle-arrow-down" class="size-5 shrink-0" />
+              <UIcon
+                name="i-lucide-circle-arrow-down"
+                class="size-5 shrink-0"
+              />
               <span class="text-sm font-medium"
-                >{{ formatNumber(plugin.monthly_downloads || 0) }} downloads</span
+                >{{
+                  formatNumber(plugin.monthly_downloads || 0)
+                }}
+                downloads</span
               >
             </NuxtLink>
           </UTooltip>

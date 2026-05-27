@@ -13,7 +13,10 @@ import { extractDualModeSources } from '../../app/utils/colorModePicture'
 
 const darkSource = {
   type: 'source',
-  props: { media: '(prefers-color-scheme: dark)', srcSet: 'https://x/dark.svg' },
+  props: {
+    media: '(prefers-color-scheme: dark)',
+    srcSet: 'https://x/dark.svg',
+  },
 }
 const lightSource = {
   type: 'source',
@@ -32,7 +35,14 @@ const text = { type: Symbol('v-txt'), children: '\n  ' }
 describe('extractDualModeSources', () => {
   it('extracts light + dark from prefers-color-scheme sources and the fallback img', () => {
     expect(
-      extractDualModeSources([text, darkSource, text, lightSource, text, fallbackImg]),
+      extractDualModeSources([
+        text,
+        darkSource,
+        text,
+        lightSource,
+        text,
+        fallbackImg,
+      ]),
     ).toEqual({
       light: 'https://x/light.svg',
       dark: 'https://x/dark.svg',
@@ -50,16 +60,37 @@ describe('extractDualModeSources', () => {
 
   it('reads both srcSet (camelCase) and srcset (lowercase)', () => {
     const r = extractDualModeSources([
-      { type: 'source', props: { media: '(prefers-color-scheme: dark)', srcset: 'd.svg' } },
-      { type: 'source', props: { media: '(prefers-color-scheme: light)', srcSet: 'l.svg' } },
+      {
+        type: 'source',
+        props: { media: '(prefers-color-scheme: dark)', srcset: 'd.svg' },
+      },
+      {
+        type: 'source',
+        props: { media: '(prefers-color-scheme: light)', srcSet: 'l.svg' },
+      },
     ])
-    expect(r).toEqual({ light: 'l.svg', dark: 'd.svg', alt: undefined, width: undefined, height: undefined })
+    expect(r).toEqual({
+      light: 'l.svg',
+      dark: 'd.svg',
+      alt: undefined,
+      width: undefined,
+      height: undefined,
+    })
   })
 
   it('takes the first URL token when srcset carries a descriptor', () => {
     const r = extractDualModeSources([
-      { type: 'source', props: { media: '(prefers-color-scheme: dark)', srcSet: 'd.svg 2x, d@3.svg 3x' } },
-      { type: 'source', props: { media: '(prefers-color-scheme: light)', srcSet: 'l.svg 1x' } },
+      {
+        type: 'source',
+        props: {
+          media: '(prefers-color-scheme: dark)',
+          srcSet: 'd.svg 2x, d@3.svg 3x',
+        },
+      },
+      {
+        type: 'source',
+        props: { media: '(prefers-color-scheme: light)', srcSet: 'l.svg 1x' },
+      },
     ])
     expect(r?.dark).toBe('d.svg')
     expect(r?.light).toBe('l.svg')
@@ -68,7 +99,10 @@ describe('extractDualModeSources', () => {
   it('returns null when no source uses prefers-color-scheme', () => {
     expect(
       extractDualModeSources([
-        { type: 'source', props: { media: '(min-width: 600px)', srcSet: 'wide.svg' } },
+        {
+          type: 'source',
+          props: { media: '(min-width: 600px)', srcSet: 'wide.svg' },
+        },
         fallbackImg,
       ]),
     ).toBeNull()
