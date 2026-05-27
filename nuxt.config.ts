@@ -45,7 +45,12 @@ export default defineNuxtConfig({
     'nuxt-og-image',
     'motion-v/nuxt',
     '@nuxtjs/google-fonts',
+    '@nuxtjs/html-validator',
   ],
+  // Dev-time advisory only: surface markup issues without failing the build.
+  htmlValidator: {
+    failOnError: false,
+  },
   site: {
     url: process.env.NUXT_PUBLIC_SITE_URL || 'https://litestar-org.github.io',
   },
