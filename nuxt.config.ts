@@ -73,14 +73,13 @@ export default defineNuxtConfig({
     },
   },
   sitemap: {
-    // Static site: build the sitemap at build time so the @nuxt/content
-    // sources (and their draft filter) resolve during `generate` rather
-    // than at runtime.
+    // Static site: build the sitemap at build time. Dynamic URLs (blog posts,
+    // plugin pages) are sourced from prerendered routes during `generate`, so
+    // the dev sitemap only lists static routes — the deployed one is complete.
     zeroRuntime: true,
-    // Drop the phantom doubled-baseURL home entry: under the
-    // /litestar.dev-v2/ subpath the prerender source records the baseURL
-    // itself as a route, which the module then re-prefixes. Exclude
-    // matches the route path (pre-baseURL), so target the baseURL route.
+    // Drop the phantom doubled-baseURL home entry: under the /litestar.dev-v2/
+    // subpath the prerender source records the baseURL itself as a route, which
+    // the module then re-prefixes. Exclude matches the route path (pre-baseURL).
     exclude: ['/litestar.dev-v2'],
   },
   site: {

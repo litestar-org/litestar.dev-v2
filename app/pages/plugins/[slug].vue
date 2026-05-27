@@ -343,19 +343,19 @@ defineOgImage('OgImagePlugin', {
           aria-label="Table of contents"
           highlight
         >
+          <template #top>
+            <div class="hidden lg:block mb-6">
+              <div class="font-semibold text-sm mb-3">Install</div>
+              <UInputCopy
+                :value="installCommand"
+                :label="installCommand"
+                size="sm"
+              />
+            </div>
+          </template>
+
           <template #bottom>
             <div class="hidden lg:block space-y-6">
-              <div>
-                <div class="font-semibold text-sm mb-3">Install</div>
-                <UInputCopy
-                  :value="installCommand"
-                  :label="installCommand"
-                  size="sm"
-                />
-              </div>
-
-              <USeparator type="dashed" />
-
               <UPageLinks title="Links" aria-label="Links" :links="links" />
 
               <USeparator type="dashed" />
