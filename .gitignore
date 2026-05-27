@@ -1,5 +1,8 @@
 node_modules/
 tmp/
+.env
+.env.*
+!.env.example
 .nuxt/
 .data/
 .output/
