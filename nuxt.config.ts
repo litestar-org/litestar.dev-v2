@@ -83,6 +83,12 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   experimental: {
     extractAsyncDataHandlers: true,
+    viteEnvironmentApi: true,
+  },
+  ui: {
+    experimental: {
+      componentDetection: true,
+    },
   },
   content: {
     build: {
