@@ -37,6 +37,12 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
     'nuxt-content-twoslash',
     '@nuxt/image',
+    // Must load BEFORE @nuxt/content: the sitemap↔content integration registers a
+    // `content:file:afterParse` hook that bakes per-document sitemap data into the
+    // content DB at build time. Loaded after content, the hook isn't wired and
+    // dynamic blog/plugin URLs go missing from the sitemap (the module even warns
+    // about this exact ordering).
+    '@nuxtjs/sitemap',
     '@nuxt/content',
     '@nuxt/scripts',
     '@vueuse/nuxt',
@@ -46,7 +52,6 @@ export default defineNuxtConfig({
     'motion-v/nuxt',
     '@nuxtjs/google-fonts',
     '@nuxtjs/html-validator',
-    '@nuxtjs/sitemap',
   ],
   // Dev-time advisory only: surface markup issues without failing the build.
   htmlValidator: {

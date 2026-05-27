@@ -12,15 +12,11 @@ const [{ data: article }, { data: surround }] = await Promise.all([
   useAsyncData(kebabCase(route.path), () =>
     queryCollection('blog').path(route.path).first(),
   ),
-  useAsyncData(`${kebabCase(route.path)}-surround`, async () => {
-    const items = await queryCollectionItemSurroundings('blog', route.path, {
-      fields: ['description', 'draft'],
-    }).order('date', 'DESC')
-    // Never link drafts as prev/next in the published site (keep slot order).
-    return items.map((item) =>
-      item && !import.meta.dev && !isPublished(item) ? null : item,
-    )
-  }),
+  useAsyncData(`${kebabCase(route.path)}-surround`, () =>
+    queryCollectionItemSurroundings('blog', route.path, {
+      fields: ['description'],
+    }).order('date', 'DESC'),
+  ),
 ])
 
 if (!article.value) {

@@ -1,4 +1,5 @@
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
+import { defineSitemapSchema } from '@nuxtjs/sitemap/content'
 // import { z } from 'zod'
 
 const TitleIconFeature = z.object({
@@ -259,9 +260,13 @@ export default defineContentConfig({
         image: z.string().editor({ input: 'media' }),
         authors: z.array(Author),
         date: z.string().date(),
-        draft: z.boolean().optional(),
         category: z.enum(['Release', 'Tutorial', 'Announcement', 'Article']),
         tags: z.array(z.string()),
+        // Source blog posts into sitemap.xml directly from the collection (built
+        // at parse time, so it works in dev and in `nuxt generate` regardless of
+        // link-crawling). Draft posts live on non-main branches, so anything that
+        // reaches the live build is publishable.
+        sitemap: defineSitemapSchema(),
       }),
     }),
     deploy: defineCollection({
@@ -308,7 +313,9 @@ export default defineContentConfig({
         // the ~60/h anonymous one (avoids throttling). No-op if unset.
         authToken: process.env.GITHUB_TOKEN,
       },
-      schema: Plugin,
+      // Source plugin detail pages into sitemap.xml from the collection so they
+      // don't depend on prerender link-crawling to be discovered.
+      schema: Plugin.extend({ sitemap: defineSitemapSchema() }),
     }),
     sponsors: defineCollection({
       type: 'page',
