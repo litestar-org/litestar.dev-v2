@@ -9,7 +9,9 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ['/robots.txt', '/sitemap.xml'],
+      // @nuxtjs/robots registers `/robots.txt` itself (only when robots.txt
+      // generation is enabled — i.e. at a root baseURL), so it's not listed here.
+      routes: ['/sitemap.xml'],
     },
     logLevel: 5,
   },
@@ -37,6 +39,12 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
     'nuxt-content-twoslash',
     '@nuxt/image',
+    // Adds per-page `<meta name="robots">` tags (applied under any baseURL) and,
+    // when served from a domain root, generates robots.txt with an auto-resolved
+    // `Sitemap:` directive. Under the GitHub Pages /litestar.dev-v2/ subpath the
+    // module refuses to emit robots.txt (crawlers only read it from the host root),
+    // so only the meta tags apply there — see `robots` config below.
+    '@nuxtjs/robots',
     // Must load BEFORE @nuxt/content: the sitemap↔content integration registers a
     // `content:file:afterParse` hook that bakes per-document sitemap data into the
     // content DB at build time. Loaded after content, the hook isn't wired and
@@ -52,6 +60,9 @@ export default defineNuxtConfig({
     'motion-v/nuxt',
     '@nuxtjs/google-fonts',
     '@nuxtjs/html-validator',
+    // Build-time scan of prerendered pages for broken internal links (runs during
+    // `nuxt generate`). External URLs are skipped by default for CI determinism.
+    'nuxt-link-checker',
   ],
   // Dev-time advisory only: surface markup issues without failing the build.
   htmlValidator: {
@@ -86,6 +97,25 @@ export default defineNuxtConfig({
     // subpath the prerender source records the baseURL itself as a route, which
     // the module then re-prefixes. Exclude matches the route path (pre-baseURL).
     exclude: ['/litestar.dev-v2'],
+  },
+  robots: {
+    // robots.txt is only honored at a domain root. Under the GitHub Pages
+    // /litestar.dev-v2/ subpath (CI sets NUXT_APP_BASE_URL) crawlers ignore a
+    // subpath robots.txt, and the module errors if asked to emit one — so only
+    // enable robots.txt generation when serving from root. The per-page
+    // `<meta name="robots">` tags apply regardless.
+    robotsTxt: (process.env.NUXT_APP_BASE_URL || '/') === '/',
+  },
+  linkChecker: {
+    // Fail the build (and CI) on genuinely broken internal links. `failOnError`
+    // only trips on errors, not warnings, so this is safe while the build has 0
+    // link errors. External URLs are left unchecked (fetchRemoteUrls defaults
+    // false) to keep CI deterministic.
+    failOnError: true,
+    // The plugins page category filters use intentionally-capitalized query
+    // values (?category=UI, ?category=Database, …) — valid links, not broken.
+    // Skip the pedantic uppercase style check so the scan only surfaces real issues.
+    skipInspections: ['no-uppercase-chars'],
   },
   site: {
     url: process.env.NUXT_PUBLIC_SITE_URL || 'https://litestar-org.github.io',
