@@ -8,7 +8,14 @@ export const useBlog = () => {
         .where('extension', '=', 'md')
         .order('date', 'DESC')
         .all()
-        .then((res) => res.filter((article) => article.path !== '/blog'))
+        .then((res) =>
+          res.filter(
+            (article) =>
+              article.path !== '/blog'
+              // Hide drafts from the published site (still visible in dev).
+              && (import.meta.dev || isPublished(article)),
+          ),
+        )
     },
     { default: () => [] },
   )

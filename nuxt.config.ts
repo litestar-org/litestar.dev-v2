@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ['/robots.txt'],
+      routes: ['/robots.txt', '/sitemap.xml'],
     },
     logLevel: 5,
   },
@@ -46,10 +46,22 @@ export default defineNuxtConfig({
     'motion-v/nuxt',
     '@nuxtjs/google-fonts',
     '@nuxtjs/html-validator',
+    '@nuxtjs/sitemap',
   ],
   // Dev-time advisory only: surface markup issues without failing the build.
   htmlValidator: {
     failOnError: false,
+  },
+  sitemap: {
+    // Static site: build the sitemap at build time so the @nuxt/content
+    // sources (and their draft filter) resolve during `generate` rather
+    // than at runtime.
+    zeroRuntime: true,
+    // Drop the phantom doubled-baseURL home entry: under the
+    // /litestar.dev-v2/ subpath the prerender source records the baseURL
+    // itself as a route, which the module then re-prefixes. Exclude
+    // matches the route path (pre-baseURL), so target the baseURL route.
+    exclude: ['/litestar.dev-v2'],
   },
   site: {
     url: process.env.NUXT_PUBLIC_SITE_URL || 'https://litestar-org.github.io',
