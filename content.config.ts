@@ -294,6 +294,9 @@ export default defineContentConfig({
       source: {
         repository: 'https://github.com/litestar-org/plugin-registry',
         include: 'readmes/*.md',
+        // Authenticate the clone so it uses GitHub's 5000/h limit instead of
+        // the ~60/h anonymous one (avoids throttling). No-op if unset.
+        authToken: process.env.GITHUB_TOKEN,
       },
     }),
     plugins: defineCollection({
@@ -301,6 +304,9 @@ export default defineContentConfig({
       source: {
         repository: 'https://github.com/litestar-org/plugin-registry',
         include: 'plugins/*.yml',
+        // Authenticate the clone so it uses GitHub's 5000/h limit instead of
+        // the ~60/h anonymous one (avoids throttling). No-op if unset.
+        authToken: process.env.GITHUB_TOKEN,
       },
       schema: Plugin,
     }),
