@@ -9,7 +9,7 @@ defineProps({
     required: false,
   },
   size: {
-    type: String as PropType<'lg' | 'xl'>,
+    type: String as PropType<'xs' | 'sm' | 'md' | 'lg' | 'xl'>,
     default: 'lg',
   },
 })
