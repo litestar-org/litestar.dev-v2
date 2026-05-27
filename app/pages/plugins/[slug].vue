@@ -340,6 +340,7 @@ defineOgImage('OgImagePlugin', {
         <UContentToc
           :links="readmeContent?.body?.toc?.links"
           title="Table of Contents"
+          aria-label="Table of contents"
           highlight
         >
           <template #bottom>
@@ -355,16 +356,21 @@ defineOgImage('OgImagePlugin', {
 
               <USeparator type="dashed" />
 
-              <UPageLinks title="Links" :links="links" />
+              <UPageLinks title="Links" aria-label="Links" :links="links" />
 
               <USeparator type="dashed" />
 
-              <UPageLinks title="Details" :links="detailsLinks" />
+              <UPageLinks
+                title="Details"
+                aria-label="Details"
+                :links="detailsLinks"
+              />
 
               <USeparator type="dashed" />
 
               <UPageLinks
                 title="Python Compatibility"
+                aria-label="Python compatibility"
                 :links="compatibilityLinks"
               />
 

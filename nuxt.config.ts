@@ -51,6 +51,26 @@ export default defineNuxtConfig({
   // Dev-time advisory only: surface markup issues without failing the build.
   htmlValidator: {
     failOnError: false,
+    options: {
+      rules: {
+        // Noise from @nuxt/ui component internals (USelectMenu/UInput render
+        // <label>/<input>/<div> structures we don't control; UPageCard/UPageHero
+        // heading nesting; Shiki injects <style> in code blocks):
+        'element-permitted-content': 'off',
+        'input-missing-label': 'off',
+        'multiple-labeled-controls': 'off',
+        'heading-level': 'off',
+        'no-dup-class': 'off',
+        // Noise from third-party plugin README HTML (GitHub markdown):
+        'attribute-allowed-values': 'off',
+        'wcag/h63': 'off',
+        'no-deprecated-attr': 'off',
+        'prefer-native-element': 'off',
+        // Soft SEO guideline; our blog titles are descriptive and the
+        // " · Litestar Blog" suffix tips them over 70 chars.
+        'long-title': 'off',
+      },
+    },
   },
   sitemap: {
     // Static site: build the sitemap at build time so the @nuxt/content
@@ -94,6 +114,11 @@ export default defineNuxtConfig({
   },
   app: {
     baseURL: '/litestar.dev-v2/',
+    // Baked default so every document — including the SPA fallback shells
+    // (200.html / 404.html) — has a lang attribute.
+    head: {
+      htmlAttrs: { lang: 'en' },
+    },
     pageTransition: false,
     layoutTransition: false,
   },

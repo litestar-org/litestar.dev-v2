@@ -152,6 +152,7 @@ initializePlugins()
               :model-value="q"
               name="q"
               icon="i-lucide-search"
+              aria-label="Search plugins"
               placeholder="Search a plugin..."
               class="w-full"
               size="lg"

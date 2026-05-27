@@ -202,11 +202,12 @@ const links = [
             v-if="article.body && article.body.toc"
             :links="article.body.toc.links"
             title="Table of Contents"
+            aria-label="Table of contents"
             highlight
           >
             <template #bottom>
               <div class="hidden lg:block space-y-6">
-                <UPageLinks title="Links" :links="links" />
+                <UPageLinks title="Links" aria-label="Links" :links="links" />
                 <USeparator type="dashed" />
                 <SocialLinks />
               </div>
