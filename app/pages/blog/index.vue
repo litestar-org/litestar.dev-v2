@@ -79,6 +79,9 @@ await fetchList()
                 :alt="`${article.title} image`"
                 :width="index === 0 ? 672 : 437"
                 :height="index === 0 ? 378 : 246"
+                :sizes="index === 0 ? '100vw md:672px' : '100vw sm:50vw lg:437px'"
+                format="webp"
+                :loading="index === 0 ? 'eager' : 'lazy'"
                 :class="ui.image()"
               />
               <img
@@ -87,6 +90,8 @@ await fetchList()
                 :alt="`${article.title} image`"
                 :width="index === 0 ? 672 : 437"
                 :height="index === 0 ? 378 : 246"
+                :loading="index === 0 ? 'eager' : 'lazy'"
+                decoding="async"
                 :class="ui.image()"
               >
             </template>
