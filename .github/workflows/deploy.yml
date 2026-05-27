@@ -41,6 +41,9 @@ jobs:
       - run: pnpm run generate-github
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GitHub Pages project site is served under /<repo>/. Drop this once the
+          # site moves to a root domain.
+          NUXT_APP_BASE_URL: /litestar.dev-v2/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:

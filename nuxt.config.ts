@@ -117,7 +117,11 @@ export default defineNuxtConfig({
     },
   },
   app: {
-    baseURL: '/litestar.dev-v2/',
+    // Defaults to '/' so local `nuxt generate` + `npx serve .output/public` work
+    // at the root. CI sets NUXT_APP_BASE_URL=/litestar.dev-v2/ for the GitHub Pages
+    // project-site subpath. When the site moves to a root domain, just drop the env
+    // var in the workflow — no code change needed.
+    baseURL: process.env.NUXT_APP_BASE_URL || '/',
     // Baked default so every document — including the SPA fallback shells
     // (200.html / 404.html) — has a lang attribute.
     head: {
