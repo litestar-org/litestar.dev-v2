@@ -59,6 +59,22 @@ describe('Built pages have required OG/SEO meta', () => {
       '600',
     )
 
+    // Canonical absolute URL for the page (consumed by previewers + crawlers).
+    const ogUrl = meta(html, { property: 'og:url' })
+    expect(ogUrl, 'og:url').toBeTruthy()
+    expect(ogUrl, 'og:url is absolute').toMatch(/^https?:\/\/.+/)
+
+    // Twitter falls back to og:* when missing, but explicit text tags are stronger
+    // and we want a hard guarantee they exist. Require equality with og:title /
+    // og:description so a future divergence (e.g. a typo) is caught here too.
+    expect(meta(html, { name: 'twitter:title' }), 'twitter:title').toBe(
+      meta(html, { property: 'og:title' }),
+    )
+    expect(
+      meta(html, { name: 'twitter:description' }),
+      'twitter:description',
+    ).toBe(meta(html, { property: 'og:description' }))
+
     const img = meta(html, { property: 'og:image' })
     expect(img, 'og:image').toBeTruthy()
     if (img!.match(/\/_og\/s\/.+\.png$/)) {
