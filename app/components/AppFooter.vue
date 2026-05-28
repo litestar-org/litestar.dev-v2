@@ -14,7 +14,7 @@ const config = useRuntimeConfig()
   >
     <template #top>
       <UContainer>
-        <UFooterColumns :columns="footerLinks">
+        <UFooterColumns :columns="footerLinks" aria-label="Footer">
           <template #left>
             <div class="flex items-center space-x-2 mb-4">
               <UIcon

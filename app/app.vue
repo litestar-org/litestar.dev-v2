@@ -25,9 +25,6 @@ if (import.meta.server) {
         href: joinURL(baseURL, 'logo.svg'),
       },
     ],
-    htmlAttrs: {
-      lang: 'en',
-    },
   })
   useSeoMeta({
     ogSiteName: 'Litestar',

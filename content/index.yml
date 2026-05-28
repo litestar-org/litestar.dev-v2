@@ -26,7 +26,7 @@ hero:
         [project]
         name = "litestar-hello-world"
         version = "0.1.0"
-        description = "Add your description here"
+        description = "A minimal Litestar example"
         readme = "README.md"
         requires-python = ">=3.13"
         dependencies = [
@@ -87,7 +87,7 @@ hero:
     - title: Websockets
       icon: i-lucide-unplug
       content: |
-        ::code-tree{defaultValue="main.py" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
+        ::code-tree{defaultValue="main_ws_listener.py" class="lg:rounded-r-none lg:border-r-0 dark:[--ui-border-muted:var(--color-gray-800)]"}
         ```python [main_ws_listener.py]
         import dataclasses
         import datetime
@@ -109,26 +109,27 @@ hero:
             - Serialize the returned 'Message' dataclass to JSON
             - Send a WebSocket message back
             """
-            return Message(data=data, timestamp=datetime.now())
+            return Message(data=data, timestamp=datetime.datetime.now())
 
-        app = Litestar([handler])
+        app = Litestar([echo_handler])
         ```
 
         ```python [main_ws_stream.py]
         import asyncio
-        import time
-        from collections.abc import AsyncGenerator
         import dataclasses
+        import datetime
+        from collections.abc import AsyncGenerator
+
         from litestar import Litestar, websocket_stream
 
-        @dataclass.dataclass()
+        @dataclasses.dataclass()
         class Ping:
             timestamp: datetime.datetime
 
         @websocket_stream("/ping")
         async def ping() -> AsyncGenerator[Ping, None]:
             """
-            Accept WebSocket connections on '/ping' an continue to
+            Accept WebSocket connections on '/ping' and continue to
             send a 'Ping' message to the client
             """
             while True:

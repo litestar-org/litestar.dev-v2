@@ -1,0 +1,21 @@
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "semi": false,
+  "arrowParens": "always",
+  "endOfLine": "lf",
+  "printWidth": 80,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "pnpm-lock.yaml",
+    "dist/",
+    ".nitro/",
+    ".cache/",
+    "coverage/",
+    "content/plugins/",
+    "content/pluginsReadme/"
+  ]
+}

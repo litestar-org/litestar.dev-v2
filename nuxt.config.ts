@@ -9,7 +9,8 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ['/robots.txt'],
+      // @nuxtjs/robots owns the `/robots.txt` route, so it's not listed here.
+      routes: ['/sitemap.xml'],
     },
     logLevel: 5,
   },
@@ -37,17 +38,89 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
     'nuxt-content-twoslash',
     '@nuxt/image',
+    // <meta robots> tags + robots.txt (see `robots` config).
+    '@nuxtjs/robots',
+    // Must load BEFORE @nuxt/content: the sitemap↔content integration registers a
+    // `content:file:afterParse` hook that bakes per-document sitemap data into the
+    // content DB at build time. Loaded after content, the hook isn't wired and
+    // dynamic blog/plugin URLs go missing from the sitemap (the module even warns
+    // about this exact ordering).
+    '@nuxtjs/sitemap',
     '@nuxt/content',
     '@nuxt/scripts',
     '@vueuse/nuxt',
     '@nuxtjs/mdc',
     '@nuxt/fonts',
     'nuxt-og-image',
+    // JSON-LD structured data (Organization/WebSite/WebPage — see `schemaOrg`).
+    'nuxt-schema-org',
     'motion-v/nuxt',
     '@nuxtjs/google-fonts',
+    '@nuxtjs/html-validator',
+    // Build-time scan for broken internal links (see `linkChecker` config).
+    'nuxt-link-checker',
   ],
+  // Dev-time advisory only: surface markup issues without failing the build.
+  htmlValidator: {
+    failOnError: false,
+    options: {
+      rules: {
+        // Noise from @nuxt/ui component internals (USelectMenu/UInput render
+        // <label>/<input>/<div> structures we don't control; UPageCard/UPageHero
+        // heading nesting; Shiki injects <style> in code blocks):
+        'element-permitted-content': 'off',
+        'input-missing-label': 'off',
+        'multiple-labeled-controls': 'off',
+        'heading-level': 'off',
+        'no-dup-class': 'off',
+        // Noise from third-party plugin README HTML (GitHub markdown):
+        'attribute-allowed-values': 'off',
+        'wcag/h63': 'off',
+        'no-deprecated-attr': 'off',
+        'prefer-native-element': 'off',
+        // Soft SEO guideline; our blog titles are descriptive and the
+        // " · Litestar Blog" suffix tips them over 70 chars.
+        'long-title': 'off',
+      },
+    },
+  },
+  sitemap: {
+    // Static site: build the sitemap at build time. Dynamic URLs (blog posts,
+    // plugin pages) are sourced from prerendered routes during `generate`, so
+    // the dev sitemap only lists static routes — the deployed one is complete.
+    zeroRuntime: true,
+    // Drop the phantom doubled-baseURL home entry: under the /litestar.dev-v2/
+    // subpath the prerender source records the baseURL itself as a route, which
+    // the module then re-prefixes. Exclude matches the route path (pre-baseURL).
+    exclude: ['/litestar.dev-v2'],
+  },
+  robots: {
+    // robots.txt only works at a domain root; under the /litestar.dev-v2/ subpath
+    // crawlers ignore it and the module errors. Meta tags apply either way.
+    robotsTxt: (process.env.NUXT_APP_BASE_URL || '/') === '/',
+  },
+  linkChecker: {
+    // Fail CI on broken internal links (warnings don't fail the build).
+    failOnError: true,
+    // Plugin category filters use capitalized query values (?category=UI) — not broken.
+    skipInspections: ['no-uppercase-chars'],
+  },
+  schemaOrg: {
+    // Site-wide identity → auto-generates the Organization + WebSite JSON-LD nodes.
+    identity: {
+      type: 'Organization',
+      name: 'Litestar',
+      logo: '/logo.svg',
+      sameAs: [
+        'https://github.com/litestar-org',
+        'https://x.com/LitestarAPI',
+        'https://discord.gg/litestar',
+      ],
+    },
+  },
   site: {
     url: process.env.NUXT_PUBLIC_SITE_URL || 'https://litestar-org.github.io',
+    name: 'Litestar',
   },
   $development: {
     site: {
@@ -76,13 +149,39 @@ export default defineNuxtConfig({
     },
   },
   app: {
-    baseURL: '/litestar.dev-v2/',
+    // Defaults to '/' so local `nuxt generate` + `npx serve .output/public` work
+    // at the root. CI sets NUXT_APP_BASE_URL=/litestar.dev-v2/ for the GitHub Pages
+    // project-site subpath. When the site moves to a root domain, just drop the env
+    // var in the workflow — no code change needed.
+    baseURL: process.env.NUXT_APP_BASE_URL || '/',
+    // Baked default so every document — including the SPA fallback shells
+    // (200.html / 404.html) — has a lang attribute.
+    head: {
+      htmlAttrs: { lang: 'en' },
+    },
     pageTransition: false,
     layoutTransition: false,
   },
   css: ['~/assets/css/main.css'],
+  vite: {
+    optimizeDeps: {
+      // Pre-bundle Vue Flow (used by the architecture diagram) so Vite doesn't
+      // discover it at runtime and trigger a dev page reload on first visit.
+      include: [
+        '@vue-flow/core',
+        '@vue-flow/background',
+        '@vue-flow/node-toolbar',
+      ],
+    },
+  },
   experimental: {
     extractAsyncDataHandlers: true,
+    viteEnvironmentApi: true,
+  },
+  ui: {
+    experimental: {
+      componentDetection: true,
+    },
   },
   content: {
     build: {
@@ -96,24 +195,19 @@ export default defineNuxtConfig({
             default: 'material-theme-lighter',
             dark: 'material-theme-palenight',
           },
-          langs: ['sql', 'diff', 'ini', 'python', 'toml', 'shell'],
+          langs: [
+            'sql',
+            'diff',
+            'ini',
+            'python',
+            'toml',
+            'shell',
+            'js',
+            'typescript',
+            'vue',
+          ],
         },
       },
-    },
-  },
-  mdc: {
-    highlight: {
-      langs: [
-        'sql',
-        'diff',
-        'ini',
-        'python',
-        'toml',
-        'shell',
-        'js',
-        'typescript',
-        'vue',
-      ],
     },
   },
   hooks: {

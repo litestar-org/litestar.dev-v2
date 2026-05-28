@@ -53,8 +53,9 @@ const ownerName = computed(() => {
 
 const { selectedPackageManager } = usePackageManager()
 
-const installCommand = computed(() =>
-  `${selectedPackageManager.value.command} ${plugin.value?.pypi || plugin.value?.key}`
+const installCommand = computed(
+  () =>
+    `${selectedPackageManager.value.command} ${plugin.value?.pypi || plugin.value?.key}`,
 )
 
 const links = computed(() => {
@@ -210,12 +211,34 @@ defineOgImage('OgImagePlugin', {
       <template #title>
         <div class="flex items-center gap-4">
           <UAvatar
+            v-if="!isDefaultPluginIcon(plugin.icon)"
             :src="pluginImage(plugin.icon)"
             :icon="pluginIcon(plugin.category)"
             :alt="plugin.name"
             size="xl"
             class="-m-[4px] rounded-none bg-transparent"
           />
+          <UAvatar
+            v-else
+            :alt="plugin.name"
+            size="xl"
+            class="-m-[4px] rounded-none bg-transparent"
+          >
+            <NuxtImg
+              src="/litestar-blue.svg"
+              alt=""
+              width="64"
+              height="64"
+              class="size-full block dark:hidden"
+            />
+            <NuxtImg
+              src="/litestar-white.svg"
+              alt=""
+              width="64"
+              height="64"
+              class="size-full hidden dark:block"
+            />
+          </UAvatar>
 
           <div>
             {{ plugin.name }}
@@ -239,9 +262,15 @@ defineOgImage('OgImagePlugin', {
               :to="`https://pypistats.org/packages/${plugin.pypi}`"
               target="_blank"
             >
-              <UIcon name="i-lucide-circle-arrow-down" class="size-5 shrink-0" />
+              <UIcon
+                name="i-lucide-circle-arrow-down"
+                class="size-5 shrink-0"
+              />
               <span class="text-sm font-medium"
-                >{{ formatNumber(plugin.monthly_downloads || 0) }} downloads</span
+                >{{
+                  formatNumber(plugin.monthly_downloads || 0)
+                }}
+                downloads</span
               >
             </NuxtLink>
           </UTooltip>
@@ -315,7 +344,13 @@ defineOgImage('OgImagePlugin', {
       </div>
     </UPageHeader>
 
-    <UPage>
+    <UPage
+      :ui="{
+        root: 'lg:grid-cols-12',
+        center: 'lg:col-span-9',
+        right: 'lg:col-span-3',
+      }"
+    >
       <UPageBody>
         <ContentRenderer
           v-if="readmeContent?.body"
@@ -330,37 +365,45 @@ defineOgImage('OgImagePlugin', {
         />
       </UPageBody>
 
-      <template #right>
-        <UContentToc>
+      <template v-if="readmeContent?.body?.toc?.links?.length" #right>
+        <UContentToc
+          :links="readmeContent?.body?.toc?.links"
+          title="Table of Contents"
+          aria-label="Table of contents"
+          highlight
+        >
+          <template #top>
+            <div class="hidden lg:block mb-6">
+              <div class="font-semibold text-sm mb-3">Install</div>
+              <UInputCopy
+                :value="installCommand"
+                :label="installCommand"
+                size="md"
+              />
+            </div>
+          </template>
+
           <template #bottom>
             <div class="hidden lg:block space-y-6">
-              <div>
-                <div class="font-semibold text-sm mb-3">Install</div>
-                <UInputCopy
-                  :value="installCommand"
-                  :label="installCommand"
-                  size="sm"
-                />
-              </div>
+              <UPageLinks title="Links" aria-label="Links" :links="links" />
 
               <USeparator type="dashed" />
 
-              <UPageLinks title="Links" :links="links" />
-
-              <USeparator type="dashed" />
-
-              <UPageLinks title="Details" :links="detailsLinks" />
+              <UPageLinks
+                title="Details"
+                aria-label="Details"
+                :links="detailsLinks"
+              />
 
               <USeparator type="dashed" />
 
               <UPageLinks
                 title="Python Compatibility"
+                aria-label="Python compatibility"
                 :links="compatibilityLinks"
               />
 
-              <USeparator type="dashed" />
-
-              <SocialLinks />
+              <ContentTocBottom />
             </div>
           </template>
         </UContentToc>

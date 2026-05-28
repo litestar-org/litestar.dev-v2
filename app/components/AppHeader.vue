@@ -78,6 +78,7 @@ const latestVersion = computed(() => {
     <UNavigationMenu
       :items="headerLinks"
       variant="link"
+      aria-label="Main"
       :ui="{ linkLeadingIcon: 'hidden' }"
     />
 

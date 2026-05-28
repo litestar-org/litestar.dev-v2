@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { kebabCase } from 'scule'
+import { withoutBase } from 'ufo'
 
 definePageMeta({
   heroBackground: 'opacity-30 -z-10',
@@ -12,11 +13,11 @@ const [{ data: article }, { data: surround }] = await Promise.all([
   useAsyncData(kebabCase(route.path), () =>
     queryCollection('blog').path(route.path).first(),
   ),
-  useAsyncData(`${kebabCase(route.path)}-surround`, () => {
-    return queryCollectionItemSurroundings('blog', route.path, {
+  useAsyncData(`${kebabCase(route.path)}-surround`, () =>
+    queryCollectionItemSurroundings('blog', route.path, {
       fields: ['description'],
-    }).order('date', 'DESC')
-  }),
+    }).order('date', 'DESC'),
+  ),
 ])
 
 if (!article.value) {
@@ -48,6 +49,30 @@ if (article.value.image) {
     blog: { title: article.value.title, category: article.value.category },
   })
 }
+
+// Article image. Schema-org resolves a root-relative path by prepending the app
+// baseURL exactly once (verified with the logo). The generated og-image path
+// already includes the baseURL, so strip it first — otherwise the JSON-LD image
+// doubles to /litestar.dev-v2/litestar.dev-v2/… under the GitHub Pages subpath.
+const { getOgImageUrl } = useBlogImages()
+const articleImage = article.value.image
+  ? article.value.image
+  : withoutBase(getOgImageUrl(article.value), config.app.baseURL)
+
+// BlogPosting JSON-LD derived from the post frontmatter. Authors map to Person nodes.
+useSchemaOrg([
+  defineArticle({
+    '@type': 'BlogPosting',
+    headline: title,
+    description,
+    datePublished: article.value.date,
+    image: articleImage,
+    author: article.value.authors?.map((author) => ({
+      '@type': 'Person',
+      name: author.name,
+    })),
+  }),
+])
 
 function formatSocialIntentQueryText(handle: string | undefined): string {
   const credit = handle ? ` by @${handle}` : ''
@@ -152,7 +177,14 @@ const links = [
         </div>
       </UPageHeader>
 
-      <UPage class="lg:gap-24">
+      <UPage
+        class="lg:gap-24"
+        :ui="{
+          root: 'lg:grid-cols-12',
+          center: 'lg:col-span-9',
+          right: 'lg:col-span-3',
+        }"
+      >
         <UPageBody>
           <ContentRenderer v-if="article.body" :value="article" />
 
@@ -191,13 +223,13 @@ const links = [
             v-if="article.body && article.body.toc"
             :links="article.body.toc.links"
             title="Table of Contents"
+            aria-label="Table of contents"
             highlight
           >
             <template #bottom>
               <div class="hidden lg:block space-y-6">
-                <UPageLinks title="Links" :links="links" />
-                <USeparator type="dashed" />
-                <SocialLinks />
+                <UPageLinks title="Links" aria-label="Links" :links="links" />
+                <ContentTocBottom />
               </div>
             </template>
           </UContentToc>

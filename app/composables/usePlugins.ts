@@ -29,12 +29,20 @@ export const pluginImage = function (icon: string = '', _size: number = 80) {
 
   if (/^https?:\/\//.test(icon)) return icon
   return `https://raw.githubusercontent.com/litestar-org/plugin-registry/main/icons/${icon}`
-
 }
 
 export const pluginIcon = function (category: string) {
   return iconsMap[category as keyof typeof iconsMap] || 'i-lucide-box'
 }
+
+/**
+ * Returns true when a plugin has no custom icon and should fall back to the
+ * Litestar mark. Covers two cases: the literal default filename the
+ * plugin-registry assigns to iconless plugins (`_default_icon.svg`), and an
+ * empty/missing value (defensive against registry drift).
+ */
+export const isDefaultPluginIcon = (icon?: string): boolean =>
+  !icon || icon === '_default_icon.svg'
 
 export const usePlugins = () => {
   const route = useRoute()
