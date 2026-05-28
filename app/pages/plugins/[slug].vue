@@ -183,6 +183,8 @@ useSeoMeta({
   description,
   ogDescription: description,
   ogTitle: computed(() => `${title.value} · Litestar Plugins`),
+  twitterTitle: computed(() => `${title.value} · Litestar Plugins`),
+  twitterDescription: description,
 })
 
 defineOgImage('OgImagePlugin', {

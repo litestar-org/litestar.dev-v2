@@ -13,6 +13,8 @@ if (import.meta.server) {
   // serves the site at /litestar.dev-v2/), but Vite serves them at root in dev.
   // Build the href per environment, otherwise the favicon 404s on the deploy.
   const baseURL = import.meta.dev ? '/' : useRuntimeConfig().app.baseURL
+  const site = useSiteConfig()
+  const route = useRoute()
 
   useHead({
     meta: [
@@ -31,6 +33,10 @@ if (import.meta.server) {
     ogType: 'website',
     twitterCard: 'summary_large_image',
     twitterSite: 'LitestarAPI',
+    // Canonical absolute URL — site.url is the host (no baseURL), app.baseURL
+    // is the GH Pages subpath, route.path is the in-app route. joinURL collapses
+    // duplicate slashes so the result is e.g. https://litestar-org.github.io/litestar.dev-v2/about.
+    ogUrl: () => joinURL(site.url, baseURL, route.path),
   })
 }
 </script>
