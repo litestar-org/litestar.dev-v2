@@ -41,25 +41,29 @@ useSeoMeta({
   twitterDescription: description,
 })
 
+// Capture the OG path used for this page's social card and reuse it for the
+// JSON-LD image — same defineOgImage call drives both, so the URL is
+// guaranteed to point at a file the prerender actually wrote.
+let articleOgPath: string | undefined
 if (article.value.image) {
   useSeoMeta({ ogImage: article.value.image })
 } else {
-  // Minimal props: the Blog template only renders title + category. Keeping
-  // the options small keeps the generated URL under v6's 200-char path limit
-  // so it stays deterministic and matches the thumbnail built in useBlogImages.
-  defineOgImage('Blog', {
+  // Minimal props: the Blog template only renders title + category.
+  const paths = defineOgImage('Blog', {
     blog: { title: article.value.title, category: article.value.category },
   })
+  articleOgPath = paths[0]
 }
 
-// Article image. Schema-org resolves a root-relative path by prepending the app
-// baseURL exactly once (verified with the logo). The generated og-image path
-// already includes the baseURL, so strip it first — otherwise the JSON-LD image
-// doubles to /litestar.dev-v2/litestar.dev-v2/… under the GitHub Pages subpath.
-const { getOgImageUrl } = useBlogImages()
+// Schema-org resolves a root-relative path by prepending the app baseURL
+// exactly once (verified with the logo). The og-image path already includes
+// the baseURL, so strip it first — otherwise the JSON-LD image doubles to
+// /litestar.dev-v2/litestar.dev-v2/… under the GitHub Pages subpath.
 const articleImage = article.value.image
   ? article.value.image
-  : withoutBase(getOgImageUrl(article.value), config.app.baseURL)
+  : articleOgPath
+    ? withoutBase(articleOgPath, config.app.baseURL)
+    : undefined
 
 // BlogPosting JSON-LD derived from the post frontmatter. Authors map to Person nodes.
 useSchemaOrg([
