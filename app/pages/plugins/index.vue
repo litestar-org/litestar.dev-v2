@@ -299,6 +299,7 @@ initializePlugins()
 
     <UPage id="smooth" class="relative z-20">
       <UPageBody>
+        <h2 class="sr-only">Browse plugins</h2>
         <div class="flex items-center gap-2 mb-4 text-muted">
           <UIcon name="i-lucide-info" class="size-4" />
           <span class="text-xs"

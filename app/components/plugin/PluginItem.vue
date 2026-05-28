@@ -98,7 +98,6 @@ const items = computed(() => [
   <UContextMenu :items="items">
     <UPageCard
       :to="`/plugins/${plugin?.key}`"
-      :title="plugin?.name"
       :description="plugin?.description"
       class="group"
       variant="subtle"
@@ -112,6 +111,10 @@ const items = computed(() => [
       }"
       @click="handleCardClick"
     >
+      <template #title>
+        <h3>{{ plugin?.name }}</h3>
+      </template>
+
       <template #leading>
         <UAvatar
           v-if="!isDefaultPluginIcon(plugin?.icon)"

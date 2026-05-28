@@ -228,9 +228,9 @@ const stats = [
           name="i-lucide-heart"
           class="w-12 h-12 mx-auto mb-4 text-primary-600 dark:text-primary-400"
         />
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           Get Involved
-        </h2>
+        </h3>
         <p class="text-lg text-gray-600 dark:text-gray-400 mb-6">
           Every contribution is welcome and appreciated! Join our community and
           help make Litestar even better.
