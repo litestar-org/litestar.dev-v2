@@ -3,8 +3,9 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
-// Resolves to the generated static deploy artifact (symlinked to .output/public).
-const DIST = new URL('../../dist/', import.meta.url).pathname
+// Resolves to the generated static deploy artifact. `nuxt generate` writes to
+// `.output/public/`; the repo also ships a convenience `dist` symlink → same dir.
+const DIST = new URL('../../.output/public/', import.meta.url).pathname
 
 async function urlsAndBase(): Promise<{ urls: string[]; base: string }> {
   const xml = await readFile(join(DIST, 'sitemap.xml'), 'utf8')
