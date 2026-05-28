@@ -98,6 +98,7 @@ export default defineNuxtConfig({
     // robots.txt only works at a domain root; under the /litestar.dev-v2/ subpath
     // crawlers ignore it and the module errors. Meta tags apply either way.
     robotsTxt: (process.env.NUXT_APP_BASE_URL || '/') === '/',
+    credits: false,
   },
   linkChecker: {
     // Fail CI on broken internal links (warnings don't fail the build).
@@ -219,6 +220,26 @@ export default defineNuxtConfig({
         }
         // @ts-expect-error -- TODO: fix this
         delete content.meta.body
+      }
+
+      // Drop the README's leading <h1> so it doesn't duplicate <UPageHeader>'s title on /plugins/<slug>.
+      if (file.id?.startsWith('readme/')) {
+        // @ts-expect-error -- meta.body is the minimark AST for data .md files
+        const root = content?.meta?.body?.value
+        const stripFirstH1 = (parent: unknown[], start: number): boolean => {
+          for (let i = start; i < parent.length; i++) {
+            const node = parent[i]
+            if (!Array.isArray(node)) continue
+            const tag = node[0]
+            if (typeof tag === 'string' && /^h[1-6]$/.test(tag)) {
+              if (tag === 'h1') parent.splice(i, 1)
+              return true
+            }
+            if (stripFirstH1(node as unknown[], 2)) return true
+          }
+          return false
+        }
+        if (Array.isArray(root)) stripFirstH1(root, 0)
       }
     },
   },
