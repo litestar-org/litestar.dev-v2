@@ -17,7 +17,8 @@
     "prepare": "prek install || true",
     "test-unit": "npx vitest --project unit",
     "test-nuxt": "npx vitest --project nuxt",
-    "test-all": "npx vitest",
+    "test-all": "npx vitest --project unit --project nuxt",
+    "test-build": "npx vitest run --project build",
     "update-stats": "npx tsx scripts/update-stats.ts"
   },
   "dependencies": {

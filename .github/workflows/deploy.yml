@@ -61,6 +61,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NUXT_APP_BASE_URL: /litestar.dev-v2/
+      - name: Verify SEO/OG meta on every prerendered page
+        run: pnpm test-build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:

@@ -37,6 +37,8 @@ useSeoMeta({
   description,
   ogDescription: description,
   ogTitle: title,
+  twitterTitle: title,
+  twitterDescription: description,
 })
 
 defineOgImage('Page', {

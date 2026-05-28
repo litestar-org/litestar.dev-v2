@@ -37,6 +37,8 @@ useSeoMeta({
   description,
   ogDescription: description,
   ogTitle: `${title} · Litestar Blog`,
+  twitterTitle: `${title} · Litestar Blog`,
+  twitterDescription: description,
 })
 
 if (article.value.image) {
