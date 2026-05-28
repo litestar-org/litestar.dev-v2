@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs'
-import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
+import { readdir, readFile } from 'node:fs/promises'
+import { join, relative } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 // Resolves to the generated static deploy artifact. `nuxt generate` writes to
@@ -103,5 +103,71 @@ describe('Built pages have required OG/SEO meta', () => {
       )
       expect(existsSync(local), `OG image PNG exists at ${local}`).toBe(true)
     }
+  })
+})
+
+// Catches the class of bug where a consumer (listing <img>, JSON-LD image, etc.)
+// predicts an /_og/s/o_<hash>.png URL that the producer never wrote — i.e. the
+// hash inputs drifted between defineOgImage and the predictor. nuxt-og-image
+// logs "Skipped N orphaned OG image hash URL" during prerender for these, but
+// doesn't fail the build. This test does.
+async function walkHtml(dir: string): Promise<string[]> {
+  const out: string[] = []
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const p = join(dir, entry.name)
+    if (entry.isDirectory()) out.push(...(await walkHtml(p)))
+    else if (entry.name.endsWith('.html')) out.push(p)
+  }
+  return out
+}
+
+function extractStaticOgRefs(html: string, base: string): string[] {
+  const refs = new Set<string>()
+  // Any quoted attribute carrying an /_og/s/o_<hash>.png path (covers <img src>,
+  // <link href>, <meta content>, srcset entries, etc.).
+  for (const m of html.matchAll(/["']([^"']*\/_og\/s\/o_[^"']+\.png)["']/g)) {
+    refs.add(m[1]!)
+  }
+  // JSON-LD blocks — walk every string field looking for the same prefix.
+  for (const m of html.matchAll(
+    /<script[^>]+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
+  )) {
+    let data: unknown
+    try {
+      data = JSON.parse(m[1]!)
+    } catch {
+      // Malformed JSON-LD is its own bug; not this test's job.
+      continue
+    }
+    JSON.stringify(data, (_, v) => {
+      if (typeof v === 'string' && v.includes('/_og/s/o_')) refs.add(v)
+      return v
+    })
+  }
+  // Strip the absolute prefix (host + baseURL) so we can resolve against DIST.
+  return [...refs].map((u) =>
+    u.replace(new RegExp(`^https?://[^/]+${base}`), ''),
+  )
+}
+
+const htmlFiles = await walkHtml(DIST)
+const orphanCases: Array<{ html: string; ref: string }> = []
+for (const file of htmlFiles) {
+  const html = await readFile(file, 'utf8')
+  for (const ref of extractStaticOgRefs(html, base)) {
+    orphanCases.push({ html: relative(DIST, file), ref })
+  }
+}
+
+describe('Built pages: every static OG image URL resolves to a file', () => {
+  // Sanity: if this is empty, the test is silently passing because no OG hash
+  // URLs exist anywhere in the dist (would mean an OG-image regression of its
+  // own). We expect at least the per-post meta to surface one.
+  it('finds at least one /_og/s/o_*.png reference to validate', () => {
+    expect(orphanCases.length).toBeGreaterThan(0)
+  })
+
+  it.each(orphanCases)('$html → $ref exists', ({ ref }) => {
+    expect(existsSync(join(DIST, ref)), `${ref} not in dist/`).toBe(true)
   })
 })
