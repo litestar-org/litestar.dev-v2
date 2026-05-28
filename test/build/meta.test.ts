@@ -7,19 +7,29 @@ import { describe, expect, it } from 'vitest'
 // `.output/public/`; the repo also ships a convenience `dist` symlink → same dir.
 const DIST = new URL('../../.output/public/', import.meta.url).pathname
 
-async function urlsAndBase(): Promise<{ urls: string[]; base: string }> {
+type PageEntry = { url: string; loc: string }
+
+async function pagesAndBase(): Promise<{ pages: PageEntry[]; base: string }> {
   const xml = await readFile(join(DIST, 'sitemap.xml'), 'utf8')
   const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]!)
   if (locs.length === 0) throw new Error('sitemap.xml has no <loc> entries')
   // Derive baseURL from the first <loc>: under GH Pages the path is prefixed
   // with `/litestar.dev-v2`; under a root deploy it's empty. Trailing slash dropped.
   const base = new URL(locs[0]).pathname.replace(/\/$/, '')
-  const urls = locs.map((u) => {
-    const p = new URL(u).pathname
+  const pages = locs.map((loc) => {
+    const p = new URL(loc).pathname
     const stripped = base ? p.replace(new RegExp(`^${base}`), '') : p
-    return stripped || '/'
+    return { url: stripped || '/', loc }
   })
-  return { urls, base }
+  return { pages, base }
+}
+
+// Strip one trailing slash. The sitemap emits the home `<loc>` without one
+// (e.g. `https://host/litestar.dev-v2`), but `joinURL(host, baseURL, '/')`
+// produces a trailing slash. Both forms point at the same resource — compare
+// modulo trailing slash so the test isn't tripped by that single discrepancy.
+function stripTrailingSlash(u: string): string {
+  return u.replace(/\/$/, '')
 }
 
 function htmlPath(p: string): string {
@@ -33,10 +43,10 @@ function meta(html: string, sel: { property?: string; name?: string }) {
   )
 }
 
-const { urls, base } = await urlsAndBase()
+const { pages, base } = await pagesAndBase()
 
 describe('Built pages have required OG/SEO meta', () => {
-  it.each(urls)('%s', async (url) => {
+  it.each(pages)('$url', async ({ url, loc }) => {
     const html = await readFile(htmlPath(url), 'utf8')
 
     expect(html.match(/<title>([^<]+)<\/title>/)?.[1], 'title').toBeTruthy()
@@ -59,10 +69,17 @@ describe('Built pages have required OG/SEO meta', () => {
       '600',
     )
 
-    // Canonical absolute URL for the page (consumed by previewers + crawlers).
+    // Canonical absolute URL for the page — must equal the sitemap <loc> for
+    // this same route (modulo trailing slash on `/`). This catches host drift
+    // (someone hardcoding the wrong domain), path typos, and baseURL mismatch
+    // in a single assertion. Both URLs are derived from the same `site.url +
+    // app.baseURL` at build time, so they're guaranteed to agree if the SEO
+    // wiring is correct.
     const ogUrl = meta(html, { property: 'og:url' })
     expect(ogUrl, 'og:url').toBeTruthy()
-    expect(ogUrl, 'og:url is absolute').toMatch(/^https?:\/\/.+/)
+    expect(stripTrailingSlash(ogUrl!), 'og:url matches sitemap loc').toBe(
+      stripTrailingSlash(loc),
+    )
 
     // Twitter falls back to og:* when missing, but explicit text tags are stronger
     // and we want a hard guarantee they exist. Require equality with og:title /
