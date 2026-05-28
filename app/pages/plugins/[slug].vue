@@ -217,6 +217,7 @@ defineOgImage('OgImagePlugin', {
             :alt="plugin.name"
             size="xl"
             class="-m-[4px] rounded-none bg-transparent"
+            :ui="{ image: 'object-contain' }"
           />
           <UAvatar
             v-else

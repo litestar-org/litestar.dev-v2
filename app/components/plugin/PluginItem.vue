@@ -120,6 +120,7 @@ const items = computed(() => [
           :alt="plugin?.name"
           size="md"
           class="rounded-md bg-transparent"
+          :ui="{ image: 'object-contain' }"
         />
         <UAvatar
           v-else

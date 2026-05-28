@@ -84,6 +84,7 @@ watch(
             :alt="module.name"
             size="lg"
             class="rounded-none bg-transparent"
+            :ui="{ image: 'object-contain' }"
           />
         </Motion>
       </UPageMarquee>
