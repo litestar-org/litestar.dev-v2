@@ -33,9 +33,9 @@ The site is automatically deployed to GitHub Pages via GitHub Actions when chang
 pnpm generate
 ```
 
-## Testing
+## Contributing
 
-TODO
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for setup, workflow, tests, and how to add content.
 
 ## Inspiration
 
