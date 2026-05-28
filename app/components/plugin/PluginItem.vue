@@ -114,12 +114,36 @@ const items = computed(() => [
     >
       <template #leading>
         <UAvatar
+          v-if="!isDefaultPluginIcon(plugin?.icon)"
           :src="pluginImage(plugin?.icon)"
           :icon="pluginIcon(plugin?.category)"
           :alt="plugin?.name"
           size="md"
           class="rounded-md bg-transparent"
         />
+        <UAvatar
+          v-else
+          :alt="plugin?.name"
+          size="md"
+          class="rounded-md bg-transparent"
+        >
+          <!-- Color-mode-aware Litestar fallback. Class-based toggle (no JS) -->
+          <!-- matches the site's `.dark` strategy and is SSG-flicker-free. -->
+          <NuxtImg
+            src="/litestar-blue.svg"
+            alt=""
+            width="40"
+            height="40"
+            class="size-full block dark:hidden"
+          />
+          <NuxtImg
+            src="/litestar-white.svg"
+            alt=""
+            width="40"
+            height="40"
+            class="size-full hidden dark:block"
+          />
+        </UAvatar>
       </template>
 
       <UBadge

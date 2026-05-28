@@ -211,12 +211,34 @@ defineOgImage('OgImagePlugin', {
       <template #title>
         <div class="flex items-center gap-4">
           <UAvatar
+            v-if="!isDefaultPluginIcon(plugin.icon)"
             :src="pluginImage(plugin.icon)"
             :icon="pluginIcon(plugin.category)"
             :alt="plugin.name"
             size="xl"
             class="-m-[4px] rounded-none bg-transparent"
           />
+          <UAvatar
+            v-else
+            :alt="plugin.name"
+            size="xl"
+            class="-m-[4px] rounded-none bg-transparent"
+          >
+            <NuxtImg
+              src="/litestar-blue.svg"
+              alt=""
+              width="64"
+              height="64"
+              class="size-full block dark:hidden"
+            />
+            <NuxtImg
+              src="/litestar-white.svg"
+              alt=""
+              width="64"
+              height="64"
+              class="size-full hidden dark:block"
+            />
+          </UAvatar>
 
           <div>
             {{ plugin.name }}
