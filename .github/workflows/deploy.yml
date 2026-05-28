@@ -10,19 +10,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  prepare-plugin-data:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Upload workspace
-        uses: actions/upload-artifact@v7
-        with:
-          name: workspace-with-plugins
-          path: .
-
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -55,15 +42,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build:
-    needs: [prepare-plugin-data, lint, test]
+    needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
-      - name: Download workspace
-        uses: actions/download-artifact@v8
-        with:
-          name: workspace-with-plugins
-          path: .
-
+      - uses: actions/checkout@v6
       - run: corepack enable
       - uses: actions/setup-node@v6
         with:
