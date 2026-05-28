@@ -4,6 +4,14 @@ on:
   push:
     branches:
       - main
+
+# Cancel in-flight runs for the same ref so rapid pushes to main don't pile up
+# (only the latest push deploys). Scoped per-ref so concurrent branches never
+# block each other.
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   prepare-plugin-data:
     runs-on: ubuntu-latest
@@ -18,8 +26,31 @@ jobs:
           name: workspace-with-plugins
           path: .
 
+  # Quality gate: format, lint, and full test suite must pass before build.
+  # Runs in parallel with prepare-plugin-data; build waits on both.
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: corepack enable
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - name: Format check
+        run: pnpm format:check
+      - name: Lint
+        run: pnpm lint:check
+      - name: Tests (unit + nuxt)
+        run: pnpm test-all
+        env:
+          # @nuxt/content clones plugin-registry; auth raises the rate limit
+          # from ~60/h to 5000/h (same pattern as the build job).
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build:
-    needs: prepare-plugin-data
+    needs: [prepare-plugin-data, verify]
     runs-on: ubuntu-latest
     steps:
       - name: Download workspace

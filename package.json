@@ -11,6 +11,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "oxlint . --fix",
+    "lint:check": "oxlint .",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "prepare": "prek install || true",
