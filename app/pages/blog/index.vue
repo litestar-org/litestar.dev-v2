@@ -20,19 +20,39 @@ useSeoMeta({
   twitterDescription: page.description,
 })
 
+// Listing's own social card. Called first so it claims the default 'og' key
+// and stays the primary <meta property="og:image"> on this page.
 defineOgImage('Page', {
   title: page.title,
   description: page.description,
 })
 
-// Enrich articles with OG images when no image is specified
-const articlesWithImages = computed(() => {
-  return enrichArticlesWithImages(articles.value || [])
-})
-
 await fetchList()
 
-// console.log('ARTICLES:', articlesWithImages.value)
+// Per-article OG paths via the same public API the post page uses — so the
+// URLs match the prerendered files (the hash drops _path before computing:
+// node_modules/nuxt-og-image/dist/runtime/shared/urlEncoding.js:97). Distinct
+// keys keep each call as its own payload entry instead of overwriting the
+// 'Page' card or earlier per-article entries (utils.js:67-77). useState
+// rehydrates the SSR result so the computed below produces stable values on
+// the client (defineOgImage returns [] during hydration; _defineOgImageRaw.js:19-20).
+const blogOgPaths = useState<string[]>('blog-og-paths', () =>
+  import.meta.server
+    ? defineOgImage(
+        'Blog',
+        (articles.value || []).map((article, i) => ({
+          props: {
+            blog: { title: article.title, category: article.category },
+          },
+          key: `blog-${i}`,
+        })),
+      )
+    : [],
+)
+
+const articlesWithImages = computed(() =>
+  enrichArticlesWithImages(articles.value || [], blogOgPaths.value),
+)
 </script>
 
 <template>
